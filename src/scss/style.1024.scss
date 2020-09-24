@@ -1,0 +1,21 @@
+// assets import
+@import 'assets/colors';
+@import 'assets/mixins';
+@import 'assets/variables';
+
+// blocks import
+@import 'general/buttons/buttons.1024';
+@import 'general/popups/popups.1024';
+@import 'general/sliders/sliders.1024';
+@import 'general/forms/forms.1024';
+@import 'general/interface/interface.1024';
+@import '../layouts/header/header.1024';
+@import '../layouts/footer/footer.1024';
+@import '../layouts/mobile-menu/mobile-menu.1024';
+@import '../layouts/hero-index/hero-index.1024';
+@import '../layouts/quiz/quiz.1024';
+@import '../layouts/callback/callback.1024';
+@import '../layouts/contacts/contacts.1024';
+@import '../layouts/news-slider/news-slider.1024';
+@import '../layouts/overlay/overlay.1024';
+@import '../layouts/thanks-popup/thanks-popup.1024';

@@ -1,0 +1,12 @@
+// assets import
+@import 'assets/colors';
+@import 'assets/mixins';
+@import 'assets/variables';
+
+// blocks import
+@import '../layouts/cases-hero/cases-hero';
+@import '../layouts/details/details';
+@import '../layouts/stages/stages';
+@import '../layouts/virtual/virtual';
+@import '../layouts/features/features';
+@import '../layouts/reviews/reviews';

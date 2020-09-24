@@ -1,0 +1,11 @@
+// assets import
+@import 'assets/colors';
+@import 'assets/mixins';
+@import 'assets/variables';
+
+// blocks import
+@import '../layouts/houses/houses';
+@import '../layouts/hero-house/hero-house';
+@import '../layouts/news/news';
+@import '../layouts/article/article';
+@import '../layouts/hero-404/hero-404';

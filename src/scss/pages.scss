@@ -1,0 +1,11 @@
+// assets import
+@import 'assets/colors';
+@import 'assets/mixins';
+@import 'assets/variables';
+
+// blocks import
+@import '../layouts/activity/activity';
+@import '../layouts/team/team';
+@import '../layouts/cases-pages/cases-pages';
+@import '../layouts/turnkey/turnkey';
+@import '../layouts/materials/materials';
