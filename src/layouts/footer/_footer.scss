@@ -2,3 +2,53 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.ftr {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  background: $black;
+  font: 12px/140% Montserrat;
+  text-align: center;
+  color: $beige;
+  &__top {
+    display: inline-block;
+    text-align: left;
+  }
+  &__logo-img {
+    margin-right: 10px;
+    float: left;
+  }
+  &__logo-text {
+    display: block;
+    width: 220px;
+    margin-bottom: 10px;
+  }
+  &__copy {
+    line-height: 120%;
+  }
+  &__nav {
+    margin: 35px 0;
+    &-list {
+      &-item {
+        margin-bottom: 20px;
+        border-bottom: 1px solid transparent;
+        transition: border-bottom-color .5s;
+        &.last {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+  &__bottom {
+  }
+  &__policy {
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+  &__dev {
+  }
+  &__dev-link {
+    font: 600 12px/140% SegoeUI;
+    letter-spacing: 0.08em;
+  }
+}

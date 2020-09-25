@@ -2,3 +2,24 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.ftr {
+  &__logo-text {
+    margin-bottom: 20px;
+    width: 290px;
+  }
+  &__logo-img {
+    width: 65px;
+  }
+  &__nav {
+    max-width: 295px;
+  }
+  &__policy {
+    margin: 0 0 20px;
+  }
+  &__dev {
+    &-link {
+      display: inline-block;
+    }
+  }
+}

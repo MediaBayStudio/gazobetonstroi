@@ -20,6 +20,9 @@ let lazy,
     element = element || document.body;
     return toArray ? Array.prototype.slice.call(element.querySelectorAll(selectors)) : element.querySelectorAll(selectors);
   },
+  id = function(selector) {
+    return document.getElementById(selector);
+  },
   // showLoader = function() {
   //   loader.classList.add('active');
   // },

@@ -2,3 +2,42 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.contacts-sect {
+  background: $beige;
+  &__title {
+    margin-bottom: 15px;
+  }
+  &__descr {
+    margin-bottom: 20px;
+  }
+}
+
+.contacts-form {
+  padding: 20px;
+  background: $white;
+  border-radius: 5px;
+  &__field {
+    width: 100%;
+    // max-width: 320px;
+  }
+  &__field_name {
+    margin-bottom: 35px;
+  }
+  &__field_tel {
+    margin-bottom: 35px;
+  }
+  &__field_email {
+    margin-bottom: 35px;
+  }
+  &__files-upload-block {
+    margin: 30px 0 35px;
+  }
+  &__bottom {
+    margin: auto;
+    max-width: 240px;
+  }
+  &__btn {
+    margin: 20px auto 0;
+  }
+}

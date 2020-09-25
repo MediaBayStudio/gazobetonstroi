@@ -4,7 +4,16 @@
     $template_directory,
     $is_front_page,
     $is_404,
-    $webp_support ?>
+    $webp_support,
+    $address,
+    $tel_1,
+    $tel_1_dry,
+    $tel_2,
+    $tel_2_dry,
+    $tel_3,
+    $tel_3_dry,
+    $email,
+    $insta ?>
 <!DOCTYPE html>
 <html <?php language_attributes() ?>>
 <head>

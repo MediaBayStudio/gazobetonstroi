@@ -22,5 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
   
   //includes
 //=include menu.js
+//=include forms.js
 
 });

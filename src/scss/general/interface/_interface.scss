@@ -40,28 +40,33 @@ body.no-scroll {
   }
 }
 
-.nav__list-item {
-  &.current {
-    cursor: not-allowed;
-    > .nav__link {
-      pointer-events: none;
-      > .nav__link-text {
-        border-bottom: 1px solid;
-      }
-    }
-  }
+.text_underline {
+  border-bottom: 1px solid;
+  transition: border-bottom-color .5s;
 }
 
-.sect {
+// .nav__list-item {
+//   &.current {
+//     cursor: not-allowed;
+//     > .nav__link {
+//       pointer-events: none;
+//       > .nav__link-text {
+//         border-bottom: 1px solid;
+//       }
+//     }
+//   }
+// }
 
+.sect {
+  color: $black;
   &_bg {
 
   }
   &-title {
-
+    font: bold 24px/140% Montserrat;
   }
   &-descr {
-
+    font: 14px/140% Montserrat;
   }
 }
 

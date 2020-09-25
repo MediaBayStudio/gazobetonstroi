@@ -2,3 +2,31 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.ftr {
+  &__top {
+  }
+  &__logo-text {
+  }
+  &__copy {
+  }
+  &__nav {
+    max-width: 275px;
+  }
+  &__bottom {
+    margin: 0 0 0 auto;
+    width: auto;
+    flex-flow: column;
+    align-items: flex-end;
+  }
+  &__policy {
+    margin: 0 0 auto;
+    font-size: 14px;
+  }
+  &__dev {
+  }
+  &__dev-link {
+    display: block;
+    text-align: right;
+  }
+}

@@ -7,6 +7,16 @@ $is_front_page = is_front_page();
 $is_404 = is_404();
 $is_category = is_category();
 
+$address = get_option( 'contacts_address' );
+$tel_1 = get_option( 'contacts_tel_1' );
+$tel_1_dry = preg_replace( '/\s/', '', $tel_1 );
+$tel_2 = get_option( 'contacts_tel_2' );
+$tel_2_dry = preg_replace( '/\s/', '', $tel_2 );
+$tel_3 = get_option( 'contacts_tel_3' );
+$tel_3_dry = preg_replace( '/\s/', '', $tel_3 );
+$email = get_option( 'contacts_email' );
+$insta = get_option( 'contacts_insta' );
+
 // Проверка поддержки webp браузером
 if ( strpos( $_SERVER['HTTP_ACCEPT'], 'image/webp' ) !== false || strpos( $_SERVER['HTTP_USER_AGENT'], ' Chrome/' ) !== false ) {
   $webp_support = true; // webp поддерживается
@@ -14,9 +24,6 @@ if ( strpos( $_SERVER['HTTP_ACCEPT'], 'image/webp' ) !== false || strpos( $_SERV
   $webp_support = false; // webp не поддерживается
 }
 
-// $address = get_option( 'contacts_address' );
-// $tel = get_option( 'contacts_tel' );
-// $tel_dry = preg_replace( '/\s/', '', $tel );
 
 
 // Удаление разных скриптов и стилей от wp
