@@ -2,3 +2,22 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.hdr {
+  &__nav {
+  
+  }
+  &__burger {
+    font-size: 8px;
+  }
+}
+
+.hdr,
+.menu__hdr {
+  height: 80px;
+}
+
+.hdr__logo-img,
+.menu__logo-img {
+  width: 265px;
+}

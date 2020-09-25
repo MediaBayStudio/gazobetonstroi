@@ -1,7 +1,7 @@
 menu = new MobileMenu('.menu', {
-  openButton: '.burger',
-  closeButtons: '.burger',
-  overlay: '.overlay',
+  openButton: '.hdr__burger',
+  closeButtons: '.hdr__burger',
+  overlay: '#overlay',
   toRight: true,
   fixHeader: '.hdr'
 });

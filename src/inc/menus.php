@@ -16,11 +16,31 @@
 
 // задать свои классы для пунктов меню (li)
   add_filter( 'nav_menu_css_class', function( $classes, $item, $args, $depth ) {
-    $classesArray = ['nav__list-item'];
+    $container_class = $args->container_class;
+    $li_class = '';
+
+    switch ( $container_class ) {
+      case 'hdr__nav':
+        $li_class = 'hdr__nav-list-item';
+        break;
+      case 'ftr__nav':
+        $li_class = 'ftr__nav-list-item';
+        break;
+      case 'menu__nav':
+        $li_class = 'menu__nav-list-item';
+        break;
+      default:
+        $li_class = 'nav__list-item';
+        break;
+    }
+
+    $classesArray = [ $li_class ];
 
     foreach ( $classes as $class ) {
       if ( $class === 'current-menu-item' ) {
         $classesArray[] = 'current';
+      } else if ( $class === 'last' ) {
+        $classesArray[] = 'last';
       }
     }
     return $classesArray;

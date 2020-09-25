@@ -2,3 +2,24 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.hero-sect {
+  margin-top: -40px;
+  padding-top: 160px;
+  padding-bottom: 100px;
+  color: $white;
+  font: 16px/140% Montserrat;
+  background: $black url(#) 0 0/cover no-repeat;
+  &__text-block {
+    max-width: 350px;
+  }
+  &__title {
+    margin-bottom: 20px;
+    font: bold 28px/140% Montserrat;
+  }
+  &__descr {
+  }
+  &__btn {
+    margin: 35px 0 60px;
+  }
+}

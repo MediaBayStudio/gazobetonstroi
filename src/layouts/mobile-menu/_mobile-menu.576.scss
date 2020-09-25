@@ -2,3 +2,11 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.menu {
+  width: 52.085vw;
+  max-width: 475px;
+  &__cnt {
+    padding-left: calc(50vw - 268px);
+  }
+}

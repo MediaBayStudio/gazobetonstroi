@@ -2,3 +2,22 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.hero-sect {
+  margin-top: -80px;
+  padding-top: 200px;
+  font-size: 24px;
+  &__text-block {
+    padding: 50px 40px 40px;
+  }
+  &__title {
+    margin-bottom: 30px;
+    font-size: 45px;
+  }
+  &__descr {
+  }
+  &__btn {
+    margin: 45px 0;
+    font-size: 18px;
+  }
+}

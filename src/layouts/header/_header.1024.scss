@@ -2,3 +2,25 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.hdr {
+  &__nav {
+    display: block;
+    font: 16px/100% Montserrat;
+    color: $beige;
+    &-list {
+      &-item {
+        display: inline-block;
+        margin-right: 25px;
+        transition: border-bottom-color .5s;
+        border-bottom: 1px solid transparent;
+        &.last {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+  &__burger {
+    display: none;
+  }
+}

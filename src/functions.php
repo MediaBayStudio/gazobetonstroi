@@ -1,10 +1,18 @@
 <?php
 $template_directory = get_template_directory_uri();
 $template_dir = get_template_directory();
+$wp_content_dir = content_url();
 $site_url = site_url();
 $is_front_page = is_front_page();
 $is_404 = is_404();
 $is_category = is_category();
+
+// Проверка поддержки webp браузером
+if ( strpos( $_SERVER['HTTP_ACCEPT'], 'image/webp' ) !== false || strpos( $_SERVER['HTTP_USER_AGENT'], ' Chrome/' ) !== false ) {
+  $webp_support = true; // webp поддерживается
+} else {
+  $webp_support = false; // webp не поддерживается
+}
 
 // $address = get_option( 'contacts_address' );
 // $tel = get_option( 'contacts_tel' );

@@ -2,3 +2,12 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.hdr {
+  &__nav {
+    font-size: 18px;
+    &-list-item {
+      margin-right: 55px;
+    }
+  }
+}

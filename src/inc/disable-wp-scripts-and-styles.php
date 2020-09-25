@@ -1,6 +1,8 @@
 <?php
 // Отключаем разные стандартные скрипты и стили wp
 add_action( 'init', function() {
+// Убираем поддержку едитора на страницах
+  remove_post_type_support( 'page', 'editor' );
   // Отключаем wp-emoji
   remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
   remove_action( 'wp_print_styles', 'print_emoji_styles' );

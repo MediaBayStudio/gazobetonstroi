@@ -4,5 +4,11 @@
 */
 
   get_header();
-  require 'template-parts/hero-index.php';
+
+  $sections = get_field( 'sections' );
+
+  foreach ( $sections as $section ) {
+    require 'template-parts/' . $section['acf_fc_layout'] . '.php';
+  }
+
   get_footer();

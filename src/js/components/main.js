@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // делаем глобальный lazy, чтобы потом можно было обновлять его
   lazy = new lazyload({
-    clearSrc: true,
-    clearMedia: true
+    // clearSrc: true,
+    // clearMedia: true
   });
 
   // фикс vh для элементов с 100vh
@@ -22,8 +22,5 @@ document.addEventListener('DOMContentLoaded', function() {
   
   //includes
 //=include menu.js
-//=include popups.js
-//=include forms.js
-//=include sliders.js
 
 });

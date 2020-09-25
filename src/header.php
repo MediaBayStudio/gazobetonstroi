@@ -3,7 +3,8 @@
     $site_url,
     $template_directory,
     $is_front_page,
-    $is_404 ?>
+    $is_404,
+    $webp_support ?>
 <!DOCTYPE html>
 <html <?php language_attributes() ?>>
 <head>
@@ -32,7 +33,8 @@
   <noscript>
     <!-- <noindex> -->Для полноценного использования сайта включите JavaScript в настройках вашего браузера.<!-- </noindex> -->
   </noscript>
-  <header class="hdr container"> <?php 
+  <header class="hdr container">
+  <a href="/" class="hdr__logo"><img src="#" data-src="<?php echo $template_directory ?>/img/logo.svg" alt="Логотип Газобетонстрой" class="hdr__logo-img lazy"></a> <?php 
   wp_nav_menu( [
     'theme_location'  => 'header_menu',
     'container'       => 'nav',
@@ -40,10 +42,11 @@
     'menu_class'      => 'hdr__nav-list',
     'items_wrap'      => '<ul class="%2$s">%3$s</ul>'
   ] ) ?>
-  <button type="button" class="hdr__burger" onclick="this.classList.toggle('active')">
+  <button type="button" class="hdr__burger">
     <span class="hdr__burger-box">
       <span class="hdr__burger-inner"></span>
     </span>
-  </button>
+  </button> <?php
+  require 'template-parts/mobile-menu.php' ?>
   </header>
 

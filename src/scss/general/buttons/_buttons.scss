@@ -2,3 +2,33 @@
 @import '../../assets/colors';
 @import '../../assets/mixins';
 @import '../../assets/variables';
+
+.btn {
+  display: flex;
+  padding: 15px 12px;
+  min-width: 185px;
+  min-height: 42px;
+  font: bold 16px/140% Montserrat;
+  // border: 2px solid;
+  border-radius: 5px;
+  // transition: background .5s, color .5s, border-color .5s;
+  transition: background .5s, color .5s;
+}
+
+.btn_yellow {
+  background: $yellow;
+  // border-color: $yellow;
+}
+
+.btn_green {
+  background: $green;
+  // border-color: $green;
+}
+
+.btn_text-black {
+  color: $black;
+}
+
+.btn_text-white {
+  color: $white;
+}

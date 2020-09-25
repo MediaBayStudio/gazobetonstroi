@@ -2,6 +2,8 @@
 // необходимые поддержки темой
   add_theme_support( 'title-tag' );
   add_theme_support( 'post-thumbnails' );
+  add_theme_support( 'post-thumbnails' );
+
 
 // удаление ненужных миниатюр
 add_filter( 'intermediate_image_sizes', function ( $sizes ){

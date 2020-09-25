@@ -2,3 +2,19 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.hero-sect {
+  &__text-block {
+    max-width: 780px;
+    padding: 60px 55px;
+  }
+  &__title {
+    font-size: 51px;
+  }
+  &__descr {
+    max-width: 570px;
+  }
+  &__btn {
+    margin-top: 70px;
+  }
+}
