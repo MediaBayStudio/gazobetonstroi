@@ -2,3 +2,53 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.contacts-sect {
+  &__title {
+  }
+  &__descr {
+  }
+}
+
+.contacts-form {
+  padding: 40px;
+  &__field {
+  }
+  &__field_name {
+  }
+  &__field_tel {
+  }
+  &__field_email {
+  }
+  &__files-upload-block {
+  }
+  &__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: none;
+  }
+  &__btn {
+    margin: 0;
+  }
+}
+
+
+
+.contacts-sect {
+  &__contacts {
+    max-width: none;
+  }
+  &__title {
+  }
+}
+
+.sect-title {
+}
+
+.contacts-block {
+  &__img {
+  }
+  &__text {
+  }
+}

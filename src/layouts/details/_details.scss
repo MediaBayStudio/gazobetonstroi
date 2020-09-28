@@ -2,3 +2,109 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.details-sect {
+  position: relative;
+  background: url(#) 0 0/cover no-repeat;
+  &::after {
+    content: '';
+    position: absolute;
+    display: block;
+    top: 60px;
+    right: 0;
+    width: 138px;
+    height: 222px;
+    background: url('../img/details-img.png') center/contain no-repeat;
+    z-index: 1;
+  }
+  &__title {
+    margin-bottom: 25px;
+    color: $white;
+  }
+}
+
+.details {
+  &__btns {
+    font: 400 16px/100% Montserrat;
+    color: $white;
+  }
+  &__btn {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    &:focus {
+      outline: 1px dotted;
+    }
+    &::before {
+      content: '';
+      margin: 0;
+      // margin: 0 15px 0 0;
+      flex-shrink: 0;
+      width: 0;
+      // width: 28px;
+      height: 1px;
+      background: $yellow;
+      transition: width .5s, margin-right .5s;
+    }
+    &-text {
+      position: relative;
+      pointer-events: none;
+      &::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        // left: 0;
+        bottom: 0;
+        // width: 100%;
+        width: 0;
+        height: 1px;
+        background: $white;
+        transition: width .5s;
+      }
+    }
+    &.is-active {
+      &::before {
+        margin: 0 15px 0 0;
+        width: 28px;
+      }
+      > .details__btn-text {
+        &::after {
+          width: 100%;
+        }
+      }
+    }
+  }
+  &__text-block {
+    margin-top: 25px;
+    padding: 20px 20px 45px;
+    display: grid;
+    grid-template-rows: 100%;
+    grid-template-columns: 100%;
+    font: 14px/140% Montserrat;
+    background: hsla(0, 0%, 100%, .85);
+    border-radius: 5px;
+  }
+  &__text {
+    grid-row: 1;
+    grid-column: 1;
+    align-self: start;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .5s, visibility .5s;
+    &:focus {
+      outline: 1px dotted;
+    }
+    &.is-active {
+      opacity: 1;
+      visibility: visible;
+      transition-delay: .5s;
+    }
+  }
+  &__text-title {
+    margin-bottom: 20px;
+    font-size: 20px;
+  }
+  &__text-descr {
+
+  }
+}

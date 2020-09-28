@@ -2,3 +2,85 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.contacts-sect {
+  &__title {
+  }
+  &__descr {
+    margin-bottom: 25px;
+  }
+}
+
+.contacts-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  &__field {
+    width: 295px;
+  }
+  &__field_name,
+  &__field_tel {
+    margin-bottom: 55px;
+  }
+  &__field_email {
+    margin-bottom: 0;
+  }
+  &__field_msg {
+  }
+  &__files-upload-block {
+    margin: 35px 0 30px;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    flex-flow: row-reverse;
+    > .uploadedfiles {
+      margin-right: 15px;
+      width: 70%;
+      display: flex;
+      flex-flow: row-reverse wrap;
+      > .uploadedfiles__file {
+        margin: 0 10px 10px 0;
+      }
+    }
+    > .fileupload {
+      flex-shrink: 0;
+    }
+  }
+  &__bottom {
+    width: 100%;
+  }
+  &__btn {
+
+  }
+}
+
+
+
+.contacts-sect {
+  &__contacts {
+    margin-top: 50px;
+    display: block;
+    column-count: 2;
+    column-fill: auto;
+    column-gap: 60px;;
+    font-size: 16px;
+    &-wrap {
+      
+    }
+  }
+  &__title {
+    margin-bottom: 20px;
+    column-span: all;
+  }
+}
+
+.sect-title {
+}
+
+.contacts-block {
+  width: 295px;
+  &__img {
+  }
+  &__text {
+  }
+}

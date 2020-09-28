@@ -41,3 +41,43 @@
     margin: 20px auto 0;
   }
 }
+
+
+
+.contacts-sect {
+  &__contacts {
+    margin-top: 35px;
+    display: flex;
+    flex-flow: column;
+    max-width: 265px;
+    font: 14px/140% Montserrat;
+  }
+  &__title {
+  }
+}
+
+.sect-title {
+}
+
+.contacts-block {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  &_geo {
+    align-items: flex-start;
+  }
+  &_email {
+    order: 10;
+  }
+  &_insta {
+    order: 11;
+  }
+  &__img {
+    margin-right: 20px;
+    flex-shrink: 0;
+    width: 15px;
+    height: 15px;
+  }
+  &__text {
+  }
+}

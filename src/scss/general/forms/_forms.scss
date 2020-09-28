@@ -16,13 +16,14 @@ label.invalid {
   border-bottom-color: $error;
 }
 
-$checkbox_size: 11px;
+$checkbox_size: 13px;
 $checkbox_margin_right: 10px;
 $checkbox_text_width: calc(100% - #{$checkbox_size + $checkbox_margin_right});
 // $checkbox_border_radius: 0;
 
 .check {
-  max-width: 270px;
+  max-width: 250px;
+  // max-width: 270px;
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
@@ -129,16 +130,29 @@ $checkbox_text_width: calc(100% - #{$checkbox_size + $checkbox_margin_right});
 }
 
 .fileupload {
+  // margin-bottom: 10px;
+  // display: inline-block;
   font: 16px/140% Montserrat;
+  position: relative;
+  cursor: pointer;
   &:focus-within {
     outline: 1px dotted;
   }
   &__inp {
+    width: 1px;
     position: absolute;
     opacity: 0;
     pointer-events: none;
   }
   &__label {
+    &::after {
+      content: '';
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      background: url('../img/icon-paper-clip.svg') center/contain no-repeat;
+      vertical-align: middle;
+    }
   }
   &__text {
   }
@@ -147,14 +161,19 @@ $checkbox_text_width: calc(100% - #{$checkbox_size + $checkbox_margin_right});
 }
 
 .uploadedfiles {
-  margin-top: 10px;
+  // padding-top: 10px;
   font: 14px/140% Montserrat;
   color: $grey;
   &__file {
-    margin-right: 5px;
+    display: inline-block;
+    margin: 10px 10px 0 0;
+    transition: color .5s;
   }
   &__file-text {
+    padding-right: 4px;
+    pointer-events: none;
   }
   &__file-icon {
+    // pointer-events: none;
   }
 }

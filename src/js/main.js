@@ -89,44 +89,62 @@ menu = new MobileMenu('.menu', {
   toRight: true,
   fixHeader: '.hdr'
 });
-;(function() {
+;
+(function() {
   let contactsForm = id('contacts-form'),
-    textFields = qa('input, textarea'),
+    $uploadFilesBlock = id('uploadedfiles'),
     errorsClass = 'invalid',
+    $filesInput = id('files-input'),
     rules = {
-      'user-email': {
-        required: true,
-        pattern: /^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z])+$/
+      name: {
+        required: true
       },
-      'user-msg': {
+      tel: {
+        required: true,
+        pattern: /\+7\([0-9]{3}\)[0-9]{3}\-[0-9]{2}\-[0-9]{2}/,
+        or: 'email'
+      },
+      email: {
+        required: true,
+        pattern: /^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z])+$/,
+        or: 'tel'
+      },
+      msg: {
         required: true,
         pattern: /[^\<\>\[\]%\&'`]+$/
       },
-      'policy': {
-        required: 'Согласитель с политикой обработки персональных данных'
+      policy: {
+        required: true
       }
     },
     messages = {
-      'user-email': {
-        required: 'Введите E-mail',
+      tel: {
+        required: 'Введите ваш телефон или E-mail',
+        pattern: 'Укажите верный телефон'
+      },
+      name: {
+        required: 'Введите ваше имя',
+      },
+      email: {
+        required: 'Введите ваш E-mail или телефон',
         pattern: 'Введите верный E-mail'
       },
-      'user-msg': {
-        required: 'Введите сообщение',
+      msg: {
+        required: 'Введите ваше сообщение',
         pattern: 'Введены недопустимые символы'
       },
-      'policy': {
+      policy: {
         required: 'Согласитель с политикой обработки персональных данных'
       }
     },
-/*
-  Функция получения значения полей у текущей формы.
-  Ищет только те элементы формы, именя которых указаны в rules.
-  Возвращает объект: 
-  {название-поля: значение-поля}
-  Например:
-  {'user-email': 'mail@mail.ru'}
-*/
+    /*
+      Функция получения значения полей у текущей формы.
+      Ищет только те элементы формы, именя которых указаны в rules.
+      Возвращает объект: 
+      {название-поля: значение-поля}
+      Например:
+      {'user-email': 'mail@mail.ru'}
+    */
     getFormData = function($form) {
       let formElements = $form.elements,
         values = {};
@@ -141,9 +159,9 @@ menu = new MobileMenu('.menu', {
 
       return values;
     },
-/*
-  Функция проверки правильности заполнения формы.
-*/
+    /*
+      Функция проверки правильности заполнения формы.
+    */
     validationForm = function() {
       event.preventDefault();
 
@@ -151,32 +169,53 @@ menu = new MobileMenu('.menu', {
         thisForm = this,
         values = getFormData(thisForm);
 
+
       for (let elementName in values) {
         let rule = rules[elementName],
-          $formElement = thisForm.elements[elementName],
-          elementValue = values[elementName];
+          $formElement = thisForm[elementName],
+          elementValue = values[elementName],
+          or = rule.or,
+          $orFormElement = thisForm[or];
 
         if (rule) {
           if ($formElement.hasAttribute('required') || rule.required === true) {
             let elementType = $formElement.type,
               pattern = rule.pattern;
 
-            if ( ((elementType === 'checkbox' || elementType === 'radio') && !$formElement.checked)
-              || elementValue === '' ) {
+            if (((elementType === 'checkbox' || elementType === 'radio') && !$formElement.checked) ||
+              elementValue === '') {
+
+              if (or) {
+                if ($orFormElement.value === '') {
+                  errors[elementName] = messages[elementName].required;
+                  continue;
+                }
+              } else {
                 errors[elementName] = messages[elementName].required;
                 continue;
+              }
             }
 
             if (elementType !== 'cehckbox' && elementType !== 'radio' && pattern) {
               if (pattern.test(elementValue) === false) {
-                errors[elementName] = messages[elementName].pattern;
-                continue;
+                if (or) {
+                  if ($orFormElement.value === '') {
+                    errors[elementName] = messages[elementName].pattern;
+                    continue;
+                  }
+                } else {
+                  errors[elementName] = messages[elementName].pattern;
+                  continue; 
+                }
+                
               }
             }
+
             hideError($formElement);
           }
         }
       }
+
       if (Object.keys(errors).length == 0) {
         thisForm.removeEventListener('change', validationForm);
         thisForm.removeEventListener('input', validationForm);
@@ -237,6 +276,7 @@ menu = new MobileMenu('.menu', {
           }
 
           $form.reset();
+          $uploadFilesBlock.innerHTML = '';
 
           if (response == 1) {
             thanksPopup.openPopup();
@@ -250,42 +290,137 @@ menu = new MobileMenu('.menu', {
 
     },
     toggleInputsClass = function() {
-      let target = event.target,
-        type = target.type;
+      let $input = event.target,
+        type = $input.type,
+        files = $input.files,
+        classList = $input.classList,
+        value = $input.value;
 
-      if (type === 'text' || target.tagName === 'TEXTAREA') {
-        if (target.value === '') {
-          target.classList.remove('filled');
+      if (type === 'text' || $input.tagName === 'TEXTAREA') {
+        if (value === '') {
+          classList.remove('filled');
         } else {
-          target.classList.add('filled');
+          classList.add('filled');
         }
+      } else if (type === 'file') {
+        // $input.filesArray = [];
+
+        let uploadedFiles = '';
+        for (let i = 0, len = files.length; i < len; i++) {
+          // $input.filesArray[i] = files[i];
+          uploadedFiles += '<span class="uploadedfiles__file"><span class="uploadedfiles__file-text">' + files[i].name + '</span></span>';
+        }
+        $uploadFilesBlock.innerHTML = uploadedFiles;
       }
 
     };
 
-    contactsForm.setAttribute('novalidate', '');
+  contactsForm.setAttribute('novalidate', '');
 
-    contactsForm.addEventListener('submit', validationForm);
-    contactsForm.addEventListener('input', toggleInputsClass);
+  contactsForm.addEventListener('submit', validationForm);
+  contactsForm.addEventListener('input', toggleInputsClass);
 
-    // $('.field__inp').on('input', function() {
-    //   if ($(this).val() !== '') {
-    //     $(this).addClass('filled');
-    //   } else {
-    //     $(this).removeClass('filled');
-    //   }
-    // });
+  // $uploadFilesBlock.addEventListener('click', function() {
+  //   let $target = event.target,
+  //     targetText = $target.firstChild.textContent;
 
-    for (let i = 0; i < textFields.length; i++) {
-      textFields[i].addEventListener('input', function() {
-        if (textFields[i].value === '')  {
-          textFields[i].classList.remove('filled');
-        } else {
-          textFields[i].classList.add('filled');
+  //   if ($target.classList.contains('uploadedfiles__file')) {
+  //     for (let i = 0, len = $filesInput.files.length; i < len; i++) {
+  //       if ($filesInput.files[i].name === targetText) {
+  //         for (let j = 0, len = $filesInput.filesArray.length; j < len; j++) {
+  //           if ($filesInput.filesArray[j].name === targetText) {
+  //             $filesInput.filesArray.splice(j, 1);
+  //             break;
+  //           }
+  //         }
+  //         $uploadFilesBlock.removeChild($target);
+  //         break;
+  //       }
+  //     }
+  //   }
+  // });
+
+
+})();
+;
+(function() {
+  let detailsBtnsblock = id('details-btns'),
+    detailsTextBlock = id('details-text');
+
+  if (detailsBtnsblock) {
+
+    let tabsContents = detailsTextBlock.children,
+      tabs = detailsBtnsblock.children,
+      tabFocus = 0,
+      changeTabs = function(event) {
+        let target = event.target,
+          parent = target.parentNode,
+          grandparent = parent.parentNode,
+          tabContent = q('#' + target.getAttribute('aria-controls'), grandparent.parentNode);
+
+
+        // Убираем выделение с кнопок
+        qa('[aria-selected="true"]', parent, true)
+          .forEach(function(el) {
+            el.setAttribute('aria-selected', false);
+            el.classList.remove('is-active');
+          });
+
+        // Скрываем все тексты
+        qa('[role="tabpanel"]', grandparent, true)
+          .forEach(function(el) {
+            el.setAttribute('aria-hidden', true);
+            el.classList.remove('is-active');
+          });
+
+        // Делаем активной текущую кнопку-таб
+        target.setAttribute('aria-selected', true);
+        target.classList.add('is-active');
+
+        // Показываем контент переключателя
+        tabContent.removeAttribute('aria-hidden');
+        tabContent.classList.add('is-active');
+
+        // Устанавливаем фокус
+        for (let i = tabs.length - 1; i >= 0; i--) {
+          if (tabs[i] === target) {
+            tabFocus = i;
+            break;
+          }
         }
-      });
-    }
-    
+      }
+
+    detailsBtnsblock.addEventListener('click', changeTabs);
+
+
+
+    detailsBtnsblock.addEventListener('keydown', function(event) {
+      // Двигаемся вправо
+      if (event.keyCode === 39 || event.keyCode === 37) {
+        tabs[tabFocus].setAttribute('tabindex', -1);
+        if (event.keyCode === 39) {
+          tabFocus++;
+          // Если дошли до конца, то начинаем сначала
+          if (tabFocus >= tabs.length) {
+            tabFocus = 0;
+          }
+          // Двигаемся влево
+        } else if (event.keyCode === 37) {
+          tabFocus--;
+          // Если дошли до конца, то начинаем сначала
+          if (tabFocus < 0) {
+            tabFocus = tabs.length - 1;
+          }
+        }
+
+        tabs[tabFocus].setAttribute('tabindex', 0);
+        tabs[tabFocus].focus();
+      }
+    });
+
+  }
+
+
 })();
 
 });
