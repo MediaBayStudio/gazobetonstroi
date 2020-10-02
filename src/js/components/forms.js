@@ -224,30 +224,33 @@
 
     };
 
-  contactsForm.setAttribute('novalidate', '');
+  if (contactsForm) {
+    contactsForm.setAttribute('novalidate', '');
 
-  contactsForm.addEventListener('submit', validationForm);
-  contactsForm.addEventListener('input', toggleInputsClass);
+    contactsForm.addEventListener('submit', validationForm);
+    contactsForm.addEventListener('input', toggleInputsClass);
+  }
 
-  // $uploadFilesBlock.addEventListener('click', function() {
-  //   let $target = event.target,
-  //     targetText = $target.firstChild.textContent;
+  let $filterForm = id('filter-form');
 
-  //   if ($target.classList.contains('uploadedfiles__file')) {
-  //     for (let i = 0, len = $filesInput.files.length; i < len; i++) {
-  //       if ($filesInput.files[i].name === targetText) {
-  //         for (let j = 0, len = $filesInput.filesArray.length; j < len; j++) {
-  //           if ($filesInput.filesArray[j].name === targetText) {
-  //             $filesInput.filesArray.splice(j, 1);
-  //             break;
-  //           }
-  //         }
-  //         $uploadFilesBlock.removeChild($target);
-  //         break;
-  //       }
-  //     }
-  //   }
-  // });
+  if ($filterForm) {
+    $filterForm.addEventListener('submit', function() {
+      // event.preventDefault();
+
+      let xhr = new XMLHttpRequest();
+
+      xhr.open($filterForm.method, $filterForm.action);
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.send();
+
+      xhr.addEventListener('readystatechange', function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          let response = xhr.response;
+          console.log(xhr);
+        }
+      });
+    });
+  }
 
 
 })();

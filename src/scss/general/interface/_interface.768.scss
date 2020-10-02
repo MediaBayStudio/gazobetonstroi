@@ -15,3 +15,31 @@
     font-size: 16px;
   }
 }
+
+.house {
+  position: relative;
+  &__link {
+    padding: 15px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: auto;
+  }
+  &__title {
+    &::after {
+      margin: 0 0 0 30px;
+    }
+  }
+  &__img {
+    height: 322px;
+  }
+  &__descr {
+    font-size: 12px;
+  }
+  &__row {
+    height: 22px;
+  }
+  &__right-col {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,55 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.cases-sect {
+
+  &__title {
+
+  }
+  &__link {
+
+  }
+  &__cases {
+  }
+  &__house {
+    width: (1240px - 40px) / 3;
+    &:nth-child(n) {
+      margin-right: 20px;
+    }
+    &:nth-child(3n+3) {
+      margin-right: 0;
+    }
+    &:nth-last-child(n+2) {
+      margin-bottom: 40px;
+    }
+
+    &:nth-child(3n+1) {
+      > .house__link {
+
+      }
+    }
+    &:nth-child(3n+2) {
+      > .house__link {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+    &:nth-child(3n+3) {
+      > .house__link {
+        left: auto;
+        right: 0;
+      }
+    }
+  }
+}
+
+.slider-nav {
+  &__counter {
+  }
+  &__counter-current {
+  }
+  &__counter-total {
+  }
+}

@@ -2,3 +2,63 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.reviews-sect {
+  padding-bottom: 40px;
+  background-size: auto;
+  background-position: bottom 40px right;
+  &::after {
+    top: 15px;
+    left: -30px;
+    bottom: auto;
+  }
+
+  &__title {
+    margin: 0 0 35px;
+  }
+
+  &__nav {
+    margin: 0 0 35px auto;
+  }
+
+  &__prev {}
+
+  &__next {}
+
+  &__counter {}
+
+  &__counter-current {}
+
+  &__counter-total {}
+
+  // Если слайдер
+  &.slick-slider {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    >.reviews-sect__nav {}
+  }
+}
+
+
+.review {
+  display: inline-block;
+  width: (536px - 20px)  / 2;
+  margin: 0 20px 0 0;
+  &.slick-slide {
+    // margin: 0 responsive() 0 0;
+    margin: 0 20px 0 0;
+  }
+
+  &.last {}
+
+  &__hdr {
+    &::before {}
+  }
+
+  &__title {}
+
+  &__subtitle {}
+
+  &__descr {}
+}

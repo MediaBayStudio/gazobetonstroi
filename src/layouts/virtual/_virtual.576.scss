@@ -2,3 +2,56 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.virtual-sect {
+  &__text {
+    font-size: 15px;
+  }
+  &__title {
+    margin: 0 0 35px;
+  }
+  &__descr {
+    &.last {
+
+    }
+  }
+  &__img {
+    margin: 40px 0 0;
+    width: 300px;
+    vertical-align: bottom;
+  }
+  &__text-block {
+    margin: 0 0 0 20px;
+    padding: 35px;
+    width: 536px - 300px - 20px;
+    display: inline-block;
+    border-radius: 5px;
+    vertical-align: bottom;
+    > .b {
+ 
+    }
+  }
+  &__features {
+
+  }
+}
+
+.features {
+  &__nav {
+
+  }
+}
+
+.feat {
+  width: (536px - 20px) / 2;
+  margin-right: 20px;
+  &.last {
+
+  }
+  &__img {
+
+  }
+  &__title {
+
+  }
+}

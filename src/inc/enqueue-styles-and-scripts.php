@@ -15,7 +15,7 @@ function enqueue_style( $style_name, $widths ) {
       if ( $width !== "0" ) {
         $media = $width - 0.02;
         // если размер файла равен 0, то не подключаем его
-      if (filesize(get_template_directory() . '/css/' . $style_name . '.' . $width . '.css') === 0) {
+      if ( filesize(get_template_directory() . '/css/' . $style_name . '.' . $width . '.css') === 0 ) {
         continue;
       }
       wp_enqueue_style( "{$style_name}-{$width}px", $template_directory . "/css/{$style_name}.{$width}.css", [], null, "(min-width: {$media}px)" );
@@ -39,7 +39,7 @@ add_action( 'wp_enqueue_scripts', function() {
 
   if ( is_front_page() ) {
     enqueue_style( 'index', $screen_widths );
-  } else if ( is_category() || is_single() || is_404() ) {
+  } else if ( is_page( 'projects' ) || is_page( 'cases' ) || is_single() || is_404() ) {
     enqueue_style( 'single', $screen_widths );
   } else if ( is_page_template( 'about.php' ) || is_page_template( 'contacts.php' ) || is_page_template( 'page.php' ) ) {
     enqueue_style( 'pages', $screen_widths );

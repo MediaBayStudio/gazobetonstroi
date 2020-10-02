@@ -2,3 +2,15 @@
 @import '../../assets/colors';
 @import '../../assets/mixins';
 @import '../../assets/variables';
+
+.house {
+  &__link {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+  }
+  &__title {
+    margin: 0 0 auto;
+    padding-bottom: 10px;
+  }
+}

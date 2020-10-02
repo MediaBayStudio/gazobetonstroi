@@ -2,3 +2,40 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.callback-form-wrap {
+  margin-top: 20px;
+  background: $lightgrey url(#) 0 100% no-repeat;
+}
+
+.callback-form {
+  padding: 20px;
+  &__title {
+    margin: 0 0 30px;
+    font: 600 18px/140% Montserrat;
+  }
+  &__field {
+    width: 100%;
+    > .field__text {
+      color: $black;
+    }
+  }
+  &__field_name,
+  &__field_tel {
+    margin: 0 0 30px;
+  }
+  &__field_tel {
+
+  }
+  &__field_email {
+    margin-bottom: 20px;
+  }
+  &__bottom {
+    margin: auto;
+    width: 240px;
+  }
+  &__btn {
+    margin: 30px auto 0;
+  }
+}
+

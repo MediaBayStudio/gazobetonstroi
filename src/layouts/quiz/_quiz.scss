@@ -2,3 +2,65 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.quiz-sect {
+  font: 16px/140% Montserrat;
+  &__text {
+  }
+  &__title {
+    margin-bottom: 10px;
+  }
+  &__descr {
+    margin-bottom: 50px;
+  }
+  &__quiz {
+  }
+}
+
+.quiz-form-wrap {
+}
+.quiz {
+  &__form-result {
+  }
+}
+
+
+.quiz {
+  &__header {
+    margin-bottom: 20px;
+  }
+  &__step-title {
+    font-weight: 600;
+  }
+  &__body {
+  }
+  &__group-inputs {
+  }
+  &__radio {
+    margin-bottom: 20px;
+  }
+  &__radio-inp {
+  }
+  &__radio-pseudo-inp {
+  }
+  &__radio-title {
+  }
+  &__select {
+  }
+  &__select-inp {
+  }
+  &__footer {
+    margin-top: 25px;
+    text-align: center;
+  }
+  &__prev {
+    &.disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  }
+}
+.required {
+}
+.disabled {
+}

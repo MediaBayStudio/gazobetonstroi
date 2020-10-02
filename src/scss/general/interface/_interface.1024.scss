@@ -14,3 +14,27 @@
 
   }
 }
+
+.house {
+  &__link {
+    padding: 20px;
+    width: 81.525%;
+  }
+  &__title {
+    margin: 0 0 20px;
+    padding: 0;
+    font-size: 18px;
+  }
+  &__descr {
+    // flex-flow: row;
+    // justify-content: space-between;
+    // text-align: center;
+  }
+  &__row {
+    // height: auto;
+    // flex-flow: column;
+  }
+  &__right-col {
+    // margin: auto 0 0;
+  }
+}

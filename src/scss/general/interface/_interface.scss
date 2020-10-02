@@ -12,10 +12,10 @@ body.no-scroll {
   overflow: hidden;
 }
 
-// img.lazy {
-//   background: url('../img/img-placeholder.svg') center/cover no-repeat;
-// }
-
+body {
+  display: flex;
+  flex-flow: column;
+}
 
 .cf7-form-field {
   top: 0;
@@ -35,38 +35,105 @@ body.no-scroll {
   height: 100%;
   overflow-y: scroll;
   z-index: 9999;
+
   &.active {
     display: block;
   }
 }
 
-.text_underline {
+.text_underline,
+.link__text {
   border-bottom: 1px solid;
   transition: border-bottom-color .5s;
 }
 
-// .nav__list-item {
-//   &.current {
-//     cursor: not-allowed;
-//     > .nav__link {
-//       pointer-events: none;
-//       > .nav__link-text {
-//         border-bottom: 1px solid;
-//       }
-//     }
-//   }
-// }
-
 .sect {
-  color: $black;
-  &_bg {
+  // стили переехали в assets/grid.scss
+  &_bg {}
 
-  }
   &-title {
     font: bold 24px/140% Montserrat;
   }
+
   &-descr {
     font: 14px/140% Montserrat;
+  }
+}
+
+.link {
+  color: $darkgrey;
+
+  &__text {}
+
+  &__arrow {
+    padding-left: 3px;
+  }
+}
+
+.house {
+  display: inline-flex;
+  flex-flow: column;
+  &__link {
+    padding: 15px 0 0;
+    width: 100%;
+    display: block;
+    background: rgba(255, 255, 255, 0.85);
+    order: 10;
+  }
+
+  &__title {
+    margin: 0 0 15px;
+    display: flex;
+    align-items: flex-start;
+    font-size: 16px;
+
+    &::after {
+      content: '';
+      margin: 0 0 0 10px;
+      flex-shrink: 0;
+      display: inline-block;
+      width: 24px;
+      height: 20px;
+      background: url('../img/icon-arrow.svg') center/contain no-repeat;
+    }
+  }
+
+  &__descr {
+    display: flex;
+    flex-flow: column;
+    font: 10px/160% Montserrat;
+  }
+
+  &__row {
+    height: 20px;
+    display: flex;
+    align-items: center;
+
+    &.material {
+      order: 1;
+    }
+
+    &.ploshhad-doma {
+      order: 2;
+    }
+
+    &.etazhi {
+      order: 3;
+    }
+  }
+
+  &__left-col {}
+
+  &__right-col {
+    margin: 0 0 0 auto;
+    font-weight: 500;
+    font-size: 12px;
+  }
+
+  &__img {
+    width: 100%;
+    // height: 100%;
+    object-fit: cover;
   }
 }
 

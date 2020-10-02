@@ -2,3 +2,42 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.stages-sect {
+  &::before {
+    font-size: 170px;
+  }
+  &__title {
+
+  }
+  &__stages {
+
+    > .slick-list {
+
+      > .slick-track {
+
+      }
+    }
+  }
+}
+
+.stages {
+  &__nav {
+    font-size: 360px;
+  }
+  &__counter {
+
+  }
+}
+
+.stage {
+  padding: 85px 40px 100px;
+  &__number {
+
+  }
+  &__title {
+
+  }
+  &__descr {
+  }
+}

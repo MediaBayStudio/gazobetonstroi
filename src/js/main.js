@@ -7,6 +7,8 @@ let lazy,
   overlay,
   thanksPopup,
   thanksPopupTimer,
+  body = document.body,
+  templateDir = body.dataset.templateDirUri,
   // callbackPopup,
   // orderPopup,
   fakeScrollbar,
@@ -16,11 +18,11 @@ let lazy,
   // mobile = mobileRegExp.test(navigator.userAgent),
   // IE = navigator.userAgent.indexOf("MSIE ") > -1 || navigator.userAgent.indexOf("Trident/") > -1,
   q = function(selector, element) {
-    element = element || document.body;
+    element = element || body;
     return element.querySelector(selector);
   },
   qa = function(selectors, element, toArray) {
-    element = element || document.body;
+    element = element || body;
     return toArray ? Array.prototype.slice.call(element.querySelectorAll(selectors)) : element.querySelectorAll(selectors);
   },
   id = function(selector) {
@@ -68,8 +70,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // делаем глобальный lazy, чтобы потом можно было обновлять его
   lazy = new lazyload({
-    // clearSrc: true,
-    // clearMedia: true
+    clearSrc: true,
+    clearMedia: true
   });
 
   // фикс vh для элементов с 100vh
@@ -315,30 +317,33 @@ menu = new MobileMenu('.menu', {
 
     };
 
-  contactsForm.setAttribute('novalidate', '');
+  if (contactsForm) {
+    contactsForm.setAttribute('novalidate', '');
 
-  contactsForm.addEventListener('submit', validationForm);
-  contactsForm.addEventListener('input', toggleInputsClass);
+    contactsForm.addEventListener('submit', validationForm);
+    contactsForm.addEventListener('input', toggleInputsClass);
+  }
 
-  // $uploadFilesBlock.addEventListener('click', function() {
-  //   let $target = event.target,
-  //     targetText = $target.firstChild.textContent;
+  let $filterForm = id('filter-form');
 
-  //   if ($target.classList.contains('uploadedfiles__file')) {
-  //     for (let i = 0, len = $filesInput.files.length; i < len; i++) {
-  //       if ($filesInput.files[i].name === targetText) {
-  //         for (let j = 0, len = $filesInput.filesArray.length; j < len; j++) {
-  //           if ($filesInput.filesArray[j].name === targetText) {
-  //             $filesInput.filesArray.splice(j, 1);
-  //             break;
-  //           }
-  //         }
-  //         $uploadFilesBlock.removeChild($target);
-  //         break;
-  //       }
-  //     }
-  //   }
-  // });
+  if ($filterForm) {
+    $filterForm.addEventListener('submit', function() {
+      // event.preventDefault();
+
+      let xhr = new XMLHttpRequest();
+
+      xhr.open($filterForm.method, $filterForm.action);
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.send();
+
+      xhr.addEventListener('readystatechange', function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          let response = xhr.response;
+          console.log(xhr);
+        }
+      });
+    });
+  }
 
 
 })();
@@ -353,46 +358,48 @@ menu = new MobileMenu('.menu', {
       tabs = detailsBtnsblock.children,
       tabFocus = 0,
       changeTabs = function(event) {
-        let target = event.target,
-          parent = target.parentNode,
-          grandparent = parent.parentNode,
-          tabContent = q('#' + target.getAttribute('aria-controls'), grandparent.parentNode);
+        let target = event.target;
 
+        if (target.tagName === 'BUTTON') {
+          let parent = target.parentNode,
+            grandparent = parent.parentNode,
+            tabContent = q('#' + target.getAttribute('aria-controls'), grandparent.parentNode);
 
-        // Убираем выделение с кнопок
-        qa('[aria-selected="true"]', parent, true)
-          .forEach(function(el) {
-            el.setAttribute('aria-selected', false);
-            el.classList.remove('is-active');
-          });
+          // Убираем выделение с кнопок
+          qa('[aria-selected="true"]', parent, true)
+            .forEach(function(el) {
+              el.setAttribute('aria-selected', false);
+              el.classList.remove('is-active');
+            });
 
-        // Скрываем все тексты
-        qa('[role="tabpanel"]', grandparent, true)
-          .forEach(function(el) {
-            el.setAttribute('aria-hidden', true);
-            el.classList.remove('is-active');
-          });
+          // Скрываем все тексты
+          qa('[role="tabpanel"]', grandparent, true)
+            .forEach(function(el) {
+              el.setAttribute('aria-hidden', true);
+              el.classList.remove('is-active');
+            });
 
-        // Делаем активной текущую кнопку-таб
-        target.setAttribute('aria-selected', true);
-        target.classList.add('is-active');
+          // Делаем активной текущую кнопку-таб
+          target.setAttribute('aria-selected', true);
+          target.classList.add('is-active');
 
-        // Показываем контент переключателя
-        tabContent.removeAttribute('aria-hidden');
-        tabContent.classList.add('is-active');
+          // Показываем контент переключателя
+          tabContent.removeAttribute('aria-hidden');
+          tabContent.classList.add('is-active');
 
-        // Устанавливаем фокус
-        for (let i = tabs.length - 1; i >= 0; i--) {
-          if (tabs[i] === target) {
-            tabFocus = i;
-            break;
+          // Устанавливаем фокус
+          for (let i = tabs.length - 1; i >= 0; i--) {
+            if (tabs[i] === target) {
+              tabFocus = i;
+              break;
+            }
           }
+
         }
       }
 
+
     detailsBtnsblock.addEventListener('click', changeTabs);
-
-
 
     detailsBtnsblock.addEventListener('keydown', function(event) {
       // Двигаемся вправо
@@ -420,6 +427,1408 @@ menu = new MobileMenu('.menu', {
 
   }
 
+
+})();
+;
+(function() {
+  let nextArrow = '<button type="button" class="arrow"></button>',
+    prevArrow = '<button type="button" class="arrow"></button>',
+    smallArrowSvg = '<svg class="arrow__svg" width="18" height="8" viewBox="0 0 18 8" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.3536 4.52494C17.5488 4.32968 17.5488 4.0131 17.3536 3.81783L14.1716 0.635853C13.9763 0.440591 13.6597 0.440591 13.4645 0.635853C13.2692 0.831115 13.2692 1.1477 13.4645 1.34296L16.2929 4.17139L13.4645 6.99981C13.2692 7.19508 13.2692 7.51166 13.4645 7.70692C13.6597 7.90218 13.9763 7.90218 14.1716 7.70692L17.3536 4.52494ZM0 4.67139H17V3.67139H0L0 4.67139Z" fill="currentColor"/></svg>',
+    longArrowSvg = '<svg class="arrow__svg" width="106" height="9" fill="url(#gradient)" xmlns="http://www.w3.org/2000/svg"><path d="M105.354 4.828a.5.5 0 000-.707L102.172.939a.501.501 0 00-.708.707l2.829 2.828-2.829 2.829a.5.5 0 00.708.707l3.182-3.182zM0 4.974h105v-1H0v1z" fill="inherit" /><defs><linearGradient id="gradient"><stop offset="0%" style="stop-color: transparent"></stop><stop offset="50%" style="stop-color: transparent"></stop><stop offset="50%" style="stop-color: currentColor"></stop><stop offset="100%" style="stop-color: currentColor"></stop></linearGradient></defs></svg>',
+    cornerArrowSvg = '<svg class="arrow__svg" width="11" height="20" viewBox="0 0 11 20" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M1 1l9 9-9 9" stroke="currentColor"/></svg>',
+
+    reviewsSlider = id('reviews-slider'),
+    reviewsSelector = '.review',
+    reviewsSlides = reviewsSlider && qa(reviewsSelector, reviewsSlider),
+
+    casesSlider = id('cases'),
+    casesSlides = casesSlider && qa('.house', casesSlider),
+
+
+    stagesSlider = id('stages-slider'),
+    stagesSelector = '.stage',
+    stagesSlides = stagesSlider && qa(stagesSelector, stagesSlider),
+
+    featuresSlider = id('features-slider'),
+    featuresSelector = '.feat',
+    featuresSlides = featuresSlider && qa(featuresSelector, featuresSlider),
+
+    createArrow = function(className, inside) {
+
+      className = (className.indexOf('prev') === -1 ? 'next ' : 'prev ') + className;
+
+      return `<button type="button" class="arrow arrow__${className}">${inside}</button>`;
+    },
+    buildSliders = function() {
+      for (let i = buildSlidersFunctions.length - 1; i >= 0; i--) {
+        buildSlidersFunctions[i]();
+      }
+    },
+    buildSlidersFunctions = [];
+
+  if (reviewsSlider && reviewsSlides.length && reviewsSlides.length > 1) {
+    let $reviewsSlider = $(reviewsSlider),
+      counterCurrentSlide = q('.slider-nav__counter-current', reviewsSlider),
+      counterTotalSlides = q('.slider-nav__counter-total', reviewsSlider),
+      buildReviewsSlider = function() {
+        // если ширина экрана больше 576px и слайдов меньше 3, то слайдера не будет
+        // показываем по 2 слайда
+        if (matchesMedia('(min-width: 575.98px)') && reviewsSlides.length < 3) {
+          if (reviewsSlider.classList.contains('slick-slider')) {
+            $reviewsSlider.slick('unslick');
+          }
+          // если ширина экрана больше 1024px и слайдов меньше 5, то слайдера не будет
+          // показываем по 4 слайда
+        } else if (matchesMedia('(min-width: 767.98px)') && reviewsSlides.length < 3) {
+          if (reviewsSlider.classList.contains('slick-slider')) {
+            $reviewsSlider.slick('unslick');
+          }
+          // в других случаях делаем слайдер
+        } else if (matchesMedia('(min-width: 1439.98px)') && reviewsSlides.length < 4) {
+          if (reviewsSlider.classList.contains('slick-slider')) {
+            $reviewsSlider.slick('unslick');
+          }
+          // в других случаях делаем слайдер
+        } else {
+          if (reviewsSlider.classList.contains('slick-slider')) {
+            // слайдер уже создан
+            return;
+          }
+          $reviewsSlider.slick({
+            appendArrows: $('.reviews-sect__nav'),
+            prevArrow: createArrow('reviews-sect__prev', smallArrowSvg),
+            nextArrow: createArrow('reviews-sect__next', smallArrowSvg),
+            slide: reviewsSelector,
+            infinite: false,
+            mobileFirst: true,
+            variableWidth: true,
+            centerMode: true,
+            centerPadding: '0px',
+            responsive: [{
+              breakpoint: 575.98,
+              settings: {
+                centerMode: false,
+                slidesToShow: 2,
+              }
+            }, {
+              breakpoint: 1439.98,
+              settings: {
+                centerMode: false,
+                slidesToShow: 3
+              }
+            }]
+          });
+
+          let counterTotal = reviewsSlides.length;
+
+          if (matchesMedia('(min-width:575.98px)')) {
+            counterTotal--;
+          } else if (matchesMedia('(min-width:1439.98px)')) {
+            counterTotal = Math.ceil(counterTotal / 3);
+          } else {
+            counterTotal = reviewsSlides.length;
+          }
+
+          counterTotalSlides.textContent = counterTotal;
+
+          $reviewsSlider.on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+            counterCurrentSlide.textContent = nextSlide + 1;
+          });
+        }
+      }
+
+    buildSlidersFunctions[0] = buildReviewsSlider;
+  }
+
+  if (casesSlider && casesSlides.length && casesSlides.length > 1) {
+    let $casesSlider = $(casesSlider),
+      casesSliderParent = casesSlider.parentElement,
+      counterCurrentSlide = q('.slider-nav__counter-current', casesSliderParent),
+      counterTotalSlides = q('.slider-nav__counter-total', casesSliderParent),
+      buildCasesSlider = function() {
+        if (matchesMedia('(min-width: 575.98px)')) {
+          if (casesSlider.classList.contains('slick-slider')) {
+            $casesSlider.slick('unslick');
+          }
+        } else {
+          if (casesSlider.classList.contains('slick-slider')) {
+            // слайдер уже создан
+            return;
+          }
+          $casesSlider.slick({
+            appendArrows: $('.cases__nav'),
+            prevArrow: createArrow('cases__prev', smallArrowSvg),
+            nextArrow: createArrow('cases__next', smallArrowSvg),
+            infinite: false,
+            variableWidth: true,
+            centerMode: true,
+            centerPadding: '0px',
+          });
+
+          let counterTotal = reviewsSlides.length;
+
+          counterTotalSlides.textContent = counterTotal;
+
+          $casesSlider.on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+            counterCurrentSlide.textContent = nextSlide + 1;
+          });
+        }
+      }
+
+    buildSlidersFunctions[1] = buildCasesSlider;
+  }
+
+  if (stagesSlider && stagesSlides.length && stagesSlides.length > 1) {
+    let $stagesSlider = $(stagesSlider),
+      counterCurrentSlide = q('.stages__counter-current', stagesSlider),
+      counterTotalSlides = q('.stages__counter-total', stagesSlider),
+      buildStagesSlider = function() {
+        if (stagesSlider.classList.contains('slick-slider')) {
+          // слайдер уже создан
+          return;
+        }
+        $stagesSlider.slick({
+          appendArrows: $('.stages__nav'),
+          prevArrow: createArrow('stages__prev', longArrowSvg),
+          nextArrow: createArrow('stages__next', longArrowSvg),
+          infinite: false,
+          adaptiveHeight: true,
+          slide: stagesSelector,
+          fade: true
+        });
+      }
+
+    let counterTotal = stagesSlides.length;
+
+    counterTotalSlides.textContent = counterTotal;
+
+    $stagesSlider.on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+      counterCurrentSlide.textContent = nextSlide + 1;
+    });
+
+    buildSlidersFunctions[2] = buildStagesSlider;
+  }
+
+  if (featuresSlider && featuresSlides.length && featuresSlides.length > 1) {
+    let $featuresSlider = $(featuresSlider),
+      counterCurrentSlide = q('.features__counter-current', featuresSlider),
+      counterTotalSlides = q('.features__counter-total', featuresSlider),
+      buildFeaturesSlider = function() {
+        // если ширина экрана больше 576px и слайдов меньше 3, то слайдера не будет
+        // показываем по 2 слайда
+        if (matchesMedia('(min-width: 575.98px)') && featuresSlides.length < 3) {
+          if (featuresSlider.classList.contains('slick-slider')) {
+            $featuresSlider.slick('unslick');
+          }
+          // если ширина экрана больше 1024px и слайдов меньше 5, то слайдера не будет
+          // показываем по 4 слайда
+        } else if (matchesMedia('(min-width: 1439.98px)') && featuresSlides.length < 4) {
+          if (featuresSlider.classList.contains('slick-slider')) {
+            $featuresSlider.slick('unslick');
+          }
+          // в других случаях делаем слайдер
+        } else {
+          if (featuresSlider.classList.contains('slick-slider')) {
+            // слайдер уже создан
+            return;
+          }
+          $featuresSlider.slick({
+            appendArrows: $('.features__nav'),
+            prevArrow: createArrow('features__prev', smallArrowSvg),
+            nextArrow: createArrow('features__next', smallArrowSvg),
+            slide: featuresSelector,
+            infinite: false,
+            mobileFirst: true,
+            variableWidth: true,
+            centerMode: true,
+            centerPadding: '0px',
+            responsive: [{
+              breakpoint: 575.98,
+              settings: {
+                centerMode: false,
+                slidesToShow: 2
+              }
+            }, {
+              breakpoint: 767.98,
+              settings: {
+                centerMode: false,
+                slidesToShow: 3,
+                prevArrow: createArrow('features__prev', cornerArrowSvg),
+                nextArrow: createArrow('features__next', cornerArrowSvg)
+              }
+            }, {
+              breakpoint: 1439.98,
+              settings: {
+                slidesToShow: 4,
+                centerMode: false,
+                prevArrow: createArrow('features__prev', cornerArrowSvg),
+                nextArrow: createArrow('features__next', cornerArrowSvg)
+              }
+            }]
+          });
+
+          let counterTotal = featuresSlides.length;
+
+          if (matchesMedia('(min-width:575.98px)')) {
+            counterTotal--;
+          } else if (matchesMedia('(min-width:1439.98px)')) {
+            counterTotal = Math.ceil(counterTotal / 3);
+          }
+
+          counterTotalSlides.textContent = counterTotal;
+
+          $featuresSlider.on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+            counterCurrentSlide.textContent = nextSlide + 1;
+          });
+        }
+      }
+
+    buildSlidersFunctions[3] = buildFeaturesSlider;
+  }
+
+  if (buildSlidersFunctions.length > 0) {
+    window.addEventListener('resize', buildSliders);
+    buildSliders();
+  }
+
+  // настройки grab курсора на всех слайдерах
+  $('.slick-list.draggable').on('mousedown', function() {
+    $(this).addClass('grabbing');
+  });
+
+  $('.slick-list.draggable').on('beforeChange', function() {
+    $(this).removeClass('grabbing');
+  });
+
+  $(document).on('mouseup', function() {
+    $('.slick-list.draggable').removeClass('grabbing');
+  });
+
+
+})();
+;
+(function() {
+
+  let $quizBlock = id('quiz'),
+    $quizForm = $quizBlock && id('quiz-form'),
+    $quizResult = $quizForm && q('.quiz__form-result', $quizForm),
+    $quizImg = $quizBlock && q('.quiz__img');
+
+
+  if ($quizBlock) {
+    window.Quiz = (function() {
+      Quiz = (function() {
+        return function(element, options) {
+          let _ = this;
+
+          _.assign = function(inserted, obj) {
+            for (let key in inserted) {
+              if (obj[key] === undefined) {
+                obj[key] = inserted[key];
+              } else if (typeof obj[key] === 'object') {
+                _.assign(inserted[key], obj[key]);
+              }
+            }
+          }
+
+          _.createEl = function(block) {
+            return document.createElement(block);
+          }
+
+          _.q = function(selector, target) {
+            target = target || document;
+            return target.querySelector(selector);
+          }
+
+          if (typeof element === 'string') {
+            _.$quiz = _.q(element);
+          } else {
+            _.$quiz = element;
+          }
+
+          if (typeof options.$form === 'string') {
+            _.$form = _.q(options.$form);
+          } else {
+            _.$form = options.$form;
+          }
+
+          if (typeof options.$result === 'string') {
+            _.$result = _.q(options.$result);
+          } else {
+            _.$result = options.$result;
+          }
+
+          _.options = options || {}
+
+          _.defaults = {
+            headerTag: 'div',
+            bodyTag: 'div',
+            footerTag: 'div',
+            stepTitletag: 'span',
+            fieldTag: 'label',
+            fieldTitleTag: 'span',
+            prevBtnTag: 'button',
+            nextBtnTag: 'button',
+            dotsTag: 'div',
+            dotTag: 'div',
+            stepsCounterNumTag: 'div',
+            currentStepNumTag: 'span',
+            totalStepNumTag: 'span',
+
+            dots: false,
+            counter: false,
+            prev: true,
+            next: true,
+
+            headerClass: 'quiz__header',
+            bodyClass: 'quiz__body',
+            footerClass: 'quiz__footer',
+            stepTittleClass: 'quiz__step-title',
+            prevBtnClass: 'quiz__prev',
+            nextBtnClass: 'quiz__next',
+            dotsClass: 'quiz__dots',
+            dotClass: 'quiz__dot',
+            stepsCounterNumClass: 'quiz__steps-counter',
+            currentStepNumClass: 'quiz__current-steps-number',
+            totalStepNumClass: 'quiz__total-steps-number',
+            gropupInputsClass: 'quiz__group-inputs',
+            groupInputsTitleClass: 'quiz__group-title',
+
+            prevBtnText: 'Назад',
+            nextBtnText: 'Следующий шаг',
+
+            fieldClasses: {
+              radio: 'quiz__radio',
+              checkbox: 'quiz__checkbox',
+              text: 'quiz__text',
+              textarea: 'quiz__text',
+              select: 'quiz__select'
+            }
+          }
+
+          _.$dots = [];
+          _.$steps = [];
+          _.$filledSteps = []; // шаги, которые уже были заполненны (для движения назад)
+          _.radioCount = 0;
+          _.checkboxCount = 0;
+
+          _.assign(_.defaults, _.options);
+
+          _.stepsLength = options.steps.length + 1;
+          _.currentStep = 0;
+
+          _.inputHandler = _.input.bind(_);
+          _.nextStepHandler = _.nextStep.bind(_);
+          _.prevStepHandler = _.prevStep.bind(_);
+
+          _.init();
+
+          _.$prevStep = _.$steps[_.currentStep - 1];
+          _.$currentStep = _.$steps[_.currentStep];
+          _.$nextStep = _.$steps[_.currentStep + 1];
+
+
+          _.$filledFieldsOnThisStep = [];
+          _.$fieldsOnThisStep = null;
+          _.result = [];
+
+          _.printStep(_.currentStep);
+
+          _.$quiz.resetQuiz = _.resetQuiz;
+
+          _.dispatchEvent(_.$quiz, 'init', _.setEventDetails());
+
+          return _.$quiz;
+          // return _;
+        }
+      })();
+
+      Quiz.prototype.init = function() {
+        console.log(this);
+        let _ = this,
+          options = _.options,
+          evt = 'input';
+
+        _.$form.parentElement.style.display = 'none';
+
+        _.buildInsides();
+        _.buildSteps();
+        _.$steps.push(_.$form);
+
+        if (options.prev) {
+          _.$prev.classList.add('disabled');
+        }
+
+        if (options.next) {
+          _.$next.classList.add('disabled');
+        } else {
+          evt = 'change';
+        }
+
+        if (options.dots) {
+          _.$dots[_.currentStep].classList.add('active');
+        }
+
+        _.$quiz.addEventListener(evt, _.inputHandler);
+        // _.$next.addEventListener('click', _.nextStepHandler);
+      };
+
+      Quiz.prototype.dispatchEvent = function(element, eventName, argumentsObj) {
+        if (typeof window.CustomEvent === "function") {
+          argumentsObj = argumentsObj || {}
+          let evt = new CustomEvent(eventName, argumentsObj);
+          element.dispatchEvent(evt);
+        }
+      };
+
+      Quiz.prototype.buildInsides = function() {
+        let _ = this,
+          options = _.options,
+          setButtonType = function(tag, el) {
+            if (tag === 'button') {
+              el.setAttribute('type', 'button');
+            }
+          };
+
+        _.$header = _.createEl(options.headerTag);
+        _.$body = _.createEl(options.bodyTag);
+        _.$footer = _.createEl(options.footerTag);
+        _.$stepsTitle = _.createEl(options.stepTitletag);
+
+        _.$header.className = options.headerClass;
+        _.$body.className = options.bodyClass;
+        _.$footer.className = options.footerClass;
+        _.$stepsTitle.className = options.stepTittleClass;
+
+        if (options.counter) {
+          _.$stepsCounter = _.createEl(options.stepsCounterNumTag);
+          _.$counterCurrentNum = _.createEl(options.currentStepNumTag);
+          _.$counterTotalNum = _.createEl(options.totalStepNumTag);
+
+          _.$stepsCounter.className = options.stepsCounterNumClass;
+          _.$counterCurrentNum.className = options.currentStepNumClass;
+          _.$counterTotalNum.className = options.totalStepNumClass;
+
+          _.$counterCurrentNum.textContent = _.currentStep + 1;
+          _.$counterTotalNum.textContent = _.stepsLength;
+
+          _.$stepsCounter.innerHTML = '<span>Шаг</span> ';
+          _.$stepsCounter.appendChild(_.$counterCurrentNum);
+          _.$stepsCounter.insertAdjacentHTML('beforeend', ' <span>из</span> ');
+          _.$stepsCounter.appendChild(_.$counterTotalNum);
+
+        }
+
+        if (options.dots) {
+          _.$dotsBlock = _.createEl(options.dotsTag);
+
+          _.$dotsBlock.className = options.dotsClass;
+
+          for (let i = 0; i < _.stepsLength; i++) {
+            let dot = _.createEl(options.dotTag);
+            dot.className = options.dotClass;
+            setButtonType(options.dotTag, dot);
+            _.$dots[i] = dot;
+            _.$dotsBlock.appendChild(dot);
+          }
+        }
+
+        if (options.prev) {
+          _.$prev = _.createEl(options.prevBtnTag);
+          _.$prev.className = options.prevBtnClass;
+          setButtonType(options.prevBtnTag, _.$prev);
+          _.$prev.textContent = options.prevBtnText;
+          _.$footer.appendChild(_.$prev);
+        }
+
+        if (options.next) {
+          _.$next = _.createEl(options.nextBtnTag);
+          _.$next.className = options.nextBtnClass;
+          setButtonType(options.nextBtnTag, _.$next);
+          _.$next.textContent = options.nextBtnText;
+          _.$footer.appendChild(_.$next);
+        }
+
+        if (options.counter) {
+          _.$header.appendChild(_.$stepsCounter);
+        }
+
+        if (options.dots) {
+          _.$header.appendChild(_.$dotsBlock);  
+        }
+        
+        _.$header.appendChild(_.$stepsTitle);
+
+        _.$quiz.appendChild(_.$header);
+        _.$quiz.appendChild(_.$body);
+        _.$quiz.appendChild(_.$footer);
+
+      };
+
+      Quiz.prototype.setEventDetails = function() {
+        let _ = this;
+
+        return {
+          'detail': {
+            prevStep: _.currentStep - 1,
+            currentStep: _.currentStep,
+            nextStep: _.currentStep + 1,
+            stepsLength: _.stepsLength,
+            currentStepObject: _.$currentStep,
+            quizObject: _
+          }
+        }
+      };
+
+      Quiz.prototype.buildSteps = function() {
+        let _ = this,
+          options = _.options,
+          steps = options.steps;
+        /*
+          Перебираем все шаги и формируем удобный объект с щагами
+          Будет содержать заголовок шага
+          И уже готовые элементы для вставки
+        */
+        for (let step in steps) {
+          let curStep = steps[step], // берем текущий шаг в переменную (для сокр. записи)
+            fields = curStep['fields'], // поля шага
+            options = curStep.options, // переданные доп. опции (для действий на переключении шагов, например, менять картинки)
+            extrafields = curStep['extrafields'], // дополнительные поля
+            stepObject = {}; // объект одного шага, который будем вставлять в массив шагов
+
+          // Если есть голые поля, т.е. без ветвления ответов
+          if (fields) {
+            let stepTitle = curStep['step-title'], // текст заголовка шага
+              parsedFields = _.parseFields(fields); // разбираем поля, создаем html объекты
+
+            // Если есть дополнительные поля, то разбираем их
+            if (extrafields) {
+              extrafields = _.parseExtraFields(extrafields);
+            }
+
+            stepObject['step-title'] = stepTitle; // текст для заголовка шага
+            stepObject.fields = parsedFields.fieldsArray; // массив разобранных полей
+            stepObject.extrafields = extrafields; // вставляем дополнительные поля (могут быть undefined)
+            stepObject.html = parsedFields.html; // элементы для вставки на страницу
+            stepObject.options = options; // доп. опции, переданные в json, для использования на событиях nextstep, prevstep
+
+            // Если поля есть ветвление ответов
+          } else {
+            /*
+              Разбираем ветвления ответов
+              значение овета: [поле, поле, поле]
+            */
+            for (let key in curStep) {
+              let parsedFields = _.parseFields(curStep[key].fields),
+                extrafields = curStep[key].extrafields,
+                stepTitle = curStep[key]['step-title'],
+                options = curStep[key].options;
+
+              // Если есть дополнительные поля, то разбираем и их
+              if (extrafields) {
+                extrafields = _.parseExtraFields(extrafields);
+              }
+
+              stepObject[key] = {
+                options: options,
+                'step-title': stepTitle,
+                fields: parsedFields.fieldsArray,
+                extrafields: extrafields,
+                html: parsedFields.html
+              }
+
+            }
+          }
+
+          _.$steps.push(stepObject); // вставляем сформированный объект шага в массив
+
+        }
+      };
+
+      Quiz.prototype.parseFields = function(fields, isExtraFields) {
+        let _ = this,
+          options = _.options,
+          obj = {
+            fieldsArray: [],
+            html: []
+          },
+          fieldsType;
+
+        // Если мы создаем доп. поле, то добавим ему соотв. дата-атрибут
+        // Всем title зададим соотв. дата-атрибут, чтобы было потом легко найти их через q
+
+        for (let field in fields) {
+          let curField = fields[field],
+            fieldType = curField.type,
+            groupTitle = curField['group-title'],
+            fieldTitle = curField.title,
+            required = curField.required,
+            values = curField.values,
+            placeholder = curField.placeholder,
+            fieldTag = fieldType === 'textarea' ? 'textarea' : 'input',
+            fieldClass = options.fieldClasses[fieldType],
+            initialSelected = curField.initialSelected;
+
+          fieldsType = fieldType;
+
+          // Разбираем обычное поле с текстом или числом
+          if (fieldType === 'text' || fieldType === 'number' || fieldType === 'textarea') {
+            let $field = _.createEl(options.fieldTag),
+              $title = _.createEl(options.fieldTitleTag),
+              $input = _.createEl(fieldTag),
+              inputClassPostfix = fieldType === 'textarea' ? '-textarea' : '-inp',
+              fieldObject = {};
+
+            if (isExtraFields) {
+              $field.setAttribute('data-extra-field', '')
+            }
+
+            $input.type = fieldType;
+
+            if (placeholder) {
+              $input.placeholder = placeholder;
+            }
+
+            $title.textContent = fieldTitle;
+            $title.setAttribute('data-field-title', '');
+
+            $field.className = fieldClass;
+            $input.className = fieldClass + inputClassPostfix + (required ? ' required' : '');
+            $title.className = fieldClass + '-title';
+
+            $field.appendChild($title);
+            $field.appendChild($input);
+
+            fieldObject.input = $input;
+            fieldObject.field = $field;
+            fieldObject.title = $title;
+
+            obj.fieldsArray.push(fieldObject);
+            obj.html.push($field);
+
+          } else if (values && values.length > 0) {
+            // Если есть group-title, то помещаем в общий блок
+            let $groupBlock,
+              $groupTitle,
+              $selectBlock,
+              $selectLabel,
+              $selectBlockTitle;
+
+            if (groupTitle || groupTitle === '') {
+              $groupBlock = _.createEl('div');
+
+              if (groupTitle) {
+                $groupTitle = _.createEl('span');
+                $groupTitle.className = options.groupInputsTitleClass;
+                $groupTitle.textContent = groupTitle;
+                $groupTitle.setAttribute('data-field-title', ''); // присваиваем тайтлу атрибут для облегчения его поиска
+                $groupBlock.appendChild($groupTitle);
+              }
+
+              $groupBlock.className = options.gropupInputsClass;
+            }
+
+            if (fieldType === 'select') {
+              $selectLabel = _.createEl(options.fieldTag); // создаем блок-обертку
+              $selectBlock = _.createEl('select'); // создаем сам селект
+
+              // Если есть заголовок полей, то создадим его
+              if (fieldTitle) {
+                $selectBlockTitle = _.createEl(options.fieldTitleTag); // создаем татйл
+                $selectBlockTitle.className = fieldClass + '-title'; // присваиваем тайтлу класс
+                $selectBlockTitle.textContent = fieldTitle; // присваиваем тайтлу текст
+                $selectBlockTitle.setAttribute('data-field-title', ''); // присваиваем тайтлу атрибут для облегчения его поиска
+                $selectLabel.appendChild($selectBlockTitle); // вставляем тайтл в блок-обертку
+              }
+
+              $selectLabel.appendChild($selectBlock); // вставляем селект в блок-обертку
+              $selectLabel.className = fieldClass; // присваиваем блоку-обертке класс
+              $selectBlock.className = fieldClass + '-inp' + (required ? ' required' : ''); // класс для селекта
+
+              if (initialSelected) {
+                $selectBlock.dataset.initialSelected = initialSelected;
+              }
+            }
+
+            /*
+              Перебираем все значения и для select создаем options,
+              а для radio и checkbox создаем input с классами, значениями и др. атрибутами
+            */
+            for (let i = 0, len = values.length; i < len; i++) {
+              let $field,
+                $title,
+                $input,
+                // $pseudoInp,
+                fiteldsNameAttr,
+                fieldObject = {};
+
+              if (fieldType === 'select') {
+                $input = _.createEl('option');
+
+                // Если передали строку, то вставляем ее как обычно
+                if (typeof values[i] === 'string') {
+                  $input.value = $input.textContent = values[i];
+                // Если не строка, то разбираем объект с текстом и атрибутами
+                } else {
+                  let customAttributes = values[i]['attr'],
+                    fieldIsNotDisabled = true;
+
+                  if (customAttributes) {
+                    for (let i = 0, len = customAttributes.length; i < len; i++) {
+                      for (let attrName in customAttributes[i]) {
+                        let attrValue = customAttributes[i][attrName];
+                        $input.setAttribute(attrName, attrValue);
+                        if (attrName === 'disabled') {
+                          fieldIsNotDisabled = false;
+                        }
+                      }
+                    }
+                  }
+
+                  if (fieldIsNotDisabled) {
+                    $input.value = $input.textContent = values[i]['text'];
+                  } else {
+                    $input.textContent = values[i]['text'];
+                  }
+                }
+                $field = $selectBlock;
+              } else {
+                $field = _.createEl(options.fieldTag);
+                $title = _.createEl(options.fieldTitleTag);
+                $input = _.createEl(fieldTag);
+                // $pseudoInp = _.createEl('span');
+
+                // Создаем атрибут name (radio-0, radio-1 и т.д.)
+                if (fieldType === 'radio') {
+                  fiteldsNameAttr = 'radio-' + _.radioCount;
+                } else {
+                  fiteldsNameAttr = 'checkbox-' + _.checkboxCount;
+                }
+
+                $input.value = values[i];
+                $input.name = fiteldsNameAttr;
+                $input.type = fieldType;
+
+                $title.textContent = values[i];
+                // $pseudoInp.className = fieldClass + '-pseudo-inp';
+                $field.className = fieldClass;
+                $input.className = fieldClass + '-inp' + (required ? ' required' : '');
+                if (required) {
+                  $input.setAttribute('required', '');
+                }
+                // $input.dataset.required = required ? 1 : 0;
+              }
+
+              if ($title) {
+                $title.className = fieldClass + '-title';
+                fieldObject.title = $title;
+              }
+
+              fieldObject.input = $input;
+              fieldObject.field = $field;
+
+              $field.appendChild($input);
+
+              // if ($pseudoInp) {
+                // $field.appendChild($pseudoInp);
+              // }
+
+              if ($title) {
+                $field.appendChild($title);
+              }
+
+              if ($groupBlock && fieldType !== 'select') {
+                $groupBlock.appendChild($field);
+              }
+
+              obj.fieldsArray.push(fieldObject);
+            } // endfor values
+
+            if ($groupBlock) {
+              if ($selectLabel) {
+                $groupBlock.appendChild($selectLabel); 
+              }
+              obj.html.push($groupBlock);
+              // obj.html = $groupBlock;
+              // _.$body.appendChild($groupBlock);
+            } else if ($selectLabel) {
+              obj.html.push($selectLabel);
+              // obj.html = $selectLabel;
+              // _.$body.appendChild($selectLabel);
+            }
+          }
+
+        } // endfor fields
+
+        if (fieldsType === 'radio') {
+          _.radioCount++;
+        }
+
+        if (fieldsType === 'checkbox') {
+          _.checkboxCount++;
+        }
+
+        return obj;
+      };
+
+      Quiz.prototype.parseExtraFields = function(extrafields) {
+        let _ = this,
+          extrafieldsObject = {};
+
+        for (let value in extrafields) {
+          let extrafield = extrafields[value],
+            parsedExtrafields = _.parseFields(extrafield, true);
+
+          extrafieldsObject[value] = parsedExtrafields;
+        }
+
+        return extrafieldsObject;
+      };
+
+      Quiz.prototype.clearPrevStep = function() {
+        let _ = this,
+          quizBody = _.$body,
+          prevStep = _.$prevStep;
+        formParent = _.$form.parentElement;
+
+        if (prevStep) {
+          // Если предыдущий шаг это форма заявки
+          if (prevStep === _.$form) {
+            formParent.style.display = 'none';
+            _.$quiz.replaceChild(quizBody, formParent);
+            // _.$body.removeChild(_.$form); // Удалим форму из боди
+            _.$result.value = ''; // Чистим ответы
+          } else {
+            let prevHtml = prevStep.html, // Массив полей предыдущего шага
+              prevExtrafields = prevStep.extrafields; // Доп. поля предыдушего шага
+
+            for (let i = 0, len = prevHtml.length; i < len; i++) {
+              quizBody.removeChild(prevHtml[i]); // Удаляем со страницы поля предыдущего шага
+            }
+
+            if (prevExtrafields) {
+              for (let key in prevExtrafields) {
+                let prevExtrafieldsHtml = prevExtrafields[key].html; // Массив html доп. полей предыдущего шага
+                for (let i = 0, len = prevExtrafieldsHtml.length; i < len; i++) {
+                  if (quizBody.contains(prevExtrafieldsHtml[i])) {
+                    quizBody.removeChild(prevExtrafieldsHtml[i]);
+                  }
+                }
+              }
+            }
+          }
+        }
+
+      };
+
+      Quiz.prototype.printStep = function(num) {
+        let _ = this,
+          options = _.options,
+          quizBody = _.$body,
+          prevStep = _.$prevStep,
+          currentHtml = _.$currentStep['html'], // html если нет ветвления ответов или шаг 1
+          prevStepObject = prevStep && prevStep.value,
+          prevStepValue; // Будем искать значение предыдущего шага для ветвления ответов
+
+        formParent = _.$form.parentElement;
+
+        // Если финальный шаг
+        if (_.$currentStep === _.$form) {
+          // console.log('final step');
+          // quizBody.appendChild(_.$form); // Добавляем форму
+          formParent.style.display = 'block';
+          _.$quiz.replaceChild(formParent, quizBody);
+          _.$quiz.classList.add('final-step');
+
+          // Заполняем поле с результатом
+          for (let i = 0, len = _.result.length; i < len; i++) {
+            let item = _.result[i];
+
+            for (let key in item) {
+              let value = item[key].join(', ');
+              _.$result.value += key + ': ' + value + '\n';
+            }
+
+          }
+          // Убираем поля предыдущего шага, если они есть
+          _.clearPrevStep();
+          return;
+        }
+
+        // Если нет готового html для вставки, значит есть ветвление
+        if (!currentHtml) {
+          if (prevStepObject) {
+            // Перебираем ответы, которые были даны в предыдущем шаге
+            for (let key in prevStepObject) {
+              let values = prevStepObject[key], // Массив ответов предыдущего шага
+                doBreak = false; // Для прерывания цикла в дочерних циклах
+
+              // Если в массиве всего 1 значение, то преобразуем его в строку
+              if (values.length === 1) {
+                values = '' + values;
+                 // console.log(values, 'один в массиве, ищу');
+                // Пробуем найти внутри вариантов текущего шага
+                if (_.$currentStep[values]) {
+                  prevStepValue = values; // Подставляем значение
+                   // console.log('есть совпадение с ', values);
+                   // console.log('Общий цикл прерван на ', values);
+                  break; // Прерываем цикл
+
+                  // Если значение не найдено, то ищем его в каждом варианте текущего шага
+                } else {
+                   // console.log('нет совпадения с', values);
+                  for (let currentStepValue in _.$currentStep) {
+                     // console.log('ищу', values, 'в', currentStepValue);
+                    if (currentStepValue.indexOf(values) !== -1) {
+                      prevStepValue = currentStepValue;
+                      doBreak = true;
+                       // console.log('есть совпадение', values, 'в', currentStepValue);
+                      break;
+                    }
+                  }
+
+                  // Если значение не найдено вообще, то надо показывать следующий шаг
+                  // if (!prevStepValue) {
+                    // console.log(values, 'не найдено вообще');
+                    // return;
+                  // }
+                }
+                // Если в массиве несколько значений, то нужно перебирать их
+              } else {
+                //  console.log(values, 'не один в массиве, перебираю');
+                for (let i = 0, len = values.length; i < len; i++) {
+                  for (let currentStepValue in _.$currentStep) {
+                    //  console.log('ищу', values[i], 'в', currentStepValue);
+                    if (currentStepValue.indexOf(values[i]) !== -1) {
+                      prevStepValue = currentStepValue;
+                      doBreak = true;
+                       // console.log('есть совпадение', values[i], 'в', currentStepValue);
+                      break;
+                    }
+                  }
+                  if (doBreak) {
+                     // console.log('Цикл прерван на', values[i]);
+                    break;
+                  }
+                }
+              }
+
+              if (doBreak) {
+                 // console.log('Общий цикл прерван на ', values);
+                break;
+              }
+
+            }
+
+          } // endif prevStepObject
+
+          if (prevStepValue) {
+            _.$currentStep = _.$currentStep[prevStepValue]; // Подставляем значение в текущий шаг
+            currentHtml = _.$currentStep['html']; // Подставляем значение html
+          }
+
+        } // endelse
+
+        // Убираем поля предыдущего шага, если они есть
+        _.clearPrevStep();
+        // Вставляем html на страницу
+        for (let key in currentHtml) {
+          let block = currentHtml[key];
+          quizBody.appendChild(block);
+        }
+
+        _.$stepsTitle.textContent = _.$currentStep['step-title']; // устанавливаем заголовок для шага
+
+        _.$fieldsOnThisStep = qa('select, input, textarea', quizBody, true); // Собираем все поля с шага
+
+        // Приводим все поля в изначальное состояние
+        for (var i = _.$fieldsOnThisStep.length - 1; i >= 0; i--) {
+          let $field = _.$fieldsOnThisStep[i],
+            fieldType = $field.type;
+
+          if ($field.checked) {
+            $field.checked = false; // снимаем выделение
+          }
+
+          if (fieldType === 'text' || fieldType === 'textarea' || fieldType === 'number') {
+            $field.value = ''; // Чистим поля ввода
+          }
+
+          if ($field.tagName === 'SELECT') {
+            if ($field.dataset.initialSelected) {
+              $field.selectedIndex = $field.dataset.initialSelected;
+            } else {
+              $field.selectedIndex = 0; // Устанавливаем селект в изначальное положение 0
+            }
+          }
+
+
+        }
+      };
+
+      Quiz.prototype.input = function(evt) {
+        let _ = this,
+          options = _.options,
+          target = evt.target,
+          extrafields = _.$currentStep.extrafields, // доп. поля на текущем шаге
+
+          $radioButtons = [],
+          $checkboxes = [],
+          $select = [],
+          $requiredFields = [], // список обязательных полей
+          $emptyRequiredFields = [], // пустые обязательные к заполнению поля (val === '')
+          $filledRequiredFields = [], // не пустые обязательные к заполнению поля (val !== '')
+          $filledFields = [], // все не пустые поля (val !== '')
+
+          radioGroupIsRequired = false, // группа радиокнопок является обязательной
+          radioGroupIsChecked = true, // выбрана хотя бы одна радиокнопка
+          checkboxesGroupIsRequired = false; // группа чекбоксов является обязательной
+          checkboxesGroupIsChecked = true; // выбран хотя бы один чекбокс
+        /*
+          Будем перебирать все поля в текущем шаге
+          И искать обязательные, заполненные, чекнутые и т.д.
+          Потом проверять, чтобы кол-во обязательных === кол-во заполненных
+          И хотя бы одна радиокнопка и хотя бы один чекбокс выбран
+          И тогда разблокировать кнопку далее, иначе блокировать
+        */
+        for (let i = _.$fieldsOnThisStep.length - 1; i >= 0; i--) {
+          // Переменные для сокращения записи
+          let $field = _.$fieldsOnThisStep[i],
+            type = $field.type,
+            value = $field.value,
+            tagName = $field.tagName,
+            checked = $field.checked;
+
+          if (type === 'radio') {
+            $radioButtons[$radioButtons.length] = $field;
+            /*
+              Если есть доп. поля и есть доп. поле у текущего значения
+              Перебираем эти поля и если радиокнопка выбрана
+              Вставялем доп. поле и обновляем массив существующих полей в шаге
+              Иначе, удаляем
+            */
+            if (extrafields && extrafields[value]) {
+              extrafields[value].html.forEach(function($field) {
+                let bodyContainsField = _.$body.contains($field), // переменная для сокр. записи
+                  $fieldInput = q('input', $field); // ищем инпут внутри доп поля, для добавления в массив полей
+
+                if (checked) {
+                  if (!bodyContainsField) {
+                    $fieldInput.value = ''; // Очищаем поле
+                    _.$body.appendChild($field); // Добавляем доп. поле на страницу
+                    _.$fieldsOnThisStep.push($fieldInput); // Добавляем в массив текущего шага
+
+                    // Если доп. поле обязательное, то добавляем его в массив обязательных полей
+                    if ($fieldInput.classList.contains('required')) {
+                      $requiredFields.push($fieldInput);
+                    }
+                  }
+                } else {
+                  if (bodyContainsField) {
+                    $fieldInput.value = ''; // Очищаем поле
+                    _.$body.removeChild($field); // Удаляем доп. поле со страницы
+
+                    // Ищем номер поля в массивах, для его удаления оттуда
+                    let indxInFieldsOnThisStep = _.$fieldsOnThisStep.indexOf($fieldInput),
+                      indxInRequiredFields = $requiredFields.indexOf($fieldInput),
+                      indxInFilledFields = $filledRequiredFields.indexOf($fieldInput);
+
+
+                    // Удаляем доп. поле из массива текущего шага
+                    if (indxInFieldsOnThisStep !== -1) {
+                      _.$fieldsOnThisStep.splice(indxInFieldsOnThisStep, 1);
+                    }
+                    // Удаляем доп. поле из массива обязательных полей
+                    if (indxInRequiredFields !== -1) {
+                      $requiredFields.splice(indxInRequiredFields, 1);
+                    }
+                    // Удаляем доп. поле из массива заполненных полей
+                    if (indxInFilledFields !== -1) {
+                      $filledRequiredFields.splice(indxInFilledFields, 1);
+                    }
+                  }
+                }
+              }); // endforeach
+            }
+          } else if (type === 'checkbox') {
+            $checkboxes[$checkboxes.length] = $field;
+          } else if (tagName === 'select') {
+            $select[$select.length] = $field;
+          }
+
+          if ($field.classList.contains('required')) {
+            $requiredFields[$requiredFields.length] = $field;
+            if (value === '') {
+              $emptyRequiredFields[$emptyRequiredFields.length] = $field;
+            } else {
+              $filledRequiredFields[$filledRequiredFields.length] = $field;
+            }
+          }
+
+          if (value !== '') {
+            // Убираем не выбранные радиокнопки и чекбоксы из массива заполненных полей
+            if ((type === 'radio' || type === 'checkbox') && !checked) {
+              continue;
+            }
+            $filledFields[$filledFields.length] = $field;
+          }
+
+        } //endfor
+
+        // если есть радиокнопки, то проверяем выбрана хотя бы одна или нет
+        if ($radioButtons.length > 0) {
+          radioGroupIsRequired = $radioButtons.some($field => $field.required);
+          if (radioGroupIsRequired) {
+            radioGroupIsChecked = $radioButtons.some($field => $field.checked);             
+          }
+        }
+
+        // если есть чекбоксы, то проверяем выбран хотя бы один или нет
+        if ($checkboxes.length > 0) {
+          checkboxesGroupIsRequired = $checkboxes.some($field => $field.required);
+          if (checkboxesGroupIsRequired) {
+            checkboxesGroupIsChecked = $checkboxes.some($field => $field.checked);
+          }
+        }
+
+
+        // console.log('radio', $radioButtons);
+        // console.log('checkboxes', $checkboxes);
+        // console.log('select', $select);
+        // console.log('required', $requiredFields);
+        // console.log('empty', $emptyRequiredFields);
+        // console.log('filled', $filledRequiredFields);
+        // console.log('fieldsOnThisStep', _.$fieldsOnThisStep);
+
+        // console.log('radio group checked is', radioGroupIsChecked);
+        // console.log('checkboxes group checked is', checkboxesGroupIsChecked);
+
+        // Если все обязательные поля заполнены
+        // и хотя бы одна радиокнопка выбрана
+        // и хотя бы один чекбокс выбран
+        // то разрешаем идти дальше (делаем кнопку активной)
+        if ( ($requiredFields.length === $filledRequiredFields.length || $requiredFields.length === 0) &&
+            radioGroupIsChecked && checkboxesGroupIsChecked) {
+
+          // Глобальная переменная с заполненными полями на этом шаге
+          _.$filledFieldsOnThisStep = $filledFields;
+
+          // Если стрелка "вперед" разрешена, то
+          if (options.next) {
+            if ($requiredFields.length === $filledRequiredFields.length &&
+              radioGroupIsChecked && checkboxesGroupIsChecked) {
+              _.$next.classList.remove('disabled');
+              _.$next.addEventListener('click', _.nextStepHandler);
+            }
+          } else {
+            if (options.next) {
+              // иначе, делаем кнопку не активной
+              _.$next.classList.add('disabled');
+              _.$next.removeEventListener('click', _.nextStepHandler);
+            } else {
+              _.nextStepHandler();              
+            }
+          }
+        }
+
+      };
+
+      /*
+        При нажатии на кнопку next (срабатывании функции nextStep)
+        Будем перебирать все заполненные поля из массива _.$filledFieldsOnThisStep
+        Будем искать в их родителе тайтл для полей (data-field-title)
+        И сформируем объект ответов:
+          obj = {
+            key: [value, value, value, ...]
+          }
+      */
+      Quiz.prototype.nextStep = function() {
+        let _ = this,
+          options = _.options,
+          object = {}, // ключи-значения инпутов (title: [values])
+          $filledFields = _.$filledFieldsOnThisStep;
+
+
+        // Собираем в массив значения всех заполненных полей
+        for (let i = 0, len = $filledFields.length; i < len; i++) {
+          let $field = $filledFields[i], // текущее поля (для сокр. записи)
+            fieldType = $field.type, // тип поля (для сокр. записи)
+            $fieldParent = fieldType === 'radio' || fieldType === 'checkbox' ? $field.parentElement.parentElement : $field.parentElement, // родитель полей для поиска тайтла
+            fieldTtile = (q('[data-field-title]', $fieldParent) || _.$stepsTitle).textContent; // текст-заголовок полей
+
+          // Если заголовка у группы полей нет, то берется название шага!
+
+
+          // Если ключа нет, то создаем его
+          if (object[fieldTtile] === undefined) {
+            object[fieldTtile] = [];
+          }
+
+          object[fieldTtile].push($field.value); // Добавляем значение в массив
+        }
+
+        console.log(object);
+
+        _.result[_.result.length] = object; // вставляем пару ключ-значения в результат
+
+        _.$prevStep = _.$currentStep; // Устанавливаем предыдущим шагом текущий
+        _.$prevStep.value = object; // Вставляем в него объект собранных значений
+
+        _.currentStep++; // Увеличиваем индекс (делаем шаг вперед)
+
+        _.$currentStep = _.$steps[_.currentStep]; // Делаем текущим шагом текущий шаг по индексу
+        _.$nextStep = _.$steps[_.currentStep + 1]; // Делаем следующим шагом ща по индексу + 1
+
+        _.printStep(_.currentStep); // Выводим поля
+
+        // Делаем активной кнопку назад
+        if (options.prev) {
+          if (_.currentStep > 0) {
+            _.$prev.classList.remove('disabled');
+            _.$prev.addEventListener('click', _.prevStepHandler);
+          }
+        }
+
+        // Делаем не активной кнопку дальше
+        if (options.next) {
+          _.$next.classList.add('disabled');
+          _.$next.removeEventListener('click', _.nextStepHandler);
+        }
+
+        // Меняем активность точек-счетчиков
+        if (options.dots) {
+          _.$dots[_.currentStep - 1].classList.remove('active');
+          _.$dots[_.currentStep].classList.add('active');
+        }
+
+        // Увеличиваем значение цифры счетчика
+        if (options.counter) {
+          _.$counterCurrentNum.textContent = _.currentStep + 1;
+        }
+
+        // Добавляем пройденный шаг в массив пройденных шагов
+        // для контроля шагов назад
+        _.$filledSteps.push(_.$prevStep);
+
+        _.dispatchEvent(_.$quiz, 'nextstep', _.setEventDetails());
+
+      };
+
+      Quiz.prototype.prevStep = function() {
+        let _ = this,
+          options = _.options;
+
+        _.$prevStep = _.$currentStep; // Устанавливаем предыдущим шагом текущий
+
+        _.currentStep--; // Уменьшаем индекс текущего шага (делаем шаг назад)
+
+        _.$currentStep = _.$filledSteps[_.currentStep]; // Уст. текущим шагом предыдущий пройденный шаг
+
+        _.$nextStep = _.$filledSteps[_.currentStep - 1]; // Уст. следующим шагом еще более ранний пройденный шаг
+
+        // Убираем последнюю пару ключ-значение из результата
+        _.result.pop();
+
+        _.printStep(_.currentStep); // Выводим на экран необходимые шаги
+
+        // Делаем активной или не активной кнопку назад
+        if (options.prev) {
+          _.$prev.classList.toggle('disabled', _.currentStep === 0);
+          if (_.currentStep === 0) {
+            _.$prev.removeEventListener('click', _.prevStepHandler);
+          }
+        }
+
+        // Делаем не активной кнопку дальше
+        if (options.next) {
+          _.$next.classList.add('disabled');
+          _.$next.removeEventListener('click', _.nextStepHandler);
+        }
+
+        // Меняем активность точек-счетчиков
+        if (options.dots) {
+          _.$dots[_.currentStep].classList.add('active');
+          _.$dots[_.currentStep + 1].classList.remove('active');
+        }
+
+        // Уменьшаем значение цифры счетчика
+        if (options.counter) {
+          _.$counterCurrentNum.textContent = _.currentStep + 1;
+        }
+
+        _.$quiz.classList.remove('final-step');
+
+        // Убираем последний пройденный шаг из массива пройденных шагов
+        _.$filledSteps.pop();
+
+
+        _.dispatchEvent(_.$quiz, 'prevstep', _.setEventDetails());
+
+      };
+
+      Quiz.prototype.resetQuiz = function() {
+        let _ = this;
+
+        _.$prevStep = _.$currentStep;
+
+        _.currentStep = 0;
+
+        _.$currentStep = _.$steps[_.currentStep];
+        _.$nextStep = _.$steps[_.currentStep + 1];
+
+        _.printStep(_.currentStep);
+
+        _.$filledSteps = [];
+        _.$filledFieldsOnThisStep = [];
+        _.$fieldsOnThisStep = null;
+        _.result = [];
+
+        console.log('reset');
+      };
+
+      return Quiz;
+    })();
+
+    let xhr = new XMLHttpRequest();
+
+    xhr.open('post', templateDir + '/quiz.json');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send();
+
+    // $quizBlock.addEventListener('init', function(event) {
+    //   changeQuizImage(event);
+    // });
+
+    // $quizBlock.addEventListener('nextstep', function(event) {
+    //   changeQuizImage(event);
+
+    //   scrollToTarget($quizBlock);
+    // });
+
+    // $quizBlock.addEventListener('prevstep', function(event) {
+    //   changeQuizImage(event);
+
+    //   scrollToTarget($quizBlock);
+    // });
+
+    xhr.addEventListener('readystatechange', function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        let response = JSON.parse(xhr.response);
+
+        let quiz = new Quiz($quizBlock, {
+          steps: response,
+          next: false,
+          // dots: true,
+          // counter: true,
+          // nextBtnClass: 'quiz__next btn',
+          $form: $quizForm,
+          $result: $quizResult
+        });
+
+        console.log(quiz);
+      }
+    });
+  }
 
 })();
 

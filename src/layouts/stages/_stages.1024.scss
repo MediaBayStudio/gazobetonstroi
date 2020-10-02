@@ -2,3 +2,55 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.stages-sect {
+  &::before {
+    font-size: 154px;
+  }
+  &__title {
+    margin-bottom: 35px;
+  }
+  &__stages {
+    width: 710px;
+    margin: auto;
+    > .slick-list {
+
+      > .slick-track {
+
+      }
+    }
+  }
+}
+
+.stages {
+  &__nav {
+    margin: 0;
+    position: absolute;
+    font-size: 230px;
+    left: calc(-1em / 2);
+    top: 50px;
+    width: calc(100% + 1em);
+    z-index: 1;
+    > .stages__prev,
+    > .stages__next {
+      > .arrow__svg {
+        fill: $darkgrey;
+      }
+    }
+  }
+  &__counter {
+
+  }
+}
+
+.stage {
+
+  &__number {
+
+  }
+  &__title {
+
+  }
+  &__descr {
+  }
+}

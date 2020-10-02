@@ -44,7 +44,7 @@
   wp_head() ?>
 </head>
 
-<body> <?php
+<body data-template-dir-uri="<?php echo $template_directory ?>"> <?php
   wp_body_open() ?>
   <noscript>
     <!-- <noindex> -->Для полноценного использования сайта включите JavaScript в настройках вашего браузера.<!-- </noindex> -->

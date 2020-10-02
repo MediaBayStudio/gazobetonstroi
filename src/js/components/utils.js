@@ -4,6 +4,8 @@ let lazy,
   overlay,
   thanksPopup,
   thanksPopupTimer,
+  body = document.body,
+  templateDir = body.dataset.templateDirUri,
   // callbackPopup,
   // orderPopup,
   fakeScrollbar,
@@ -13,11 +15,11 @@ let lazy,
   // mobile = mobileRegExp.test(navigator.userAgent),
   // IE = navigator.userAgent.indexOf("MSIE ") > -1 || navigator.userAgent.indexOf("Trident/") > -1,
   q = function(selector, element) {
-    element = element || document.body;
+    element = element || body;
     return element.querySelector(selector);
   },
   qa = function(selectors, element, toArray) {
-    element = element || document.body;
+    element = element || body;
     return toArray ? Array.prototype.slice.call(element.querySelectorAll(selectors)) : element.querySelectorAll(selectors);
   },
   id = function(selector) {

@@ -2,3 +2,41 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.callback-form-wrap {
+  border-radius: 5px;
+}
+
+.callback-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  &__title {
+    font-size: 20px;
+  }
+  &__field {
+    margin: 0;
+    width: 185px;
+    > .field__text {
+
+    }
+  }
+  &__field_name,
+  &__field_tel,
+  &__field_email {
+    // margin: 0;
+  }
+  &__field_tel {
+
+  }
+  &__field_email {
+
+  }
+  &__bottom {
+    margin: 25px 0 0;
+    width: 100%;
+  }
+  &__btn {
+
+  }
+}

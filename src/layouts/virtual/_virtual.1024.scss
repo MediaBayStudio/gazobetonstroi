@@ -2,3 +2,55 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.virtual-sect {
+  &__text {
+    display: inline-block;
+    width: 540px;
+  }
+  &__title {
+
+  }
+  &__descr {
+
+    &.last {
+
+    }
+  }
+  &__img {
+    margin: 0 0 0 20px;
+    width: 380px;
+  }
+  &__text-block {
+    margin: 0 20px 0 0;
+    padding: 40px 20px;
+    width: 300px;
+    > .b {
+ 
+    }
+  }
+  &__features {
+    > .slick-list {
+      width: 788px;
+    }
+  }
+}
+
+.features {
+  &__nav {
+
+  }
+}
+
+.feat {
+  width: (788px - 40px) / 3;
+  &.last {
+
+  }
+  &__img {
+
+  }
+  &__title {
+    font-size: 18px;
+  }
+}

@@ -2,3 +2,57 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.virtual-sect {
+  &__text {
+    width: 735px;
+  }
+  &__title {
+
+  }
+  &__descr {
+
+    &.last {
+
+    }
+  }
+  &__img {
+    margin: 0 0 0 90px;
+    width: 414px;
+  }
+  &__text-block {
+    margin: 0 15px 0 0;
+    padding: 38px 40px 40px;
+    height: 232px;
+    width: 400px;
+    font-size: 39px;
+    > .b {
+      max-width: none;
+    }
+  }
+  &__features {
+    margin-top: 135px;
+    > .slick-list {
+      width: 1170px;
+    }
+  }
+}
+
+.features {
+  &__nav {
+
+  }
+}
+
+.feat {
+  width: (1170px - 60px) / 4;
+  &.last {
+
+  }
+  &__img {
+
+  }
+  &__title {
+
+  }
+}

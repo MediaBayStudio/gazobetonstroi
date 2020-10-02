@@ -78,7 +78,7 @@ li.slick-active > .dot {
 
 .arrow {
   display: flex;
-  transition: opacity .35s, fill .35s;
+  transition: opacity .35s, color .35s;
   &.slick-disabled {
     opacity: 0.5;
   }
@@ -90,4 +90,20 @@ li.slick-active > .dot {
   &__svg {
     pointer-events: none;
   }
+}
+
+.slider-nav {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font: 16px/100% Montserrat;
+  color: $darkgrey;
+  &__counter {
+    margin: 0 40px;
+  }
+}
+
+.slick-slider + .slider-nav,
+.slick-slider > .slider-nav {
+  display: flex;
 }

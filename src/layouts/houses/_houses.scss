@@ -2,3 +2,69 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.houses {
+  font: 16px/140% Montserrat;
+  &__filter {
+  }
+  &__cards {
+  }
+}
+
+.filter-form {
+  padding: 35px 20px;
+  color: $darkgrey;
+  font: 18px/140% Montserrat;
+  &__title {
+    font-size: 20px;
+    font-weight: bold;
+    color: $black;
+  }
+  &__group {
+    display: inline-flex;
+    flex-flow: column;
+    align-items: flex-start;
+    &:nth-child(n+2) {
+      margin-top: 20px;
+    }
+  }
+  &__group-title {
+    margin: 0 0 15px;
+    font-weight: bold;
+    color: $black;
+  }
+  &__check {
+    margin: 0 0 10px;
+    align-items: center;
+    > .check__checkbox {
+      margin: 0 10px 0 0;
+      width: 10px;
+      height: 10px;
+      box-shadow: inset 0 0 0 10px $white;
+      background: $green;
+      border-radius: 2px;
+      transition: box-shadow .5s;
+    }
+    > .check__inp:checked + .check__checkbox {
+      box-shadow: inset 0 0 0 1.25px $white;
+    }
+  }
+  &__checkbox {
+  }
+  &__bottom {
+    max-width: 185px;
+    margin: 15px auto 0;
+    text-align: center;
+  }
+  &__btn {
+  }
+  &__reset {
+    margin: 30px 0 0;
+    color: $black;
+    font-weight: 500;
+    font-size: 16px;
+    &:focus {
+      outline: 1px dotted;
+    }
+  }
+}

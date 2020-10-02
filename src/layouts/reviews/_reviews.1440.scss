@@ -2,3 +2,49 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.reviews-sect {
+  padding-bottom: 120px;
+  background-position: bottom 60px right;
+  &::after {
+    bottom: 80px;
+  }
+
+  &__title {}
+
+  &__nav {}
+
+  &__prev {}
+
+  &__next {}
+
+  &__counter {}
+
+  &__counter-current {}
+
+  &__counter-total {}
+
+  // Если слайдер
+  &.slick-slider {
+    >.reviews-sect__nav {}
+  }
+}
+
+
+.review {
+  width: (1240px - 40px) / 3;
+  &.slick-slide {}
+
+  &.last {}
+
+  &__hdr {
+    margin-bottom: 20px;
+    &::before {}
+  }
+
+  &__title {}
+
+  &__subtitle {}
+
+  &__descr {}
+}

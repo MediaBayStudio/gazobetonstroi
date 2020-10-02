@@ -9,46 +9,48 @@
       tabs = detailsBtnsblock.children,
       tabFocus = 0,
       changeTabs = function(event) {
-        let target = event.target,
-          parent = target.parentNode,
-          grandparent = parent.parentNode,
-          tabContent = q('#' + target.getAttribute('aria-controls'), grandparent.parentNode);
+        let target = event.target;
 
+        if (target.tagName === 'BUTTON') {
+          let parent = target.parentNode,
+            grandparent = parent.parentNode,
+            tabContent = q('#' + target.getAttribute('aria-controls'), grandparent.parentNode);
 
-        // Убираем выделение с кнопок
-        qa('[aria-selected="true"]', parent, true)
-          .forEach(function(el) {
-            el.setAttribute('aria-selected', false);
-            el.classList.remove('is-active');
-          });
+          // Убираем выделение с кнопок
+          qa('[aria-selected="true"]', parent, true)
+            .forEach(function(el) {
+              el.setAttribute('aria-selected', false);
+              el.classList.remove('is-active');
+            });
 
-        // Скрываем все тексты
-        qa('[role="tabpanel"]', grandparent, true)
-          .forEach(function(el) {
-            el.setAttribute('aria-hidden', true);
-            el.classList.remove('is-active');
-          });
+          // Скрываем все тексты
+          qa('[role="tabpanel"]', grandparent, true)
+            .forEach(function(el) {
+              el.setAttribute('aria-hidden', true);
+              el.classList.remove('is-active');
+            });
 
-        // Делаем активной текущую кнопку-таб
-        target.setAttribute('aria-selected', true);
-        target.classList.add('is-active');
+          // Делаем активной текущую кнопку-таб
+          target.setAttribute('aria-selected', true);
+          target.classList.add('is-active');
 
-        // Показываем контент переключателя
-        tabContent.removeAttribute('aria-hidden');
-        tabContent.classList.add('is-active');
+          // Показываем контент переключателя
+          tabContent.removeAttribute('aria-hidden');
+          tabContent.classList.add('is-active');
 
-        // Устанавливаем фокус
-        for (let i = tabs.length - 1; i >= 0; i--) {
-          if (tabs[i] === target) {
-            tabFocus = i;
-            break;
+          // Устанавливаем фокус
+          for (let i = tabs.length - 1; i >= 0; i--) {
+            if (tabs[i] === target) {
+              tabFocus = i;
+              break;
+            }
           }
+
         }
       }
 
+
     detailsBtnsblock.addEventListener('click', changeTabs);
-
-
 
     detailsBtnsblock.addEventListener('keydown', function(event) {
       // Двигаемся вправо

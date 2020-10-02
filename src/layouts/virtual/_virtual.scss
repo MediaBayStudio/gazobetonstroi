@@ -2,3 +2,65 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.virtual-sect {
+  overflow: hidden;
+  &__text {
+    font: 14px/140% Montserrat;
+  }
+  &__title {
+    margin: 0 0 25px;
+  }
+  &__descr {
+    margin: 0 0 25px;
+    &.last {
+      margin: 0;
+    }
+  }
+  &__img {
+    margin: 0 0 60px;
+    width: 280px;
+  }
+  &__text-block {
+    padding: 20px;
+    font: bold 24px/140% Montserrat;
+    color: $white;
+    background: $darkgrey;
+    > .b {
+      display: block;
+      max-width: 240px;
+    }
+  }
+  &__features {
+    margin-top: 60px;
+    display: flex;
+    flex-flow: column;
+  }
+}
+
+.features {
+  &__nav {
+    margin-top: 35px;
+    order: 10;
+  }
+}
+
+.feat {
+  margin-right: responsive('320->575', '20->153');
+  width: 280px;
+  text-align: center;
+  &.last {
+    margin: 0;
+  }
+  &__img {
+    width: 57px;
+    height: 57px;
+    object-fit: contain;
+  }
+  &__title {
+    margin: 20px auto 0;
+    max-width: 260px;
+    display: block;
+    font: 600 16px/140% Montserrat;
+  }
+}
