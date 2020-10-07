@@ -34,8 +34,8 @@
 
   <?php #var_dump( $posts ) ?>
 
-<div class="houses sect">
-  <form action="<?php the_permalink() ?>" method="get" class="houses__filter filter-form" id="filter-form">
+<div class="houses container">
+  <form action="<?php the_permalink() ?>" method="get" class="filter-form popup" id="filter-form">
     <button type="button" class="filter-form__close">
       <img src="<?php echo $template_directory ?>/img/icon-close.svg" alt="Иконка">
     </button>
@@ -72,14 +72,15 @@
       }
     }
 
-    foreach ( $parent_terms as $term ) : ?>
-      <fieldset class="filter-form__group">
+    foreach ( $parent_terms as $term ) :
+      $childs = $child_terms[ $term['id'] ];
+      $childs_count = count( $childs );
+      $fieldset_class = $childs_count > 3 ? ' dropdown' : ''; ?>
+      <fieldset class="filter-form__group<?php echo $fieldset_class ?>">
         <legend class="filter-form__group-title"><?php echo $term['title'] ?></legend> <?php
-        $childs = $child_terms[ $term['id'] ];
         foreach ( $childs as $child ) : ?>
-          <label class="check filter-form__check">
+          <label class="check check_fill filter-form__check">
             <input type="checkbox" name="<?php echo $term['slug'] ?>[]" value="<?php echo $child['id'] ?>" class="check__inp">
-            <span class="check__checkbox"></span>
             <span class="check__text"><?php echo $child['title'] ?></span>
           </label> <?php
         endforeach ?>
@@ -91,6 +92,7 @@
       <button type="reset" class="filter-form__reset text_underline">Сбросить фильтр</button>
      </div>
   </form>
+  <button type="button" id="filter-form-call-btn"><img src="#" data-src="<?php echo $template_directory ?>/img/icon-filter.svg" alt="" class="lazy" style="padding-right:10px">Фильтр</button>
   <div class="houses__cards"> <?php
     print_houses( $posts, 'houses' ) ?>
   </div>

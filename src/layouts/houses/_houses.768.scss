@@ -2,3 +2,63 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.houses {
+
+  &__filter {
+  }
+  &__cards {
+  }
+  &__house {
+    width: (688px - 20px) / 2;
+  }
+}
+
+.houses {
+  padding-bottom: 135px;
+}
+
+#filter-form-call-btn {
+  &.fixed {
+    top: 80px;
+  }
+  &:focus {
+
+  }
+}
+
+.filter-form {
+
+  &__title {
+ 
+  }
+  &__close {
+
+  }
+  &__group {
+
+    &:nth-child(n+2) {
+
+    }
+  }
+  &__group-title {
+
+  }
+  &__check {
+
+    &:focus-within {
+
+    }
+  }
+  &__bottom {
+
+  }
+  &__btn {
+  }
+  &__reset {
+
+    &:focus {
+
+    }
+  }
+}

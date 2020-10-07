@@ -1,4 +1,23 @@
-let lazy,
+let
+  browser = {
+    // Opera 8.0+
+    isOpera: (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0,
+    // Firefox 1.0+
+    isFirefox: typeof InstallTrigger !== 'undefined',
+    // Safari 3.0+ "[object HTMLElementConstructor]"
+    isSafari: /constructor/i.test(window.HTMLElement) || (function(p) {
+      return p.toString() === "[object SafariRemoteNotification]";
+    })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification)),
+    // Internet Explorer 6-11
+    isIE: /*@cc_on!@*/ false || !!document.documentMode,
+    // Edge 20+
+    isEdge: !( /*@cc_on!@*/ false || !!document.documentMode) && !!window.StyleMedia,
+    // Chrome 1+
+    isChrome: !!window.chrome && !!window.chrome.webstore,
+    isYandex: !!window.yandex,
+    isMac: window.navigator.platform.toUpperCase().indexOf('MAC') >= 0
+  },
+  lazy,
   menu,
   hdr,
   overlay,
@@ -38,7 +57,7 @@ let lazy,
   matchesMedia = function(media) {
     return window.matchMedia(media).matches;
   },
-  scrollToTarget  = function(target) {
+  scrollToTarget = function(target) {
     event.preventDefault();
 
     let wndwY = window.pageYOffset,
@@ -51,7 +70,7 @@ let lazy,
           start = time;
         }
         let progress = time - start,
-          r = (targetTop < 0 ? Math.max(wndwY - progress/V, wndwY + targetTop) : Math.min(wndwY + progress/V, wndwY + targetTop));
+          r = (targetTop < 0 ? Math.max(wndwY - progress / V, wndwY + targetTop) : Math.min(wndwY + progress / V, wndwY + targetTop));
 
         window.scrollTo(0, r);
 

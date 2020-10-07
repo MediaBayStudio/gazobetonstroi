@@ -2,3 +2,47 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.turnkey-sect {
+
+  &__title {
+
+  }
+  &__text {
+  }
+  &__descr {
+    &:nth-last-child(n+2) {
+
+    }
+  }
+  &__tabs-btns {
+
+  }
+  &__btn {
+  }
+  &__btn-text {
+  }
+  &__tabs-cnt {
+    margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    &::before {
+
+    }
+    &::after {
+
+    }
+  }
+  &__tab-cnt {
+    width: (688px - 30px) / 2;
+  }
+  &__tab-cnt-title {
+
+    &::before {
+
+    }
+  }
+  &__tab-cnt-descr {
+  }
+}

@@ -5,6 +5,9 @@
 
 .quiz-sect {
   font: 16px/140% Montserrat;
+  &_green {
+    background: $lightgrey;
+  }
   &__text {
   }
   &__title {
@@ -38,6 +41,7 @@
   }
   &__radio {
     margin-bottom: 20px;
+    background: $white;
   }
   &__radio-inp {
   }
@@ -46,6 +50,7 @@
   &__radio-title {
   }
   &__select {
+    background: $white;
   }
   &__select-inp {
   }

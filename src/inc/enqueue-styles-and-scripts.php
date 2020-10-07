@@ -41,7 +41,7 @@ add_action( 'wp_enqueue_scripts', function() {
     enqueue_style( 'index', $screen_widths );
   } else if ( is_page( 'projects' ) || is_page( 'cases' ) || is_single() || is_404() ) {
     enqueue_style( 'single', $screen_widths );
-  } else if ( is_page_template( 'about.php' ) || is_page_template( 'contacts.php' ) || is_page_template( 'page.php' ) ) {
+  } else if ( is_page( 'about' ) || is_page( 'building' ) || is_page( 'improvement' ) ) {
     enqueue_style( 'pages', $screen_widths );
   }
 
@@ -49,6 +49,7 @@ add_action( 'wp_enqueue_scripts', function() {
 
   // Подключаем скрипты циклом
   $scripts = [
+    'sly.min',
     'slick.min',
     'jquery.validate.min',
     'lazy.min',
@@ -59,6 +60,9 @@ add_action( 'wp_enqueue_scripts', function() {
   ];
 
   foreach ( $scripts as $script_name ) {
+    if ( $script_name === 'sly.min' && !is_single() ) {
+      continue;
+    }
     wp_enqueue_script( "{$script_name}", $template_directory . "/js/{$script_name}.js", [], null );
   }
 
@@ -78,6 +82,7 @@ add_action( 'wp_enqueue_scripts', function() {
 add_filter('script_loader_tag',   function( $html, $handle ) {
 
   switch ( $handle ) {
+    case 'sly.min':
     case 'slick.min':
     case 'jquery.validate.min':
     case 'lazy.min':

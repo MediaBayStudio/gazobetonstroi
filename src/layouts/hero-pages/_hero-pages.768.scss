@@ -2,3 +2,56 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.hero-page-sect {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 16px;
+
+  &__title {
+    margin: 0 0 30px;
+    width: 100%;
+    font-size: 32px;
+  }
+
+  &__text {
+    flex: 375px;
+  }
+
+  &__descr {}
+
+  &__decor {}
+
+  &__figure {
+    margin: 0 0 0 30px;
+    flex: 280px 1 0;
+  }
+
+  &__img {}
+
+  &__features {
+    margin: 0;
+    padding-top: 75px;
+    padding-bottom: 75px;
+    display: block;
+    // display: flex;
+    // flex-wrap: wrap;
+    // justify-content: space-between;
+  }
+}
+
+.feat {
+  display: inline-block;
+  width: 50%;
+  &:nth-last-child(n+4) {
+    margin: 0 0 75px;
+  }
+  &__title {}
+
+  &__descr {
+    width: auto;
+    font-size: 18px;
+  }
+}

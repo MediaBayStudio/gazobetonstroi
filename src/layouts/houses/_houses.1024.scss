@@ -5,6 +5,85 @@
 
 .houses {
   &__filter {
-    
+
+  }
+  &__cards {
+  }
+  &__house {
+    width: 300px;
+    margin: 0 20px 40px 0;
+    &:nth-last-child(-n+2) {
+      margin-bottom: 0;
+    }
+    > .house__link {
+      width: 100%;
+    }
+  }
+}
+
+.houses {
+  padding-top: 80px;
+  display: flex;
+  &__cards {
+    text-align: left;
+  }
+}
+
+#filter-form-call-btn {
+  display: none;
+  &:focus {
+
+  }
+}
+
+.filter-form {
+  margin: 0 20px 0 0;
+  padding: 0 20px 20px;
+  flex-shrink: 0;
+  width: 300px;
+  position: static;
+  visibility: visible;
+  overflow: visible;
+  opacity: 1;
+  &.fixed {
+    position: fixed;
+    top: 80px;
+    left: calc(50% - 470px);
+    max-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-bottom: 100px;
+  }
+  &__title {
+    display: none;
+  }
+  &__close {
+    display: none;
+  }
+  &__group {
+    padding: 0 2px;
+    &:nth-child(n+2) {
+
+    }
+  }
+  &__group-title {
+    cursor: pointer;
+  }
+  &__check {
+    margin: 0 0 15px;
+    &:focus-within {
+
+    }
+  }
+  &__bottom {
+    margin-top: 35px;
+  }
+  &__btn {
+  }
+  &__reset {
+
+    &:focus {
+
+    }
   }
 }

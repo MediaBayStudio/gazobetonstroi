@@ -2,3 +2,75 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.house-sect {
+  &__sliders {
+    margin: 0 20px 0 0;
+    width: 385px;
+    display: inline-block;
+    vertical-align: top;
+  }
+  &__text {
+    display: inline-block;
+    width: 275px;
+  }
+  &__gallery {
+    &-nav {
+
+      > .slider-nav__counter {
+
+      }
+    }
+  }
+  &__img {
+
+  }
+  &__title {
+
+  }
+  &__descr {
+
+  }
+  &__list {
+    margin-top: 15px;
+    font-size: 14px;
+    &-item {
+
+      &-text {
+
+        &:first-of-type {
+
+        }
+        &:last-of-type {
+
+        }
+      }
+      &-dots {
+
+      }
+    }
+  }
+}
+
+.house-slider {
+  overflow: hidden;
+  // width: 390px;
+  height: 260px;
+  > .slick-list,
+  > .slick-list > .slick-track {
+  }
+  &__img {
+
+  }
+}
+
+
+.house-nav {
+
+  &__img {
+
+    &.active {
+
+    }
+  }
+}

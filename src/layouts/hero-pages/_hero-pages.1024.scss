@@ -2,3 +2,37 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.hero-page-sect {
+
+  &__title {}
+
+  &__text {
+    max-width: 680px;
+    flex: 600px;
+  }
+
+  &__descr {}
+
+  &__figure {
+    // flex: 300px 1 0;
+  }
+
+  &__img {}
+
+  &__features {
+    padding-top: 85px;
+    padding-bottom: 85px;
+  }
+}
+
+.feat {
+  width: 25%;
+  vertical-align: top;
+  &:nth-child(n) {
+    margin: 0;
+  }
+  &__title {}
+
+  &__descr {}
+}

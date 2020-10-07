@@ -2,3 +2,74 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.hero-page-sect {
+  $hero-pb: 30px;
+  padding-top: 30px;
+  padding-bottom: $hero-pb;
+  font: 14px/140% Montserrat;
+  color: $black;
+
+  &__text {}
+
+  &__title {
+    margin: 0 0 20px;
+    font-size: 24px;
+    line-height: 140%;
+  }
+
+  &__descr {
+    &:nth-last-of-type(n+2) {
+      margin: 0 0 25px;
+    }
+  }
+
+  &__figure {
+    margin: 30px auto 0;
+    width: 280px;
+    position: relative;
+  }
+
+  &__decor {
+    width: 145px;
+    object-fit: contain;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  &__img {
+    max-width: 100%;
+    object-fit: cover;
+  }
+
+  &__features {
+    $mt: -75px - $hero-pb;
+    margin-top: $mt;
+    padding-top: 50px + -$mt;
+    padding-bottom: 50px;
+    font: 600 77px/1 Montserrat;
+    text-align: center;
+    background: $lightgrey;
+    color: $green;
+    overflow: hidden;
+  }
+
+  &__nav {
+    margin-top: 50px;
+  }
+}
+
+.feat {
+  &__title {
+  }
+
+  &__descr {
+    margin: 10px auto;
+    width: 142px;
+    font-size: 16px;
+    color: $black;
+  }
+}

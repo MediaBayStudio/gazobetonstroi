@@ -2,3 +2,50 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.hero-page-sect {
+  $hero-pb: 100px;
+  padding-top: 100px;
+  padding-bottom: $hero-pb;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 740px 100px auto;
+  &__decor {}
+
+  &__text {
+    max-width: 740px;
+    grid-row: 2;
+    grid-column: 1;
+  }
+
+  &__title {
+    margin: 0 0 40px;
+    grid-row: 1;
+    grid-column: 1;
+    font-size: 40px;
+  }
+
+  &__descr {}
+
+  &__figure {
+    margin: 0;
+    grid-row: 1/span 2;
+    grid-column: 3;
+    width: 400px;
+  }
+
+  &__img {}
+
+  &__features {
+    $mt: -65px - $hero-pb;
+    margin-top: $mt;
+    padding-top: 135px;
+    padding-bottom: 100px;
+  }
+}
+
+.feat {
+  &__title {}
+
+  &__descr {}
+}

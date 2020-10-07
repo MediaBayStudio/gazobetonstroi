@@ -2,3 +2,41 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.team-sect {
+  align-items: center;
+  &__title {
+    width: auto;
+  }
+
+  &__team {
+    overflow: hidden;
+  }
+
+  &__nav {
+    margin: 0 0 35px auto;
+  }
+}
+
+.char {
+  width: (688px - 20px) / 2;
+  height: 334px;
+
+  &:last-child {}
+
+  &__text {}
+
+  &__name {}
+
+  &__position {}
+
+  &__photo {}
+}
+
+.slider-nav {
+  &__counter {}
+
+  &__counter-current {}
+
+  &__counter-total {}
+}

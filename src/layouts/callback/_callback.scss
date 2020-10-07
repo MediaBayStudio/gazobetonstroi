@@ -39,3 +39,16 @@
   }
 }
 
+.callback-sect__text-block {
+  padding: 20px;
+  font: 16px/140% Montserrat;
+  background: $darkgrey;
+  color: $white;
+  > .b {
+    display: block;
+    margin-bottom: 25px;
+    font-size: 20px;
+  }
+}
+
+

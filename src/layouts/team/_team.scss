@@ -2,3 +2,64 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.team-sect {
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden;
+  &__title {
+    margin: 0 0 35px;
+    width: 100%;
+  }
+  &__team {
+    width: 100%;
+    flex-shrink: 0;
+    order: 10;
+    font: 14px/160% Montserrat;
+    &.slick-slider {
+    }
+  }
+  &__nav {
+    margin: 0 auto 20px;
+  }
+}
+
+.char {
+  margin-right: responsive('320->575', '20->148');
+  width: 280px;
+  height: 315px;
+  position: relative;
+  &:last-child {
+    margin-right: 0;
+  }
+  &__text {
+    width: 260px;
+    padding: 20px 20px 15px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.85);
+  }
+  &__name {
+    margin: 0 0 5px;
+    display: block;
+    font-weight: 500;
+    font-size: 18px;
+  }
+  &__position {
+  }
+  &__photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.slider-nav {
+  &__counter {
+  }
+  &__counter-current {
+  }
+  &__counter-total {
+  }
+}

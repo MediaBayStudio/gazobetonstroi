@@ -32,9 +32,6 @@
     display: flex;
     align-items: center;
     margin-bottom: 15px;
-    &:focus {
-      outline: 1px dotted;
-    }
     &::before {
       content: '';
       margin: 0;
@@ -91,9 +88,6 @@
     opacity: 0;
     visibility: hidden;
     transition: opacity .5s, visibility .5s;
-    &:focus {
-      outline: 1px dotted;
-    }
     &.is-active {
       opacity: 1;
       visibility: visible;

@@ -2,3 +2,89 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.turnkey-sect {
+
+  &__title {
+
+  }
+  &__text {
+    width: 610px;
+  }
+  &__decor {
+
+  }
+  &__descr {
+    &:nth-last-child(n+2) {
+
+    }
+  }
+  &__tabs-btns {
+    height: 360px;
+    &::before {
+      content: url('../img/turnkey-line.1440.svg');
+    }
+  }
+  &__btn {
+
+    &::before {
+
+    }
+    &.is-active {
+
+      &::before {
+
+      }
+    }
+    &:nth-child(1) {
+
+    }
+    &:nth-child(2) {
+      top: 1px;
+      left: 185px;
+    }
+    &:nth-child(3) {
+      top: 34px;
+      left: 340px;
+    }
+    &:nth-child(4) {
+      top: 130px;
+      left: 437px;
+    }
+    &:nth-child(5) {
+      top: 245px;
+      left: 460px;
+    }
+  }
+  &__btn-text {
+
+  }
+  &__img {
+    width: 350px;
+    bottom: 0;
+  }
+  &__tabs-cnt {
+    width: 610px;
+    height: 205px;
+  }
+  &__tab-cnt {
+    padding-left: 35px;
+    &.is-active {
+
+    }
+    &:last-child {
+
+    }
+    &::before {
+
+    }
+  }
+  &__tab-cnt-title {
+    margin: 0 0 10px;
+    &::before {
+
+    }
+  }
+  &__tab-cnt-descr {
+  }
+}

@@ -231,26 +231,5 @@
     contactsForm.addEventListener('input', toggleInputsClass);
   }
 
-  let $filterForm = id('filter-form');
-
-  if ($filterForm) {
-    $filterForm.addEventListener('submit', function() {
-      // event.preventDefault();
-
-      let xhr = new XMLHttpRequest();
-
-      xhr.open($filterForm.method, $filterForm.action);
-      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      xhr.send();
-
-      xhr.addEventListener('readystatechange', function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          let response = xhr.response;
-          console.log(xhr);
-        }
-      });
-    });
-  }
-
 
 })();

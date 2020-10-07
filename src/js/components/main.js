@@ -26,5 +26,6 @@ document.addEventListener('DOMContentLoaded', function() {
 //=include tabs.js
 //=include sliders.js
 //=include quiz.js
+//=include filter.js
 
 });

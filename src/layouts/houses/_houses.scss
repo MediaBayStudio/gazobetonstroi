@@ -4,67 +4,125 @@
 @import '../../scss/assets/variables';
 
 .houses {
+  padding-top: 20px;
+  padding-bottom: 85px;
   font: 16px/140% Montserrat;
-  &__filter {
-  }
+
+  &__filter {}
+
   &__cards {
+    text-align: center;
   }
+
+  &__house {
+    margin: 20px auto 0;
+    width: 280px;
+    text-align: left;
+  }
+}
+
+#filter-form-call-btn.clone,
+.filter-form.clone {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#filter-form-call-btn {
+  margin: 0 0 0 auto;
+  display: flex;
+  align-items: center;
+
+  &.fixed {
+    padding: 10px 0;
+    padding-right: inherit;
+    justify-content: flex-end;
+    width: 100%;
+    position: fixed;
+    top: 40px;
+    right: 0;
+    background: $white;
+  }
+
 }
 
 .filter-form {
   padding: 35px 20px;
-  color: $darkgrey;
+  display: block;
+  // flex-flow: column;
+  max-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
   font: 18px/140% Montserrat;
+  color: $darkgrey;
+  background: $lightgrey;
+  z-index: 1;
+
   &__title {
     font-size: 20px;
     font-weight: bold;
     color: $black;
   }
+
+  &__close {
+    position: fixed;
+    right: 20px;
+    top: 34px;
+  }
+
   &__group {
-    display: inline-flex;
+    display: flex;
     flex-flow: column;
     align-items: flex-start;
+
     &:nth-child(n+2) {
-      margin-top: 20px;
+      margin-top: 25px;
+    }
+
+    &.dropdown {
+      max-height: 40px;
+      overflow: hidden;
+      transition: max-height .5s;
+      will-change: max-height;
+
+      >.filter-form__group-title {
+        &::after {
+          content: '';
+          margin: 0 0 0 5px;
+          display: inline-block;
+          width: 9px;
+          height: 9px;
+          background: url('../img/icon-polygon.svg') center/contain no-repeat;
+          pointer-events: none;
+        }
+      }
     }
   }
+
   &__group-title {
     margin: 0 0 15px;
     font-weight: bold;
     color: $black;
   }
+
   &__check {
     margin: 0 0 10px;
-    align-items: center;
-    > .check__checkbox {
-      margin: 0 10px 0 0;
-      width: 10px;
-      height: 10px;
-      box-shadow: inset 0 0 0 10px $white;
-      background: $green;
-      border-radius: 2px;
-      transition: box-shadow .5s;
-    }
-    > .check__inp:checked + .check__checkbox {
-      box-shadow: inset 0 0 0 1.25px $white;
-    }
   }
-  &__checkbox {
-  }
+
   &__bottom {
     max-width: 185px;
     margin: 15px auto 0;
     text-align: center;
   }
-  &__btn {
-  }
+
+  &__btn {}
+
   &__reset {
     margin: 30px 0 0;
     color: $black;
     font-weight: 500;
     font-size: 16px;
-    &:focus {
-      outline: 1px dotted;
-    }
   }
 }

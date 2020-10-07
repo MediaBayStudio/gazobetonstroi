@@ -4,23 +4,59 @@
 @import '../../scss/assets/variables';
 
 .houses {
+
   &__filter {
   }
   &__cards {
   }
+  &__house {
+    margin: 20px 20px 0 0;
+    width: (536px - 20px) / 2;
+    &:nth-child(2n) {
+      margin-right: 0;
+    }
+  }
+}
+
+#filter-form-call-btn {
+
+  &:focus {
+
+  }
 }
 
 .filter-form {
+
+  &__title {
+ 
+  }
+  &__close {
+
+  }
   &__group {
+
+    &:nth-child(n+2) {
+
+    }
   }
   &__group-title {
+
   }
-  &__checkbox {
+  &__check {
+
+    &:focus-within {
+
+    }
   }
   &__bottom {
+
   }
   &__btn {
   }
   &__reset {
+
+    &:focus {
+
+    }
   }
 }

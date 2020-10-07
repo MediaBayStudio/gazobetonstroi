@@ -10,7 +10,7 @@ $data_media = '(min-width:575.98px){'.$lg.' url(' . $img_path . '768.jpg)}(min-w
   <h2 class="stages-sect__title sect-title"><?php echo $sect_title ?></h2>
   <div class="stages-sect__stages" id="stages-slider">
     <div class="slider-nav stages__nav"></div>
-    <div class="stages__counter"><span class="stages__counter-current">1</span>/<span class="stages__counter-total">6</span></div> <?php
+    <div class="slider-nav__counter stages__counter"><span class="slider-nav__counter-current">1</span>/<span class="slider-nav__counter-total">6</span></div> <?php
     for ( $i = 0, $len = count( $stages ); $i < $len; $i++ ) :
       $order_class = $stages[$i + 1] ? '' : ' last' ?>
       <div class="stage<?php echo $order_class ?>">
