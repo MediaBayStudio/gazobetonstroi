@@ -4,6 +4,8 @@
 @import '../../scss/assets/variables';
 
 .contacts-sect {
+  background-repeat: no-repeat;
+  background-size: cover;
   &__title {
   }
   &__descr {
@@ -53,7 +55,6 @@
 
   }
 }
-
 
 
 .contacts-sect {

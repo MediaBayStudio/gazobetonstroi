@@ -39,7 +39,7 @@ add_action( 'wp_enqueue_scripts', function() {
 
   if ( is_front_page() ) {
     enqueue_style( 'index', $screen_widths );
-  } else if ( is_page( 'projects' ) || is_page( 'cases' ) || is_single() || is_404() ) {
+  } else if ( is_page( 'news' ) || is_page( 'projects' ) || is_page( 'cases' ) || is_single() || is_404() ) {
     enqueue_style( 'single', $screen_widths );
   } else if ( is_page( 'about' ) || is_page( 'building' ) || is_page( 'improvement' ) ) {
     enqueue_style( 'pages', $screen_widths );

@@ -81,6 +81,7 @@ li.slick-active > .dot {
   transition: opacity .35s, color .35s;
   &.slick-disabled {
     opacity: 0.5;
+    pointer-events: none;
   }
   &__prev {
     > .arrow__svg {

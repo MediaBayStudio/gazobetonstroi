@@ -3,9 +3,9 @@
     closeButtons: '.thanks-popup__close'
   });
 
-  // thanksPopup.addEventListener('popupbeforeopen', function() {
-  //   clearTimeout(thanksPopupTimer);
-  // });
+  thanksPopup.addEventListener('popupbeforeopen', function() {
+    clearTimeout(thanksPopupTimer);
+  });
 
 // Закрытие всех попапов вместе с закрытием окна спасибо
   // thanksPopup.addEventListener('popupbeforeclose', function() {

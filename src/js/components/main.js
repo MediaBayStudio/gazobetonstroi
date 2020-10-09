@@ -27,5 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
 //=include sliders.js
 //=include quiz.js
 //=include filter.js
+//=include loadmore.js
+//=include popups.js
 
 });

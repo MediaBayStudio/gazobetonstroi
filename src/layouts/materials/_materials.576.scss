@@ -2,3 +2,36 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.material-sect {
+  font-size: 15px;
+  &__decor {}
+
+  &__text {}
+
+  &__title {}
+
+  &__descr {
+    &:nth-last-child(n+2) {}
+
+    >.small {
+      font-size: 11px;
+    }
+  }
+
+  &__images {
+    margin: 50px 0 0;
+    flex-flow: row;
+    justify-content: space-between;
+  }
+
+  &__figure {}
+
+  &__img {
+    margin: 0 0 20px;
+  }
+
+  &__figcaption {}
+
+  &__nav {}
+}

@@ -2,3 +2,57 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.news-sect {
+  transition: max-height .5s;
+  overflow: hidden;
+  will-change: max-height;
+  // &__loadmore {
+  //   margin: 40px auto 0;
+  //   display: block;
+  //   font: 500 18px/100% Montserrat;
+  //   text-align: center;
+  //   position: relative;
+  //   &::after {
+  //     // Част стилей переехали в forms.scss
+  //     content: '';
+  //     position: absolute;
+  //     top: calc(50% - 15px);
+  //     left: calc(50% - 15px);
+  //     // width: 30px;
+  //     // height: 30px;
+  //     // border-radius: 50%;
+  //     // border: 3px solid transparent;
+  //     // border-top-color: $green;
+  //     // border-left-color: $green;
+  //     // animation: spin .5s linear infinite;
+  //     pointer-events: none;
+  //     opacity: 0;
+  //     transition: opacity .5s;
+  //   }
+  //   &[hidden] {
+  //     display: none;
+  //   }
+  //   &.loading {
+  //     pointer-events: none;
+  //     > .news-sect__loadmore-text,
+  //     > .news-sect__loadmore-icon {
+  //       opacity: .5;
+  //     }
+  //     &::after {
+  //       opacity: 1;
+  //     }
+  //   }
+  // }
+  // &__loadmore-text {
+  //   transition: opacity 0.5s;
+  // }
+  // &__loadmore-icon {
+  //   margin: 10px auto 0;
+  //   display: block;
+  //   width: 36px;
+  //   height: 10px;
+  //   object-fit: contain;
+  //   transition: opacity 0.5s;
+  // }
+}

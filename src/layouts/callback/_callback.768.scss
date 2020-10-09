@@ -41,6 +41,25 @@
   }
 }
 
+
+.quiz-form,
+.callback-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  &__title {
+    font-size: 20px;
+  }
+  &__field {
+    margin: 0;
+    width: 185px;
+  }
+  &__bottom {
+    margin: 25px 0 0;
+    width: 100%;
+  }
+}
+
 .callback-sect__text-block {
   padding: 50px 40px 45px;
   > .b {

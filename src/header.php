@@ -13,7 +13,13 @@
     $tel_3,
     $tel_3_dry,
     $email,
-    $insta ?>
+    $insta;
+
+    if ( is_single() ) {
+      $body_data_attr = ' data-project="' . $post->post_title . '"';
+    } else {
+      $body_data_attr = '';
+    } ?>
 <!DOCTYPE html>
 <html <?php language_attributes() ?>>
 <head>
@@ -44,7 +50,7 @@
   wp_head() ?>
 </head>
 
-<body data-template-dir-uri="<?php echo $template_directory ?>"> <?php
+<body<?php echo $body_data_attr ?> data-template-dir-uri="<?php echo $template_directory ?>" data-site-url="<?php echo $site_url ?>"> <?php
   wp_body_open() ?>
   <noscript>
     <!-- <noindex> -->Для полноценного использования сайта включите JavaScript в настройках вашего браузера.<!-- </noindex> -->

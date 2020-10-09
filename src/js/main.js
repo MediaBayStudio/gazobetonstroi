@@ -28,10 +28,10 @@ let
   thanksPopupTimer,
   body = document.body,
   templateDir = body.dataset.templateDirUri,
+  siteUrl = body.dataset.siteUrl,
   // callbackPopup,
   // orderPopup,
   fakeScrollbar,
-  // siteurl = document.body.dataset.siteurl,
   // page = document.body.dataset.page,
   // mobileRegExp = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i,
   // mobile = mobileRegExp.test(navigator.userAgent),
@@ -112,184 +112,182 @@ menu = new MobileMenu('.menu', {
 });
 ;
 (function() {
-  let contactsForm = id('contacts-form'),
-    $uploadFilesBlock = id('uploadedfiles'),
-    errorsClass = 'invalid',
-    $filesInput = id('files-input'),
-    rules = {
-      name: {
-        required: true
-      },
-      tel: {
-        required: true,
-        pattern: /\+7\([0-9]{3}\)[0-9]{3}\-[0-9]{2}\-[0-9]{2}/,
-        or: 'email'
-      },
-      email: {
-        required: true,
-        pattern: /^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z])+$/,
-        or: 'tel'
-      },
-      msg: {
-        required: true,
-        pattern: /[^\<\>\[\]%\&'`]+$/
-      },
-      policy: {
-        required: true
-      }
-    },
-    messages = {
-      tel: {
-        required: 'Введите ваш телефон или E-mail',
-        pattern: 'Укажите верный телефон'
-      },
-      name: {
-        required: 'Введите ваше имя',
-      },
-      email: {
-        required: 'Введите ваш E-mail или телефон',
-        pattern: 'Введите верный E-mail'
-      },
-      msg: {
-        required: 'Введите ваше сообщение',
-        pattern: 'Введены недопустимые символы'
-      },
-      policy: {
-        required: 'Согласитель с политикой обработки персональных данных'
-      }
-    },
-    /*
-      Функция получения значения полей у текущей формы.
-      Ищет только те элементы формы, именя которых указаны в rules.
-      Возвращает объект: 
-      {название-поля: значение-поля}
-      Например:
-      {'user-email': 'mail@mail.ru'}
-    */
-    getFormData = function($form) {
-      let formElements = $form.elements,
-        values = {};
+  let $contactsForm = id('contacts-form'),
+    $callbackForm = id('callback-form'),
+    $quizForm = id('quiz-form');
 
-      for (let rule in rules) {
-        let formElement = formElements[rule];
 
-        if (formElement) {
-          values[rule] = formElement.value;
+  let formValidator = function(params) {
+    let $form = params.form,
+      $formBtn = params.formBtn,
+      $uploadFilesBlock = params.uploadFilesBlock,
+      errorsClass = 'invalid',
+      $filesInput = params.filesInput,
+      rules = {
+        name: {
+          required: true
+        },
+        tel: {
+          required: true,
+          pattern: /\+7\([0-9]{3}\)[0-9]{3}\-[0-9]{2}\-[0-9]{2}/,
+          or: 'email'
+        },
+        email: {
+          required: true,
+          pattern: /^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z])+$/,
+          or: 'tel'
+        },
+        msg: {
+          required: true,
+          pattern: /[^\<\>\[\]%\&'`]+$/
+        },
+        policy: {
+          required: true
         }
-      }
+      },
+      messages = {
+        tel: {
+          required: 'Введите ваш телефон или E-mail',
+          pattern: 'Укажите верный телефон'
+        },
+        name: {
+          required: 'Введите ваше имя',
+        },
+        email: {
+          required: 'Введите ваш E-mail или телефон',
+          pattern: 'Введите верный E-mail'
+        },
+        msg: {
+          required: 'Введите ваше сообщение',
+          pattern: 'Введены недопустимые символы'
+        },
+        policy: {
+          required: 'Согласитель с политикой обработки персональных данных'
+        }
+      },
+      /*
+        Функция получения значения полей у текущей формы.
+        Ищет только те элементы формы, именя которых указаны в rules.
+        Возвращает объект: 
+        {название-поля: значение-поля}
+        Например:
+        {'user-email': 'mail@mail.ru'}
+      */
+      getFormData = function($form) {
+        let formElements = $form.elements,
+          values = {};
 
-      return values;
-    },
-    /*
-      Функция проверки правильности заполнения формы.
-    */
-    validationForm = function() {
-      event.preventDefault();
+        for (let rule in rules) {
+          let formElement = formElements[rule];
 
-      let errors = {},
-        thisForm = this,
-        values = getFormData(thisForm);
+          if (formElement) {
+            values[rule] = formElement.value;
+          }
+        }
 
+        return values;
+      },
+      /*
+        Функция проверки правильности заполнения формы.
+      */
+      validationForm = function(event) {
+        let errors = {},
+          thisForm = $form,
+          values = getFormData(thisForm);
 
-      for (let elementName in values) {
-        let rule = rules[elementName],
-          $formElement = thisForm[elementName],
-          elementValue = values[elementName],
-          or = rule.or,
-          $orFormElement = thisForm[or];
+        for (let elementName in values) {
+          let rule = rules[elementName],
+            $formElement = thisForm[elementName],
+            elementValue = values[elementName],
+            or = rule.or,
+            $orFormElement = thisForm[or];
 
-        if (rule) {
-          if ($formElement.hasAttribute('required') || rule.required === true) {
-            let elementType = $formElement.type,
-              pattern = rule.pattern;
+          if (rule) {
+            if ($formElement.hasAttribute('required') || rule.required === true) {
+              let elementType = $formElement.type,
+                pattern = rule.pattern;
 
-            if (((elementType === 'checkbox' || elementType === 'radio') && !$formElement.checked) ||
-              elementValue === '') {
+              if (((elementType === 'checkbox' || elementType === 'radio') && !$formElement.checked) ||
+                elementValue === '') {
 
-              if (or) {
-                if ($orFormElement.value === '') {
-                  errors[elementName] = messages[elementName].required;
-                  continue;
-                }
-              } else {
-                errors[elementName] = messages[elementName].required;
-                continue;
-              }
-            }
-
-            if (elementType !== 'cehckbox' && elementType !== 'radio' && pattern) {
-              if (pattern.test(elementValue) === false) {
                 if (or) {
                   if ($orFormElement.value === '') {
-                    errors[elementName] = messages[elementName].pattern;
+                    errors[elementName] = messages[elementName].required;
                     continue;
                   }
                 } else {
-                  errors[elementName] = messages[elementName].pattern;
-                  continue; 
+                  errors[elementName] = messages[elementName].required;
+                  continue;
                 }
-                
               }
+
+              if (elementType !== 'cehckbox' && elementType !== 'radio' && pattern) {
+                if (pattern.test(elementValue) === false) {
+                  if (or) {
+                    if ($orFormElement.value === '') {
+                      errors[elementName] = messages[elementName].pattern;
+                      continue;
+                    }
+                  } else {
+                    errors[elementName] = messages[elementName].pattern;
+                    continue;
+                  }
+
+                }
+              }
+
+              hideError($formElement);
             }
-
-            hideError($formElement);
           }
         }
-      }
 
-      if (Object.keys(errors).length == 0) {
-        thisForm.removeEventListener('change', validationForm);
-        thisForm.removeEventListener('input', validationForm);
-        if (event.type === 'submit') {
-          submitHandler(thisForm);
-        }
-      } else {
-        thisForm.addEventListener('change', validationForm);
-        thisForm.addEventListener('input', validationForm);
-        showErrors(thisForm, errors);
-      }
-    },
-    showErrors = function($form, errors) {
-      let $formElements = $form.elements;
-
-      for (let elementName in errors) {
-        let errorText = errors[elementName],
-          $errorElement = `<label class="${errorsClass}">${errorText}</label>`,
-          $formElement = $formElements[elementName],
-          $nextElement = $formElement.nextElementSibling;
-
-        if ($nextElement && $nextElement.classList.contains(errorsClass)) {
-          if ($nextElement.textContent !== errorText) {
-            $nextElement.textContent = errorText;
-          }
-          continue;
+        if (Object.keys(errors).length == 0) {
+          thisForm.removeEventListener('change', validationForm);
+          thisForm.removeEventListener('input', validationForm);
+          $form.validatie = true;
         } else {
-          $formElement.insertAdjacentHTML('afterend', $errorElement);
+          thisForm.addEventListener('change', validationForm);
+          thisForm.addEventListener('input', validationForm);
+          showErrors(thisForm, errors);
+          $form.validatie = false;
         }
 
-        $formElement.classList.add(errorsClass);
-      }
+      },
+      showErrors = function($form, errors) {
+        let $formElements = $form.elements;
 
-    },
-    hideError = function($formElement) {
-      let $nextElement = $formElement.nextElementSibling;
-      $formElement.classList.remove(errorsClass);
-      if ($nextElement && $nextElement.classList.contains(errorsClass)) {
-        $nextElement.parentElement.removeChild($nextElement);
-      }
-    },
-    submitHandler = function($form) {
+        for (let elementName in errors) {
+          let errorText = errors[elementName],
+            $errorElement = `<label class="${errorsClass}">${errorText}</label>`,
+            $formElement = $formElements[elementName],
+            $nextElement = $formElement.nextElementSibling;
 
-      let xhr = new XMLHttpRequest(),
-        data = new FormData($form);
+          if ($nextElement && $nextElement.classList.contains(errorsClass)) {
+            if ($nextElement.textContent !== errorText) {
+              $nextElement.textContent = errorText;
+            }
+            continue;
+          } else {
+            $formElement.insertAdjacentHTML('afterend', $errorElement);
+          }
 
-      xhr.open($form.method, $form.action);
-      xhr.send(data);
+          $formElement.classList.add(errorsClass);
+        }
 
-      xhr.addEventListener('readystatechange', function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          let $formElements = $form.elements,
-            response = xhr.response;
+      },
+      hideError = function($formElement) {
+        let $nextElement = $formElement.nextElementSibling;
+        $formElement.classList.remove(errorsClass);
+        if ($nextElement && $nextElement.classList.contains(errorsClass)) {
+          $nextElement.parentElement.removeChild($nextElement);
+        }
+      },
+      submitHandler = function(event) {
+        let $form = q('#' + event.detail.id + '>form'),
+          eventType = event.type;
+
+        if (eventType === 'wpcf7mailsent') {
+          let $formElements = $form.elements;
 
           for (let i = 0; i < $formElements.length; i++) {
             hideError($formElements[i]);
@@ -297,50 +295,105 @@ menu = new MobileMenu('.menu', {
           }
 
           $form.reset();
-          $uploadFilesBlock.innerHTML = '';
-
-          if (response == 1) {
-            thanksPopup.openPopup();
-            thanksPopupTimer = setTimeout(function() {
-              thanksPopup.closePopup();
-            }, 3000);
+          if ($uploadFilesBlock) {
+            $uploadFilesBlock.innerHTML = '';
           }
-
+          if ($form === $quizForm) {
+            id('quiz').resetQuiz();
+          }
+          console.log('отправлено');
         }
-      });
+        /* else if (eventType === 'wpcf7mailfailed') {
+                console.log('отправка не удалась');
+              }*/
 
-    },
-    toggleInputsClass = function() {
-      let $input = event.target,
-        type = $input.type,
-        files = $input.files,
-        classList = $input.classList,
-        value = $input.value;
+        $form.classList.remove('loading');
 
-      if (type === 'text' || $input.tagName === 'TEXTAREA') {
-        if (value === '') {
-          classList.remove('filled');
-        } else {
-          classList.add('filled');
+        thanksPopup.openPopup();
+        thanksPopupTimer = setTimeout(function() {
+          thanksPopup.closePopup();
+        }, 3000);
+
+
+      },
+      toggleInputsClass = function() {
+        let $input = event.target,
+          type = $input.type,
+          files = $input.files,
+          classList = $input.classList,
+          value = $input.value;
+
+        if (type === 'text' || $input.tagName === 'TEXTAREA') {
+          if (value === '') {
+            classList.remove('filled');
+          } else {
+            classList.add('filled');
+          }
+        } else if (type === 'file') {
+          // $input.filesArray = [];
+
+          let uploadedFiles = '';
+          for (let i = 0, len = files.length; i < len; i++) {
+            // $input.filesArray[i] = files[i];
+            uploadedFiles += '<span class="uploadedfiles__file"><span class="uploadedfiles__file-text">' + files[i].name + '</span></span>';
+          }
+          $uploadFilesBlock.innerHTML = uploadedFiles;
         }
-      } else if (type === 'file') {
-        // $input.filesArray = [];
+      };
 
-        let uploadedFiles = '';
-        for (let i = 0, len = files.length; i < len; i++) {
-          // $input.filesArray[i] = files[i];
-          uploadedFiles += '<span class="uploadedfiles__file"><span class="uploadedfiles__file-text">' + files[i].name + '</span></span>';
-        }
-        $uploadFilesBlock.innerHTML = uploadedFiles;
+    $form.setAttribute('novalidate', '');
+    $form.validatie = false;
+    $formBtn.addEventListener('click', function() {
+      validationForm();
+      if ($form.validatie === false) {
+        event.preventDefault();
+      } else {
+        $form.classList.add('loading');
       }
+    });
+    if (!document.wpcf7mailsent) {
+      document.addEventListener('wpcf7mailsent', submitHandler);
+      document.wpcf7mailsent = true;
+    }
+    $form.addEventListener('input', toggleInputsClass);
+  };
 
-    };
 
-  if (contactsForm) {
-    contactsForm.setAttribute('novalidate', '');
 
-    contactsForm.addEventListener('submit', validationForm);
-    contactsForm.addEventListener('input', toggleInputsClass);
+  if ($contactsForm) {
+    let $contactsFormBtn = q('button', $contactsForm),
+      $uploadFilesBlock = id('uploadedfiles'),
+      $filesInput = id('files-input');
+
+    formValidator({
+      form: $contactsForm,
+      formBtn: $contactsFormBtn,
+      uploadFilesBlock: $uploadFilesBlock,
+      filesInput: $filesInput
+    });
+  }
+
+  if ($callbackForm) {
+    let $callbackFormBtn = q('button', $callbackForm),
+      projectName = body.dataset.project;
+
+    if (projectName) {
+      q('[name="project"]', $callbackForm).value = projectName;
+    }
+
+    formValidator({
+      form: $callbackForm,
+      formBtn: $callbackFormBtn
+    });
+  }
+
+  if ($quizForm) {
+    let $quizFormBtn = q('button', $quizForm);
+
+    formValidator({
+      form: $quizForm,
+      formBtn: $quizFormBtn
+    });
   }
 
 
@@ -487,6 +540,16 @@ menu = new MobileMenu('.menu', {
     teamSelector = '.char',
     teamSlides = teamSlider && qa(teamSelector, teamSlider),
 
+    // Слайдер материалов
+    materialsSlider = id('materials-slider'),
+    materialsSelector = '.material-sect__figure',
+    materialsSlides = materialsSlider && qa(materialsSelector, materialsSlider),
+
+    // Слайдер карточек новостей
+    newsSlider = id('news-slider'),
+    newsSelector = '.post',
+    newsSlides = newsSlider && qa(newsSelector, newsSlider),
+
     createArrow = function(className, inside) {
 
       className = (className.indexOf('prev') === -1 ? 'next ' : 'prev ') + className;
@@ -555,10 +618,10 @@ menu = new MobileMenu('.menu', {
 
           let counterTotal = reviewsSlides.length;
 
-          if (matchesMedia('(min-width:575.98px)')) {
+          if (matchesMedia('(min-width:1439.98px)')) {
+            counterTotal = counterTotal - 2;
+          } else if (matchesMedia('(min-width:575.98px)')) {
             counterTotal--;
-          } else if (matchesMedia('(min-width:1439.98px)')) {
-            counterTotal = Math.ceil(counterTotal / 3);
           } else {
             counterTotal = reviewsSlides.length;
           }
@@ -705,10 +768,10 @@ menu = new MobileMenu('.menu', {
 
           let counterTotal = featuresSlides.length;
 
-          if (matchesMedia('(min-width:575.98px)')) {
-            counterTotal--;
-          } else if (matchesMedia('(min-width:1439.98px)')) {
-            counterTotal = Math.ceil(counterTotal / 3);
+          if (matchesMedia('(min-width:1439.98px)')) {
+            counterTotal = counterTotal - 2;
+          } else if (matchesMedia('(min-width:575.98px)')) {
+            counterTotal--;;
           }
 
           counterTotalSlides.textContent = counterTotal;
@@ -811,10 +874,10 @@ menu = new MobileMenu('.menu', {
 
           let counterTotal = featsSlides.length;
 
-          if (matchesMedia('(min-width:575.98px)')) {
+          if (matchesMedia('(min-width:1439.98px)')) {
+            counterTotal = counterTotal - 2;
+          } else if (matchesMedia('(min-width:575.98px)')) {
             counterTotal--;
-          } else if (matchesMedia('(min-width:1439.98px)')) {
-            counterTotal = Math.ceil(counterTotal / 3);
           }
 
           counterTotalSlides.textContent = counterTotal;
@@ -902,6 +965,114 @@ menu = new MobileMenu('.menu', {
     buildSlidersFunctions.push(buildTeamSlider);
   }
 
+  if (materialsSlider) {
+    let $materialsSlider = $(materialsSlider),
+      counterCurrentSlide = q(counterCurrentSelector, materialsSlider),
+      counterTotalSlides = q(counterTotalSelector, materialsSlider),
+      buildFeatsSlider = function() {
+        if (matchesMedia('(min-width: 575.98px)')) {
+          if (materialsSlider.classList.contains(slickSliderClass)) {
+            $materialsSlider.slick('unslick');
+          }
+        } else {
+          if (materialsSlider.classList.contains(slickSliderClass)) {
+            return;
+          }
+          $materialsSlider.slick({
+            appendArrows: $('.slider-nav', $materialsSlider),
+            prevArrow: createArrow('material-sect__prev', smallArrowSvg),
+            nextArrow: createArrow('material-sect__next', smallArrowSvg),
+            slide: materialsSelector,
+            infinite: false
+          });
+
+          let counterTotal = materialsSlides.length;
+
+          counterTotalSlides.textContent = counterTotal;
+
+          $materialsSlider.on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+            counterCurrentSlide.textContent = nextSlide + 1;
+          });
+        }
+      }
+
+    buildSlidersFunctions.push(buildFeatsSlider);
+  }
+
+  if (newsSlider && newsSlides.length && newsSlides.length > 1) {
+    let $newsSlider = $(newsSlider),
+      newsSliderParent = newsSlider.parentElement,
+      counterCurrentSlide = q(counterCurrentSelector, newsSliderParent),
+      counterTotalSlides = q(counterTotalSelector, newsSliderParent),
+      buildTeamSlider = function() {
+        if (matchesMedia('(min-width: 575.98px)') && newsSlides.length < 3) {
+          if (newsSlider.classList.contains(slickSliderClass)) {
+            $newsSlider.slick('unslick');
+          }
+        } else if (matchesMedia('(min-width: 1023.98px)') && newsSlides.length < 4) {
+          if (newsSlider.classList.contains(slickSliderClass)) {
+            $newsSlider.slick('unslick');
+          }
+        } else if (matchesMedia('(min-width: 1439.98px)') && newsSlides.length < 5) {
+          if (newsSlider.classList.contains(slickSliderClass)) {
+            $newsSlider.slick('unslick');
+          }
+        } else {
+          if (newsSlider.classList.contains(slickSliderClass)) {
+            return;
+          }
+          $newsSlider.slick({
+            appendArrows: $('.slider-nav', newsSliderParent),
+            prevArrow: createArrow('news-slider__prev', smallArrowSvg),
+            nextArrow: createArrow('news-slider__next', smallArrowSvg),
+            slide: newsSelector,
+            infinite: false,
+            mobileFirst: true,
+            variableWidth: true,
+            centerMode: true,
+            centerPadding: '0px',
+            responsive: [{
+              breakpoint: 575.98,
+              settings: {
+                centerMode: false,
+                slidesToShow: 2
+              }
+            }, {
+              breakpoint: 1023.98,
+              settings: {
+                centerMode: false,
+                slidesToShow: 3
+              }
+            }, {
+              breakpoint: 1439.98,
+              settings: {
+                centerMode: false,
+                slidesToShow: 4
+              }
+            }]
+          });
+
+          let counterTotal = newsSlides.length;
+
+          if (matchesMedia('(min-width:1439.98px)')) {
+            counterTotal = counterTotal - 3;
+          } else if (matchesMedia('(min-width:1023.98px)')) {
+            counterTotal = counterTotal - 2;
+          } else if (matchesMedia('(min-width:575.98px)')) {
+            counterTotal--;
+          }
+
+          counterTotalSlides.textContent = counterTotal;
+
+          $newsSlider.on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+            counterCurrentSlide.textContent = nextSlide + 1;
+          });
+        }
+      }
+
+    buildSlidersFunctions.push(buildTeamSlider);
+  }
+
   if (buildSlidersFunctions.length > 0) {
     window.addEventListener('resize', buildSliders);
     buildSliders();
@@ -929,7 +1100,6 @@ menu = new MobileMenu('.menu', {
     $quizForm = $quizBlock && id('quiz-form'),
     $quizResult = $quizForm && q('.quiz__form-result', $quizForm),
     $quizImg = $quizBlock && q('.quiz__img');
-
 
   if ($quizBlock) {
     window.Quiz = (function() {
@@ -985,28 +1155,44 @@ menu = new MobileMenu('.menu', {
             fieldTitleTag: 'span',
             prevBtnTag: 'button',
             nextBtnTag: 'button',
+
             dotsTag: 'div',
             dotTag: 'div',
+
+            progressBarTag: 'div',
+            progressTextTag: 'span',
+
             stepsCounterNumTag: 'div',
             currentStepNumTag: 'span',
             totalStepNumTag: 'span',
 
             dots: false,
             counter: false,
+            progress: true,
             prev: true,
             next: true,
+
+            finalStepTitle: false,
 
             headerClass: 'quiz__header',
             bodyClass: 'quiz__body',
             footerClass: 'quiz__footer',
             stepTittleClass: 'quiz__step-title',
+
             prevBtnClass: 'quiz__prev',
             nextBtnClass: 'quiz__next',
+
             dotsClass: 'quiz__dots',
             dotClass: 'quiz__dot',
+
+            progressClass: 'quiz__progress',
+            progressTextClass: 'quiz__progress-text',
+            progressBarText: 'quiz__progress-bar',
+
             stepsCounterNumClass: 'quiz__steps-counter',
             currentStepNumClass: 'quiz__current-steps-number',
             totalStepNumClass: 'quiz__total-steps-number',
+
             gropupInputsClass: 'quiz__group-inputs',
             groupInputsTitleClass: 'quiz__group-title',
 
@@ -1054,6 +1240,8 @@ menu = new MobileMenu('.menu', {
 
           _.dispatchEvent(_.$quiz, 'init', _.setEventDetails());
 
+          _.$quiz.ctx = _;
+
           return _.$quiz;
           // return _;
         }
@@ -1065,7 +1253,8 @@ menu = new MobileMenu('.menu', {
           options = _.options,
           evt = 'input';
 
-        _.$form.parentElement.style.display = 'none';
+        // _.$form.parentElement.style.display = 'none';
+        _.$form.parentElement.setAttribute('hidden', '');
 
         _.buildInsides();
         _.buildSteps();
@@ -1073,10 +1262,12 @@ menu = new MobileMenu('.menu', {
 
         if (options.prev) {
           _.$prev.classList.add('disabled');
+          _.$prev.setAttribute('tabindex', '-1');
         }
 
         if (options.next) {
           _.$next.classList.add('disabled');
+          _.$next.setAttribute('tabindex', '-1');
         } else {
           evt = 'change';
         }
@@ -1165,17 +1356,39 @@ menu = new MobileMenu('.menu', {
           _.$footer.appendChild(_.$next);
         }
 
+        if (options.progress) {
+          _.$progressBar = _.createEl(options.progressBarTag);
+          _.$progressWrap = _.createEl('div');
+          _.$progressText = _.createEl(options.progressTextTag);
+          if (options.progressBarTag === 'div') {
+            _.$progressBar.setAttribute('role', 'progressbar');
+            _.$progressBar.setAttribute('aria-valuemin', '0');
+            _.$progressBar.setAttribute('aria-valuenow', '0');
+            _.$progressBar.setAttribute('aria-valuemax', '100');
+          }
+          _.$progressText.textContent = '0%';
+
+          _.$progressWrap.className = options.progressClass;
+          _.$progressBar.className = options.progressBarText;
+          _.$progressText.className = options.progressTextClass;
+
+          _.$progressWrap.appendChild(_.$progressText);
+          _.$progressWrap.appendChild(_.$progressBar);
+
+          _.$footer.appendChild(_.$progressWrap)
+        }
+
         if (options.counter) {
           _.$header.appendChild(_.$stepsCounter);
         }
 
         if (options.dots) {
-          _.$header.appendChild(_.$dotsBlock);  
+          _.$header.appendChild(_.$dotsBlock);
         }
-        
+
         _.$header.appendChild(_.$stepsTitle);
 
-        _.$quiz.appendChild(_.$header);
+        _.$quiz.insertAdjacentElement('afterbegin', _.$header);
         _.$quiz.appendChild(_.$body);
         _.$quiz.appendChild(_.$footer);
 
@@ -1281,6 +1494,7 @@ menu = new MobileMenu('.menu', {
             required = curField.required,
             values = curField.values,
             placeholder = curField.placeholder,
+            focusOn = curField.focusOn,
             fieldTag = fieldType === 'textarea' ? 'textarea' : 'input',
             fieldClass = options.fieldClasses[fieldType],
             initialSelected = curField.initialSelected;
@@ -1303,6 +1517,10 @@ menu = new MobileMenu('.menu', {
 
             if (placeholder) {
               $input.placeholder = placeholder;
+            }
+
+            if (focusOn) {
+              $input.dataset.focus = 1;
             }
 
             $title.textContent = fieldTitle;
@@ -1380,11 +1598,10 @@ menu = new MobileMenu('.menu', {
 
               if (fieldType === 'select') {
                 $input = _.createEl('option');
-
                 // Если передали строку, то вставляем ее как обычно
                 if (typeof values[i] === 'string') {
                   $input.value = $input.textContent = values[i];
-                // Если не строка, то разбираем объект с текстом и атрибутами
+                  // Если не строка, то разбираем объект с текстом и атрибутами
                 } else {
                   let customAttributes = values[i]['attr'],
                     fieldIsNotDisabled = true;
@@ -1446,7 +1663,7 @@ menu = new MobileMenu('.menu', {
               $field.appendChild($input);
 
               // if ($pseudoInp) {
-                // $field.appendChild($pseudoInp);
+              // $field.appendChild($pseudoInp);
               // }
 
               if ($title) {
@@ -1462,7 +1679,7 @@ menu = new MobileMenu('.menu', {
 
             if ($groupBlock) {
               if ($selectLabel) {
-                $groupBlock.appendChild($selectLabel); 
+                $groupBlock.appendChild($selectLabel);
               }
               obj.html.push($groupBlock);
               // obj.html = $groupBlock;
@@ -1510,16 +1727,18 @@ menu = new MobileMenu('.menu', {
         if (prevStep) {
           // Если предыдущий шаг это форма заявки
           if (prevStep === _.$form) {
-            formParent.style.display = 'none';
-            _.$quiz.replaceChild(quizBody, formParent);
+            formParent.setAttribute('hidden', '');
+            // _.$quiz.replaceChild(quizBody, formParent);
             // _.$body.removeChild(_.$form); // Удалим форму из боди
             _.$result.value = ''; // Чистим ответы
           } else {
             let prevHtml = prevStep.html, // Массив полей предыдущего шага
               prevExtrafields = prevStep.extrafields; // Доп. поля предыдушего шага
 
-            for (let i = 0, len = prevHtml.length; i < len; i++) {
-              quizBody.removeChild(prevHtml[i]); // Удаляем со страницы поля предыдущего шага
+            if (prevHtml) {
+              for (let i = 0, len = prevHtml.length; i < len; i++) {
+                quizBody.removeChild(prevHtml[i]); // Удаляем со страницы поля предыдущего шага
+              }
             }
 
             if (prevExtrafields) {
@@ -1537,7 +1756,8 @@ menu = new MobileMenu('.menu', {
 
       };
 
-      Quiz.prototype.printStep = function(num) {
+      Quiz.prototype.printStep = function(num, dir) {
+        dir = dir || 'next';
         let _ = this,
           options = _.options,
           quizBody = _.$body,
@@ -1550,11 +1770,16 @@ menu = new MobileMenu('.menu', {
 
         // Если финальный шаг
         if (_.$currentStep === _.$form) {
-          // console.log('final step');
-          // quizBody.appendChild(_.$form); // Добавляем форму
-          formParent.style.display = 'block';
-          _.$quiz.replaceChild(formParent, quizBody);
+          formParent.removeAttribute('hidden');
+          quizBody.setAttribute('hidden', '');
+          // formParent.style.display = 'block';
+          // quizBody.style.display = 'none';
+          // _.$quiz.replaceChild(formParent, quizBody);
           _.$quiz.classList.add('final-step');
+
+          if (options.finalStepTitle) {
+            _.$stepsTitle.textContent = options.finalStepTitle
+          }
 
           // Заполняем поле с результатом
           for (let i = 0, len = _.result.length; i < len; i++) {
@@ -1568,7 +1793,15 @@ menu = new MobileMenu('.menu', {
           }
           // Убираем поля предыдущего шага, если они есть
           _.clearPrevStep();
+          _.setProgress(100, dir);
           return;
+        } else {
+          if (_.currentStep === 0) {
+            _.setProgress(0, dir);
+          } else {
+            let percent = Math.ceil((_.currentStep + 1) / _.stepsLength * 100);
+            _.setProgress(percent, dir);
+          }
         }
 
         // Если нет готового html для вставки, значит есть ветвление
@@ -1582,55 +1815,49 @@ menu = new MobileMenu('.menu', {
               // Если в массиве всего 1 значение, то преобразуем его в строку
               if (values.length === 1) {
                 values = '' + values;
-                 // console.log(values, 'один в массиве, ищу');
+                // console.log(values, 'один в массиве, ищу');
                 // Пробуем найти внутри вариантов текущего шага
                 if (_.$currentStep[values]) {
                   prevStepValue = values; // Подставляем значение
-                   // console.log('есть совпадение с ', values);
-                   // console.log('Общий цикл прерван на ', values);
+                  // console.log('есть совпадение с ', values);
+                  // console.log('Общий цикл прерван на ', values);
                   break; // Прерываем цикл
 
                   // Если значение не найдено, то ищем его в каждом варианте текущего шага
                 } else {
-                   // console.log('нет совпадения с', values);
+                  // console.log('нет совпадения с', values);
                   for (let currentStepValue in _.$currentStep) {
-                     // console.log('ищу', values, 'в', currentStepValue);
+                    // console.log('ищу', values, 'в', currentStepValue);
                     if (currentStepValue.indexOf(values) !== -1) {
                       prevStepValue = currentStepValue;
                       doBreak = true;
-                       // console.log('есть совпадение', values, 'в', currentStepValue);
+                      // console.log('есть совпадение', values, 'в', currentStepValue);
                       break;
                     }
                   }
-
-                  // Если значение не найдено вообще, то надо показывать следующий шаг
-                  // if (!prevStepValue) {
-                    // console.log(values, 'не найдено вообще');
-                    // return;
-                  // }
                 }
                 // Если в массиве несколько значений, то нужно перебирать их
               } else {
-                //  console.log(values, 'не один в массиве, перебираю');
+                 // console.log(values, 'не один в массиве, перебираю');
                 for (let i = 0, len = values.length; i < len; i++) {
                   for (let currentStepValue in _.$currentStep) {
-                    //  console.log('ищу', values[i], 'в', currentStepValue);
+                     // console.log('ищу', values[i], 'в', currentStepValue);
                     if (currentStepValue.indexOf(values[i]) !== -1) {
                       prevStepValue = currentStepValue;
                       doBreak = true;
-                       // console.log('есть совпадение', values[i], 'в', currentStepValue);
+                      // console.log('есть совпадение', values[i], 'в', currentStepValue);
                       break;
                     }
                   }
                   if (doBreak) {
-                     // console.log('Цикл прерван на', values[i]);
+                    // console.log('Цикл прерван на', values[i]);
                     break;
                   }
                 }
               }
 
               if (doBreak) {
-                 // console.log('Общий цикл прерван на ', values);
+                // console.log('Общий цикл прерван на ', values);
                 break;
               }
 
@@ -1645,8 +1872,25 @@ menu = new MobileMenu('.menu', {
 
         } // endelse
 
-        // Убираем поля предыдущего шага, если они есть
-        _.clearPrevStep();
+        // Если ничего нет вообще, то надо делать следующий шаг
+        if (!currentHtml) {
+          if (dir === 'prev') {
+            _.prevStepHandler();
+          } else {
+            _.nextStep(false);
+            _.currentStep--;
+          }
+          return;
+        }
+
+        if (_.$prevStep === _.$form) {
+          formParent.setAttribute('hidden', '');
+          // formParent.style.display = 'none';
+        } else {
+          // Убираем поля предыдущего шага, если они есть
+          _.clearPrevStep();
+        }
+        
         // Вставляем html на страницу
         for (let key in currentHtml) {
           let block = currentHtml[key];
@@ -1677,9 +1921,8 @@ menu = new MobileMenu('.menu', {
               $field.selectedIndex = 0; // Устанавливаем селект в изначальное положение 0
             }
           }
+        } // end for
 
-
-        }
       };
 
       Quiz.prototype.input = function(evt) {
@@ -1698,7 +1941,7 @@ menu = new MobileMenu('.menu', {
 
           radioGroupIsRequired = false, // группа радиокнопок является обязательной
           radioGroupIsChecked = true, // выбрана хотя бы одна радиокнопка
-          checkboxesGroupIsRequired = false; // группа чекбоксов является обязательной
+          checkboxesGroupIsRequired = false, // группа чекбоксов является обязательной
           checkboxesGroupIsChecked = true; // выбран хотя бы один чекбокс
         /*
           Будем перебирать все поля в текущем шаге
@@ -1733,7 +1976,9 @@ menu = new MobileMenu('.menu', {
                     $fieldInput.value = ''; // Очищаем поле
                     _.$body.appendChild($field); // Добавляем доп. поле на страницу
                     _.$fieldsOnThisStep.push($fieldInput); // Добавляем в массив текущего шага
-
+                    if ($fieldInput.dataset.focus) {
+                      $fieldInput.focus(); // Устанавливаем фокус на этом поле
+                    }
                     // Если доп. поле обязательное, то добавляем его в массив обязательных полей
                     if ($fieldInput.classList.contains('required')) {
                       $requiredFields.push($fieldInput);
@@ -1795,7 +2040,7 @@ menu = new MobileMenu('.menu', {
         if ($radioButtons.length > 0) {
           radioGroupIsRequired = $radioButtons.some($field => $field.required);
           if (radioGroupIsRequired) {
-            radioGroupIsChecked = $radioButtons.some($field => $field.checked);             
+            radioGroupIsChecked = $radioButtons.some($field => $field.checked);
           }
         }
 
@@ -1823,8 +2068,8 @@ menu = new MobileMenu('.menu', {
         // и хотя бы одна радиокнопка выбрана
         // и хотя бы один чекбокс выбран
         // то разрешаем идти дальше (делаем кнопку активной)
-        if ( ($requiredFields.length === $filledRequiredFields.length || $requiredFields.length === 0) &&
-            radioGroupIsChecked && checkboxesGroupIsChecked) {
+        if (($requiredFields.length === $filledRequiredFields.length || $requiredFields.length === 0) &&
+          radioGroupIsChecked && checkboxesGroupIsChecked) {
 
           // Глобальная переменная с заполненными полями на этом шаге
           _.$filledFieldsOnThisStep = $filledFields;
@@ -1835,15 +2080,24 @@ menu = new MobileMenu('.menu', {
               radioGroupIsChecked && checkboxesGroupIsChecked) {
               _.$next.classList.remove('disabled');
               _.$next.addEventListener('click', _.nextStepHandler);
+              _.$next.setAttribute('tabindex', '0');
             }
           } else {
             if (options.next) {
               // иначе, делаем кнопку не активной
               _.$next.classList.add('disabled');
               _.$next.removeEventListener('click', _.nextStepHandler);
+              _.$next.setAttribute('tabindex', '-1');
             } else {
-              _.nextStepHandler();              
+              _.nextStepHandler();
             }
+          }
+        } else {
+          // Если стрелка "вперед" разрешена, то делаем ее неактивной
+          if (options.next) {
+            _.$next.classList.add('disabled');
+            _.$next.removeEventListener('click', _.nextStepHandler);
+            _.$next.setAttribute('tabindex', '-1');
           }
         }
 
@@ -1858,79 +2112,92 @@ menu = new MobileMenu('.menu', {
             key: [value, value, value, ...]
           }
       */
-      Quiz.prototype.nextStep = function() {
+      Quiz.prototype.nextStep = function(event) {
+        // Если не передан event, то пропуск шага
         let _ = this,
           options = _.options,
           object = {}, // ключи-значения инпутов (title: [values])
           $filledFields = _.$filledFieldsOnThisStep;
 
+        // Если нажали на кнопку (не автошаг, не пропкуск шага)
+        if (event) {
+          // Собираем в массив значения всех заполненных полей
+          for (let i = 0, len = $filledFields.length; i < len; i++) {
+            let $field = $filledFields[i], // текущее поля (для сокр. записи)
+              fieldType = $field.type, // тип поля (для сокр. записи)
+              $fieldParent = fieldType === 'radio' || fieldType === 'checkbox' ? $field.parentElement.parentElement : $field.parentElement, // родитель полей для поиска тайтла
+              fieldTtile = (q('[data-field-title]', $fieldParent) || _.$stepsTitle).textContent; // текст-заголовок полей
 
-        // Собираем в массив значения всех заполненных полей
-        for (let i = 0, len = $filledFields.length; i < len; i++) {
-          let $field = $filledFields[i], // текущее поля (для сокр. записи)
-            fieldType = $field.type, // тип поля (для сокр. записи)
-            $fieldParent = fieldType === 'radio' || fieldType === 'checkbox' ? $field.parentElement.parentElement : $field.parentElement, // родитель полей для поиска тайтла
-            fieldTtile = (q('[data-field-title]', $fieldParent) || _.$stepsTitle).textContent; // текст-заголовок полей
-
-          // Если заголовка у группы полей нет, то берется название шага!
+            // Если заголовка у группы полей нет, то берется название шага!
 
 
-          // Если ключа нет, то создаем его
-          if (object[fieldTtile] === undefined) {
-            object[fieldTtile] = [];
+            // Если ключа нет, то создаем его
+            if (object[fieldTtile] === undefined) {
+              object[fieldTtile] = [];
+            }
+
+            object[fieldTtile].push($field.value); // Добавляем значение в массив
           }
 
-          object[fieldTtile].push($field.value); // Добавляем значение в массив
+          _.result[_.result.length] = object; // вставляем пару ключ-значения в результат
+
+          _.$prevStep = _.$currentStep; // Устанавливаем предыдущим шагом текущий
+
+          _.$prevStep.value = object; // Вставляем в него объект собранных значений
         }
-
-        console.log(object);
-
-        _.result[_.result.length] = object; // вставляем пару ключ-значения в результат
-
-        _.$prevStep = _.$currentStep; // Устанавливаем предыдущим шагом текущий
-        _.$prevStep.value = object; // Вставляем в него объект собранных значений
 
         _.currentStep++; // Увеличиваем индекс (делаем шаг вперед)
 
         _.$currentStep = _.$steps[_.currentStep]; // Делаем текущим шагом текущий шаг по индексу
         _.$nextStep = _.$steps[_.currentStep + 1]; // Делаем следующим шагом ща по индексу + 1
 
+
         _.printStep(_.currentStep); // Выводим поля
 
-        // Делаем активной кнопку назад
-        if (options.prev) {
-          if (_.currentStep > 0) {
-            _.$prev.classList.remove('disabled');
-            _.$prev.addEventListener('click', _.prevStepHandler);
+        // Если передан эвент, то есть если нажалли на кнопку
+        if (event) {
+          _.dispatchEvent(_.$quiz, 'nextstep', _.setEventDetails());
+
+          // Делаем активной кнопку назад
+          if (options.prev) {
+            if (_.currentStep > 0) {
+              _.$prev.classList.remove('disabled');
+              _.$prev.addEventListener('click', _.prevStepHandler);
+              _.$prev.setAttribute('tabindex', '0');
+            }
           }
+
+          // Делаем не активной кнопку дальше
+          if (options.next) {
+            _.$next.classList.add('disabled');
+            _.$next.removeEventListener('click', _.nextStepHandler);
+            _.$next.setAttribute('tabindex', '-1');
+          }
+
+          // Меняем активность точек-счетчиков
+          if (options.dots) {
+            _.$dots[_.currentStep - 1].classList.remove('active');
+            _.$dots[_.currentStep].classList.add('active');
+          }
+
+          // Увеличиваем значение цифры счетчика
+          if (options.counter) {
+            _.$counterCurrentNum.textContent = _.currentStep + 1;
+          }
+
+          // Ищем самый первый элемент квиза и устанавливаем на нем фокус
+          if (_.$currentStep.fields) {
+            _.$currentStep.fields[0].input.focus();
+          }
+
+          // Добавляем пройденный шаг в массив пройденных шагов
+          // для контроля шагов назад
+          _.$filledSteps.push(_.$prevStep);
         }
-
-        // Делаем не активной кнопку дальше
-        if (options.next) {
-          _.$next.classList.add('disabled');
-          _.$next.removeEventListener('click', _.nextStepHandler);
-        }
-
-        // Меняем активность точек-счетчиков
-        if (options.dots) {
-          _.$dots[_.currentStep - 1].classList.remove('active');
-          _.$dots[_.currentStep].classList.add('active');
-        }
-
-        // Увеличиваем значение цифры счетчика
-        if (options.counter) {
-          _.$counterCurrentNum.textContent = _.currentStep + 1;
-        }
-
-        // Добавляем пройденный шаг в массив пройденных шагов
-        // для контроля шагов назад
-        _.$filledSteps.push(_.$prevStep);
-
-        _.dispatchEvent(_.$quiz, 'nextstep', _.setEventDetails());
 
       };
 
-      Quiz.prototype.prevStep = function() {
+      Quiz.prototype.prevStep = function(event) {
         let _ = this,
           options = _.options;
 
@@ -1945,13 +2212,15 @@ menu = new MobileMenu('.menu', {
         // Убираем последнюю пару ключ-значение из результата
         _.result.pop();
 
-        _.printStep(_.currentStep); // Выводим на экран необходимые шаги
+
+        _.printStep(_.currentStep, 'prev'); // Выводим на экран необходимые шаги
 
         // Делаем активной или не активной кнопку назад
         if (options.prev) {
           _.$prev.classList.toggle('disabled', _.currentStep === 0);
           if (_.currentStep === 0) {
             _.$prev.removeEventListener('click', _.prevStepHandler);
+            _.$prev.setAttribute('tabindex', '-1');
           }
         }
 
@@ -1976,14 +2245,15 @@ menu = new MobileMenu('.menu', {
 
         // Убираем последний пройденный шаг из массива пройденных шагов
         _.$filledSteps.pop();
+        // console.log('pop');
 
-
+        _.$body.removeAttribute('hidden');
         _.dispatchEvent(_.$quiz, 'prevstep', _.setEventDetails());
 
       };
 
       Quiz.prototype.resetQuiz = function() {
-        let _ = this;
+        let _ = this.ctx || this;
 
         _.$prevStep = _.$currentStep;
 
@@ -1996,10 +2266,38 @@ menu = new MobileMenu('.menu', {
 
         _.$filledSteps = [];
         _.$filledFieldsOnThisStep = [];
-        _.$fieldsOnThisStep = null;
+        _.$fieldsOnThisStep = qa('input, select, textarea', _.$body, true);
         _.result = [];
 
-        console.log('reset');
+        _.$body.removeAttribute('hidden');
+        _.$form.parentElement.setAttribute('hidden', '');
+        _.$quiz.classList.remove('final-step');
+
+      };
+
+      Quiz.prototype.setProgress = function(percent, direction) {
+        let _ = this,
+          currentPercent = +_.$progressText.textContent.slice(0, -1),
+          number = currentPercent,
+          timer = setInterval(function() {
+
+            if (direction === 'prev') {
+              _.$progressText.textContent = --number + '%';
+              if (number <= percent) {
+                clearInterval(timer);
+                _.$progressText.textContent = percent + '%';
+              }
+            } else {
+              _.$progressText.textContent = ++number + '%';
+              if (number >= percent) {
+                clearInterval(timer);
+                _.$progressText.textContent = percent + '%';
+              }
+            }
+
+          }, 10);
+
+        _.$progressBar.style.backgroundSize = percent + '%, 100%';
       };
 
       return Quiz;
@@ -2011,37 +2309,17 @@ menu = new MobileMenu('.menu', {
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send();
 
-    // $quizBlock.addEventListener('init', function(event) {
-    //   changeQuizImage(event);
-    // });
-
-    // $quizBlock.addEventListener('nextstep', function(event) {
-    //   changeQuizImage(event);
-
-    //   scrollToTarget($quizBlock);
-    // });
-
-    // $quizBlock.addEventListener('prevstep', function(event) {
-    //   changeQuizImage(event);
-
-    //   scrollToTarget($quizBlock);
-    // });
-
     xhr.addEventListener('readystatechange', function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
         let response = JSON.parse(xhr.response);
 
         let quiz = new Quiz($quizBlock, {
           steps: response,
-          next: false,
-          // dots: true,
-          // counter: true,
-          // nextBtnClass: 'quiz__next btn',
+          finalStepTitle: 'Для получения расчета оставьте свои контактные данные',
+          nextBtnClass: 'quiz__next btn btn_green btn_text-black',
           $form: $quizForm,
           $result: $quizResult
         });
-
-        console.log(quiz);
       }
     });
   }
@@ -2049,43 +2327,104 @@ menu = new MobileMenu('.menu', {
 })();
 ;
 (function() {
-  let $filterForm = id('filter-form');
+  let $filterForm = id('filter-form'),
+    $housesCards = id('houses-cards'),
+    $loadmoreBtn = id('loadmore-btn');
 
   if ($filterForm) {
+    let housesOnPage = qa('.house', $housesCards),
+      totalCountPosts = $loadmoreBtn ? $loadmoreBtn.dataset.postsCount : housesOnPage.length,
+      numberposts = $filterForm.dataset.numberposts,
+      postType = $filterForm.dataset.postType,
+      loadHouses = function(byFilter) {
+        let xhr = new XMLHttpRequest(),
+          data;
+
+        if (byFilter) {
+          data = new FormData($filterForm);
+          data.append('action', 'print_houses');
+          data.append('numberposts', numberposts);
+          data.append('post_type', postType);
+          $filterFormPopup.closePopup();
+        } else {
+          let loadmoreFilter = $loadmoreBtn.dataset.filter;
+          data = 'action=print_houses&numberposts=' + numberposts + '&post_type=' + postType + '&offset=' + housesOnPage.length;
+          if (loadmoreFilter) {
+            data += '&filter=' + loadmoreFilter;
+          }
+        }
+
+        console.log(data);
+
+        xhr.open('POST', siteUrl + '/wp-admin/admin-ajax.php');
+        if (!byFilter) {
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        }
+        xhr.send(data);
+
+        xhr.addEventListener('readystatechange', function() {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            let houses = xhr.response;
+
+            if (byFilter) {
+              $housesCards.innerHTML = houses;
+            } else {
+              $housesCards.removeChild($loadmoreBtn);
+              $housesCards.insertAdjacentHTML('beforeend', houses);
+            }
+
+            $loadmoreBtn = id('loadmore-btn');
+            totalCountPosts = $loadmoreBtn && $loadmoreBtn.dataset.postsCount;
+
+            
+            housesOnPage = qa('.house', $housesCards);
+
+            // $housesCards.style.maxHeight = $housesCards.scrollHeight + 'px';
+
+            // if (housesOnPage.length == totalCountPosts) {
+            //   $loadmoreBtn.setAttribute('hidden', '');
+            // } else {
+            //   $loadmoreBtn.focus();
+            // }
+          }
+        });
+      };
+
     $filterFormPopup = new Popup('#filter-form', {
       openButtons: '#filter-form-call-btn',
       closeButtons: '.filter-form__close',
       clickToClose: false
     });
 
-    // Сворачиваем списки фильтров, при закрытии окна
-    // $filterFormPopup.addEventListener('popupclose', function() {
-    //   let $fieldSets = qa('.dropdown', $filterForm);
-    //   for (let i = $fieldSets.length - 1; i >= 0; i--) {
-    //     let dataHeight = $fieldSets[i].dataset.height;
-    //     $fieldSets[i].classList.remove('active');
-    //     if (dataHeight) {
-    //       $fieldSets[i].style.maxHeight = dataHeight + 'px';
-    //     }
-    //   }
-    // });
-
     $filterForm.addEventListener('submit', function() {
       event.preventDefault();
 
-      let xhr = new XMLHttpRequest();
+      loadHouses(true);
 
-      xhr.open($filterForm.method, $filterForm.action);
-      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      xhr.send();
+      // let xhr = new XMLHttpRequest(),
+      //   data = new FormData($filterForm);
 
-      xhr.addEventListener('readystatechange', function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          let response = xhr.response;
-          console.log(response);
-        }
-      });
+      // data.append('action', 'print_houses');
+      // data.append('numberposts', numberposts);
+      // data.append('post_type', postType);
+
+      // xhr.open('POST', siteUrl + '/wp-admin/admin-ajax.php');
+      // xhr.send(data);
+
+      // $filterFormPopup.closePopup();
+
+
     });
+
+    $housesCards.addEventListener('click', function(e) {
+      let target = e.target;
+
+      if (target.id === 'loadmore-btn') {
+        loadHouses(false);
+      }
+    });
+
+    // $housesCards.style.maxHeight = $housesCards.scrollHeight + 'px';
 
     $filterForm.addEventListener('click', function() {
       let target = event.target,
@@ -2146,5 +2485,76 @@ menu = new MobileMenu('.menu', {
   }
 
 })();
+;
+(function() {
+  let $newsSect = id('news-sect'),
+    $loadmoreBtn = id('loadmore-btn');
+
+  if ($newsSect && $loadmoreBtn) {
+    let totalCountPosts = $newsSect.dataset.postsCount,
+      numberposts = $newsSect.dataset.numberposts,
+      pageUri = $newsSect.dataset.pageUri,
+      postsOnPage = qa('.post', $newsSect),
+      loadPosts = function(event) {
+        $loadmoreBtn.classList.add('loading');
+        $loadmoreBtn.blur();
+
+        let xhr = new XMLHttpRequest(),
+          data = 'action=print_posts&numberposts=' + numberposts + '&offset=' + postsOnPage.length;
+
+        xhr.open('POST', siteUrl + '/wp-admin/admin-ajax.php');
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send(data);
+
+        xhr.addEventListener('readystatechange', function() {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            let posts = xhr.response;
+            
+            $loadmoreBtn.classList.remove('loading');
+            $loadmoreBtn.insertAdjacentHTML('beforebegin', posts);
+            postsOnPage = qa('.post', $newsSect);
+
+            $newsSect.style.maxHeight = $newsSect.scrollHeight + 'px';
+
+            if (postsOnPage.length == totalCountPosts) {
+              $loadmoreBtn.setAttribute('hidden', '');
+            } else {
+              $loadmoreBtn.focus();
+            }
+
+          }
+        });
+      };
+
+    $newsSect.style.maxHeight = $newsSect.scrollHeight + 'px';
+    $newsSect.removeAttribute('data-page-uri');
+
+    $loadmoreBtn.addEventListener('click', loadPosts);
+
+    console.log('totalCountPosts', totalCountPosts);
+    console.log('numberposts', numberposts);
+  }
+
+})();
+(function() {
+  thanksPopup = new Popup('.thanks-popup', {
+    closeButtons: '.thanks-popup__close'
+  });
+
+  thanksPopup.addEventListener('popupbeforeopen', function() {
+    clearTimeout(thanksPopupTimer);
+  });
+
+// Закрытие всех попапов вместе с закрытием окна спасибо
+  // thanksPopup.addEventListener('popupbeforeclose', function() {
+  //   let otherPopups = [callbackPopup, orderPopup];
+
+  //   for (let i = 0; i < otherPopups.length; i++) {
+  //     if (otherPopups[i].classList.contains('active')) {
+  //       otherPopups[i].closePopup();
+  //     }
+  //   }
+  // });
+})()
 
 });

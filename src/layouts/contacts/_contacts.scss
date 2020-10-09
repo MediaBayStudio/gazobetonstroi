@@ -17,6 +17,7 @@
   padding: 20px;
   background: $white;
   border-radius: 5px;
+  position: relative;
   &__field {
     width: 100%;
     // max-width: 320px;
@@ -42,6 +43,29 @@
   }
 }
 
+// .contacts-form,
+// .quiz-form {
+//   &__field {
+//     width: 100%;
+//     // max-width: 320px;
+//   }
+//   &__field_name {
+//     margin-bottom: 35px;
+//   }
+//   &__field_tel {
+//     margin-bottom: 35px;
+//   }
+//   &__field_email {
+//     margin-bottom: 35px;
+//   }
+//   &__bottom {
+//     margin: auto;
+//     max-width: 240px;
+//   }
+//   &__btn {
+//     margin: 20px auto 0;
+//   }
+// }
 
 
 .contacts-sect {

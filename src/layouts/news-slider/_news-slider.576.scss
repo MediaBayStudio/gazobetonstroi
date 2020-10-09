@@ -2,3 +2,25 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.news-slider {
+  flex-flow: row wrap;
+  align-items: center;
+  &__title {
+    margin: 0 0 30px;
+  }
+  &__nav {
+    margin: 0 0 30px auto;
+  }
+  &__link {
+    margin: 0 0 30px auto;
+  }
+  &__posts {
+  }
+}
+
+#news-slider {
+  .slick-slide {
+    margin: 0 20px 0 0;
+  }
+}

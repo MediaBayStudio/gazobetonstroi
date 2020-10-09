@@ -38,3 +38,25 @@
     // margin: auto 0 0;
   }
 }
+
+
+.post {
+  width: (940px - 40px) / 3;
+  &:nth-child(n) {
+    margin-right: 20px;
+  }
+  &:nth-child(3n+3) {
+    margin-right: 0;
+  }
+  &:last-child {}
+
+  &__img {
+    width: (940px - 40px) / 3;
+  }
+
+  &__title {}
+
+  &__descr {}
+
+  &__date {}
+}

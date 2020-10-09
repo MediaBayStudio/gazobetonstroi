@@ -2,3 +2,40 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.material-sect {
+  &__decor {
+    width: 200px;
+  }
+
+  &__text {
+    width: 715px;
+  }
+
+  &__title {
+    margin: 0 0 40px;
+  }
+
+  &__descr {
+    &:nth-last-child(n+2) {}
+
+    >.small {}
+  }
+
+  &__images {
+    margin: 0 0 0 225px;
+  }
+
+  &__figure {
+    width: 250px;
+    &:nth-last-of-type(n+2) {
+      margin: 0 0 30px;
+    }
+  }
+
+  &__img {}
+
+  &__figcaption {}
+
+  &__nav {}
+}

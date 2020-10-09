@@ -31,3 +31,18 @@
 .turnkey-sect__btn:hover {
   color: $green;
 }
+
+.quiz__radio:hover > .quiz__radio-inp {
+  background: $black;
+  box-shadow: inset 0 0 0 5px $white;
+  transition: box-shadow .5s, border-color .5s, background 0s 0s;
+}
+
+.post__link:hover,
+.post__link:hover +.post__link {
+  color: $green;
+}
+
+.close:hover {
+  stroke: $green;
+}

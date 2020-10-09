@@ -2,3 +2,22 @@
 @import '../../assets/colors';
 @import '../../assets/mixins';
 @import '../../assets/variables';
+
+
+.popup {
+  &.active {
+  }
+  &__cnt {
+  }
+  &__close {
+    &-block {
+
+    }
+  }
+  &__title {
+    font-size: 20px;
+  }
+  &__descr {
+    font-size: 18px;
+  }
+}

@@ -2,7 +2,6 @@
 /*
   Template name: Страница
 */
-
   get_header();
 
   $sections = get_field( 'sections' );

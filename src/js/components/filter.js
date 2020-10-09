@@ -1,42 +1,103 @@
 ;
 (function() {
-  let $filterForm = id('filter-form');
+  let $filterForm = id('filter-form'),
+    $housesCards = id('houses-cards'),
+    $loadmoreBtn = id('loadmore-btn');
 
   if ($filterForm) {
+    let housesOnPage = qa('.house', $housesCards),
+      totalCountPosts = $loadmoreBtn ? $loadmoreBtn.dataset.postsCount : housesOnPage.length,
+      numberposts = $filterForm.dataset.numberposts,
+      postType = $filterForm.dataset.postType,
+      loadHouses = function(byFilter) {
+        let xhr = new XMLHttpRequest(),
+          data;
+
+        if (byFilter) {
+          data = new FormData($filterForm);
+          data.append('action', 'print_houses');
+          data.append('numberposts', numberposts);
+          data.append('post_type', postType);
+          $filterFormPopup.closePopup();
+        } else {
+          let loadmoreFilter = $loadmoreBtn.dataset.filter;
+          data = 'action=print_houses&numberposts=' + numberposts + '&post_type=' + postType + '&offset=' + housesOnPage.length;
+          if (loadmoreFilter) {
+            data += '&filter=' + loadmoreFilter;
+          }
+        }
+
+        console.log(data);
+
+        xhr.open('POST', siteUrl + '/wp-admin/admin-ajax.php');
+        if (!byFilter) {
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        }
+        xhr.send(data);
+
+        xhr.addEventListener('readystatechange', function() {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            let houses = xhr.response;
+
+            if (byFilter) {
+              $housesCards.innerHTML = houses;
+            } else {
+              $housesCards.removeChild($loadmoreBtn);
+              $housesCards.insertAdjacentHTML('beforeend', houses);
+            }
+
+            $loadmoreBtn = id('loadmore-btn');
+            totalCountPosts = $loadmoreBtn && $loadmoreBtn.dataset.postsCount;
+
+            
+            housesOnPage = qa('.house', $housesCards);
+
+            // $housesCards.style.maxHeight = $housesCards.scrollHeight + 'px';
+
+            // if (housesOnPage.length == totalCountPosts) {
+            //   $loadmoreBtn.setAttribute('hidden', '');
+            // } else {
+            //   $loadmoreBtn.focus();
+            // }
+          }
+        });
+      };
+
     $filterFormPopup = new Popup('#filter-form', {
       openButtons: '#filter-form-call-btn',
       closeButtons: '.filter-form__close',
       clickToClose: false
     });
 
-    // Сворачиваем списки фильтров, при закрытии окна
-    // $filterFormPopup.addEventListener('popupclose', function() {
-    //   let $fieldSets = qa('.dropdown', $filterForm);
-    //   for (let i = $fieldSets.length - 1; i >= 0; i--) {
-    //     let dataHeight = $fieldSets[i].dataset.height;
-    //     $fieldSets[i].classList.remove('active');
-    //     if (dataHeight) {
-    //       $fieldSets[i].style.maxHeight = dataHeight + 'px';
-    //     }
-    //   }
-    // });
-
     $filterForm.addEventListener('submit', function() {
       event.preventDefault();
 
-      let xhr = new XMLHttpRequest();
+      loadHouses(true);
 
-      xhr.open($filterForm.method, $filterForm.action);
-      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      xhr.send();
+      // let xhr = new XMLHttpRequest(),
+      //   data = new FormData($filterForm);
 
-      xhr.addEventListener('readystatechange', function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          let response = xhr.response;
-          console.log(response);
-        }
-      });
+      // data.append('action', 'print_houses');
+      // data.append('numberposts', numberposts);
+      // data.append('post_type', postType);
+
+      // xhr.open('POST', siteUrl + '/wp-admin/admin-ajax.php');
+      // xhr.send(data);
+
+      // $filterFormPopup.closePopup();
+
+
     });
+
+    $housesCards.addEventListener('click', function(e) {
+      let target = e.target;
+
+      if (target.id === 'loadmore-btn') {
+        loadHouses(false);
+      }
+    });
+
+    // $housesCards.style.maxHeight = $housesCards.scrollHeight + 'px';
 
     $filterForm.addEventListener('click', function() {
       let target = event.target,

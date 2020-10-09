@@ -2,3 +2,46 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.material-sect {
+  &__decor {
+    width: 230px;
+  }
+
+  &__text {
+    display: inline-block;
+    width: 540px;
+  }
+
+  &__title {}
+
+  &__descr {
+    &:nth-last-child(n+2) {
+      margin: 0 0 25px;
+    }
+
+    >.small {}
+  }
+
+  &__images {
+    margin: 0 0 0 60px;
+    display: inline-flex;
+    flex-flow: column;
+    vertical-align: bottom;
+  }
+
+  &__figure {
+    width: 280px;
+    &:nth-last-of-type(n+2) {
+      margin: 0 0 70px;
+    }
+  }
+
+  &__img {
+    margin: 0 0 30px;
+  }
+
+  &__figcaption {}
+
+  &__nav {}
+}

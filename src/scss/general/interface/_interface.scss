@@ -7,14 +7,74 @@
 .filter-form__reset:focus,
 .btn:focus,
 .details__btn:focus,
+.quiz__prev:focus,
 .details__text:focus,
 .turnkey-sect__btn:focus,
 .turnkey-sect__tab-cnt:focus,
+.news-sect__loadmore:focus,
 .check:focus-within,
 .fileupload:focus-within,
 .quiz__radio:focus-within,
+.quiz__text:focus-within,
+.post:focus-within,
 .quiz__select:focus-within {
   outline: 1px dotted $black;
+}
+
+.loadmore {
+  margin: 40px auto 0;
+  display: block;
+  font: 500 18px/100% Montserrat;
+  text-align: center;
+  position: relative;
+
+  &::after {
+    // Часть стилей переехали в forms.scss
+    content: '';
+    position: absolute;
+    top: calc(50% - 15px);
+    left: calc(50% - 15px);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .5s;
+  }
+
+  &__text {
+    transition: opacity 0.5s;
+    pointer-events: none;
+  }
+
+  &__icon {
+    margin: 10px auto 0;
+    display: block;
+    width: 36px;
+    height: 10px;
+    object-fit: contain;
+    transition: opacity 0.5s;
+    pointer-events: none;
+  }
+
+  &[hidden] {
+    display: none;
+  }
+
+  &.loading {
+    pointer-events: none;
+
+    >.loadmore__text,
+    >.loadmore__icon {
+      opacity: .5;
+    }
+
+    &::after {
+      opacity: 1;
+    }
+  }
+}
+
+[hidden],
+.quiz__body[hidden] {
+  display: none;
 }
 
 a[href="#"] {
@@ -62,6 +122,7 @@ body {
 }
 
 .sect {
+
   // стили переехали в assets/grid.scss
   &_bg {}
 
@@ -87,6 +148,7 @@ body {
 .house {
   display: inline-flex;
   flex-flow: column;
+
   &__link {
     padding: 15px 0 0;
     width: 100%;
@@ -148,6 +210,45 @@ body {
     width: 100%;
     // height: 100%;
     object-fit: cover;
+  }
+}
+
+.post {
+  margin: 0 0 45px;
+  width: 280px;
+
+  &:last-of-type {
+    margin: 0;
+  }
+
+  &__img {
+    margin: 0 0 25px;
+    max-width: 100%;
+    object-fit: cover;
+  }
+
+  &__title {
+    margin: 0 0 15px;
+    font: bold 16px/140% Montserrat;
+    transition: color 0.5s;
+  }
+
+  &__descr {
+    margin: 0 0 25px;
+    font: 14px/160% Montserrat;
+  }
+
+  &__date {
+    font: 12px/100% Montserrat;
+    color: $grey;
+  }
+
+  &__link {
+    display: block;
+
+    &:focus {
+      outline: 0;
+    }
   }
 }
 

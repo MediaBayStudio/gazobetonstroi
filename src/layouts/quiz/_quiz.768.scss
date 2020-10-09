@@ -2,3 +2,98 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.quiz-form {
+  // Стили переехали в callback.scss
+}
+
+.quiz-sect {
+
+  &_green {}
+
+  &__text {}
+
+  &__title {
+    margin: 0 0 15px;
+  }
+
+  &__descr {
+    margin: 0 0 15px;
+    padding: 0 0 15px;
+    font: 18px/140% Montserrat; // такая запись короче переопределения 2-х св-тв
+    border-bottom: 1px solid;
+  }
+
+  &__quiz {
+    &.final-step {
+      > .quiz__header {
+        margin: 0 0 50px;
+      }
+      > .quiz__footer {
+        margin: 45px 0 0;
+      }
+    }
+  }
+
+  &__img {}
+}
+
+.quiz-form-wrap {}
+
+.quiz {
+  &__form-result {}
+}
+
+
+.quiz {
+  &__header {
+    margin: 0 0 40px;
+  }
+
+  &__step-title {
+    font-size: 18px;
+  }
+
+  &__body,
+  &__group-inputs {}
+
+  &__group-inputs {}
+
+  &__radio,
+  &__select {
+    width: (688px - 50px) / 2;
+    margin-right: 50px;
+    &:last-child,
+    &:nth-child(even) {
+    }
+    &:first-of-type {
+      margin-right: 50px;
+    }
+  }
+
+  &__text {
+    width: (688px - 50px) / 2;
+  }
+
+  &__radio-inp {}
+
+  &__radio-pseudo-inp {}
+
+  &__radio-title {}
+
+  &__select {
+    // background: $white;
+  }
+
+  &__select-inp {}
+
+  &__footer {}
+
+  &__prev {
+    &.disabled {}
+  }
+}
+
+.required {}
+
+.disabled {}

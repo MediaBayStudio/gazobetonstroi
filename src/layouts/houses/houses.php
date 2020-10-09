@@ -1,41 +1,18 @@
 <?php
   $post_type = $section['post_type'];
-  $numberposts = $section['numberposts'];
-
-  if ( $_GET ) {
-    // var_dump( $_GET );
-    $filter = [];
-    foreach ( $_GET as $cat_slug => $cat_id ) {
-      if ( is_array( $cat_id ) ) {
-        foreach ( $cat_id as $id ) {
-          $filter[] = $id;
-        }
-      } else {
-        $filter[] = $cat_id;
-      }
-    }
-
-    $filter = [ [
-      'taxonomy' => 'house_properties',
-      'terms' => implode( ',', $filter )
-    ] ];
-
-  } else {
-    $filter = '';
-  }
-  #var_dump( $filter );
-
+  // $numberposts = $section['numberposts'];
+  $numberposts = 2;
+  $count_posts = wp_count_posts( $post_type )->publish;
 
   $posts = get_posts( [
     'post_type' => $post_type,
-    'numberposts' => $numberposts,
-    'tax_query' => $filter
-  ] ) ?>
+    'numberposts' => $numberposts
+  ] ); ?>
 
   <?php #var_dump( $posts ) ?>
 
 <div class="houses container">
-  <form action="<?php the_permalink() ?>" method="get" class="filter-form popup" id="filter-form">
+  <form action="<?php the_permalink() ?>" method="get" class="filter-form popup" id="filter-form" data-numberposts="<?php echo $numberposts ?>" data-post-type="<?php echo $post_type ?>">
     <button type="button" class="filter-form__close">
       <img src="<?php echo $template_directory ?>/img/icon-close.svg" alt="Иконка">
     </button>
@@ -75,7 +52,7 @@
     foreach ( $parent_terms as $term ) :
       $childs = $child_terms[ $term['id'] ];
       $childs_count = count( $childs );
-      $fieldset_class = $childs_count > 3 ? ' dropdown' : ''; ?>
+      $fieldset_class = $childs_count > 3 ? ' dropdown' : '' ?>
       <fieldset class="filter-form__group<?php echo $fieldset_class ?>">
         <legend class="filter-form__group-title"><?php echo $term['title'] ?></legend> <?php
         foreach ( $childs as $child ) : ?>
@@ -93,7 +70,7 @@
      </div>
   </form>
   <button type="button" id="filter-form-call-btn"><img src="#" data-src="<?php echo $template_directory ?>/img/icon-filter.svg" alt="" class="lazy" style="padding-right:10px">Фильтр</button>
-  <div class="houses__cards"> <?php
-    print_houses( $posts, 'houses' ) ?>
+  <div class="houses__cards" id="houses-cards"> <?php
+    print_houses( $posts, 'houses', $numberposts, $count_posts ) ?>
   </div>
 </div>
