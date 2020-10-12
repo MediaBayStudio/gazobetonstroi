@@ -2,3 +2,23 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+
+.projects-sect {
+}
+
+.project {
+  &__slider {
+  }
+  &__nav {
+    
+  }
+  &__img {
+    height: 390px;
+  }
+  &__title {
+    margin: 40px 0 25px;
+  }
+  &__descr {
+  }
+}

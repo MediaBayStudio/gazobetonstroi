@@ -1,0 +1,22 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.gallery-popup {
+  &__cnt {
+    max-width: 780px;
+    height: 85vh;
+    height: calc(var(--vh, 1vh) * 85);
+    max-height: 85vh;
+    max-height: calc(var(--vh, 1vh) * 85);
+  }
+
+  &__close {}
+
+  &__title {}
+
+  &__img {}
+
+  &__descr {}
+}

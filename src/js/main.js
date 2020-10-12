@@ -20,10 +20,13 @@ let
     isYandex: !!window.yandex,
     isMac: window.navigator.platform.toUpperCase().indexOf('MAC') >= 0
   },
+  smallArrowSvg,
+  createArrow,
   lazy,
   menu,
   hdr,
   overlay,
+  galleryPopup,
   thanksPopup,
   thanksPopupTimer,
   body = document.body,
@@ -496,9 +499,17 @@ menu = new MobileMenu('.menu', {
 })();
 ;
 (function() {
+  smallArrowSvg = '<svg class="arrow__svg" width="18" height="8" viewBox="0 0 18 8" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.3536 4.52494C17.5488 4.32968 17.5488 4.0131 17.3536 3.81783L14.1716 0.635853C13.9763 0.440591 13.6597 0.440591 13.4645 0.635853C13.2692 0.831115 13.2692 1.1477 13.4645 1.34296L16.2929 4.17139L13.4645 6.99981C13.2692 7.19508 13.2692 7.51166 13.4645 7.70692C13.6597 7.90218 13.9763 7.90218 14.1716 7.70692L17.3536 4.52494ZM0 4.67139H17V3.67139H0L0 4.67139Z" fill="currentColor"/></svg>';
+
+  createArrow = function(className, inside) {
+
+    className = (className.indexOf('prev') === -1 ? 'next ' : 'prev ') + className;
+
+    return `<button type="button" class="arrow arrow__${className}">${inside}</button>`;
+  };
+
   let nextArrow = '<button type="button" class="arrow"></button>',
     prevArrow = '<button type="button" class="arrow"></button>',
-    smallArrowSvg = '<svg class="arrow__svg" width="18" height="8" viewBox="0 0 18 8" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.3536 4.52494C17.5488 4.32968 17.5488 4.0131 17.3536 3.81783L14.1716 0.635853C13.9763 0.440591 13.6597 0.440591 13.4645 0.635853C13.2692 0.831115 13.2692 1.1477 13.4645 1.34296L16.2929 4.17139L13.4645 6.99981C13.2692 7.19508 13.2692 7.51166 13.4645 7.70692C13.6597 7.90218 13.9763 7.90218 14.1716 7.70692L17.3536 4.52494ZM0 4.67139H17V3.67139H0L0 4.67139Z" fill="currentColor"/></svg>',
     longArrowSvg = '<svg class="arrow__svg" width="106" height="9" fill="url(#gradient)" xmlns="http://www.w3.org/2000/svg"><path d="M105.354 4.828a.5.5 0 000-.707L102.172.939a.501.501 0 00-.708.707l2.829 2.828-2.829 2.829a.5.5 0 00.708.707l3.182-3.182zM0 4.974h105v-1H0v1z" fill="inherit" /><defs><linearGradient id="gradient"><stop offset="0%" style="stop-color: transparent"></stop><stop offset="50%" style="stop-color: transparent"></stop><stop offset="50%" style="stop-color: currentColor"></stop><stop offset="100%" style="stop-color: currentColor"></stop></linearGradient></defs></svg>',
     cornerArrowSvg = '<svg class="arrow__svg" width="11" height="20" viewBox="0 0 11 20" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M1 1l9 9-9 9" stroke="currentColor"/></svg>',
 
@@ -550,18 +561,35 @@ menu = new MobileMenu('.menu', {
     newsSelector = '.post',
     newsSlides = newsSlider && qa(newsSelector, newsSlider),
 
-    createArrow = function(className, inside) {
-
-      className = (className.indexOf('prev') === -1 ? 'next ' : 'prev ') + className;
-
-      return `<button type="button" class="arrow arrow__${className}">${inside}</button>`;
-    },
     buildSliders = function() {
       for (let i = buildSlidersFunctions.length - 1; i >= 0; i--) {
         buildSlidersFunctions[i]();
       }
     },
     buildSlidersFunctions = [];
+
+  $('.project__slider').each(function() {
+    let $slider = $(this),
+      slidesSelector = '.project__img',
+      $slides = qa(slidesSelector, $slider[0]),
+      counterCurrentSlide = q(counterCurrentSelector, $slider[0]),
+      counterTotalSlides = q(counterTotalSelector, $slider[0]);
+
+    $slider.slick({
+      appendArrows: $('.slider-nav', $slider),
+      infinite: false,
+      slide: slidesSelector,
+      draggable: false,
+      prevArrow: createArrow('project__prev', smallArrowSvg),
+      nextArrow: createArrow('project__next', smallArrowSvg),
+    });
+
+    counterTotalSlides.textContent = $slides.length;
+
+    $slider.on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+      counterCurrentSlide.textContent = nextSlide + 1;
+    });
+  })
 
   if (reviewsSlider && reviewsSlides.length && reviewsSlides.length > 1) {
     let $reviewsSlider = $(reviewsSlider),
@@ -2333,59 +2361,98 @@ menu = new MobileMenu('.menu', {
 
   if ($filterForm) {
     let housesOnPage = qa('.house', $housesCards),
-      totalCountPosts = $loadmoreBtn ? $loadmoreBtn.dataset.postsCount : housesOnPage.length,
+      totalHouses = 0,
+      $filterHint = id('filter-form-hint'),
       numberposts = $filterForm.dataset.numberposts,
       postType = $filterForm.dataset.postType,
+      filterTimer,
+      setCountHouses = function(event) {
+        if (event && event.type === 'change') {
+          clearTimeout(filterTimer);
+
+          filterTimer = setTimeout(function() {
+            $filterForm.classList.add('loading');
+
+            let eventTragetParent = event.target.parentElement,
+              xhr = new XMLHttpRequest(),
+              data = new FormData($filterForm);
+
+            data.append('action', 'get_count_houses');
+            data.append('post_type', postType);
+
+            xhr.open('POST', siteUrl + '/wp-admin/admin-ajax.php');
+            xhr.send(data);
+
+            xhr.addEventListener('readystatechange', function() {
+              if (xhr.readyState === 4 && xhr.status === 200) {
+                let countHouses = xhr.response,
+                  coords = eventTragetParent.offsetTop;
+
+                $filterForm.classList.remove('loading');
+
+                $filterHint.style.top = coords + 'px';
+                $filterHint.style.opacity = 1;
+
+                $filterHint.dataset.countHouses = countHouses;
+              }
+            });
+          }, 1000);
+
+        }
+      },
       loadHouses = function(byFilter) {
+        $housesCards.classList.add('loading');
+        $filterForm.classList.add('loading');
+
         let xhr = new XMLHttpRequest(),
-          data;
+          data = new FormData($filterForm);
+
+        data.append('action', 'print_houses');
+        data.append('numberposts', numberposts);
+        data.append('post_type', postType);
 
         if (byFilter) {
-          data = new FormData($filterForm);
-          data.append('action', 'print_houses');
-          data.append('numberposts', numberposts);
-          data.append('post_type', postType);
           $filterFormPopup.closePopup();
         } else {
-          let loadmoreFilter = $loadmoreBtn.dataset.filter;
-          data = 'action=print_houses&numberposts=' + numberposts + '&post_type=' + postType + '&offset=' + housesOnPage.length;
-          if (loadmoreFilter) {
-            data += '&filter=' + loadmoreFilter;
-          }
+          data.append('offset', housesOnPage.length);
         }
-
-        console.log(data);
 
         xhr.open('POST', siteUrl + '/wp-admin/admin-ajax.php');
-        if (!byFilter) {
-          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        }
         xhr.send(data);
 
         xhr.addEventListener('readystatechange', function() {
           if (xhr.readyState === 4 && xhr.status === 200) {
+
+            $housesCards.classList.remove('loading');
+            $filterForm.classList.remove('loading');
+
             let houses = xhr.response;
 
             if (byFilter) {
               $housesCards.innerHTML = houses;
             } else {
-              $housesCards.removeChild($loadmoreBtn);
+              if ($housesCards.contains($loadmoreBtn)) {
+                $housesCards.removeChild($loadmoreBtn);
+              }
               $housesCards.insertAdjacentHTML('beforeend', houses);
             }
 
             $loadmoreBtn = id('loadmore-btn');
-            totalCountPosts = $loadmoreBtn && $loadmoreBtn.dataset.postsCount;
 
-            
             housesOnPage = qa('.house', $housesCards);
 
-            // $housesCards.style.maxHeight = $housesCards.scrollHeight + 'px';
+            $filterHint.style.opacity = 0;
 
-            // if (housesOnPage.length == totalCountPosts) {
-            //   $loadmoreBtn.setAttribute('hidden', '');
-            // } else {
-            //   $loadmoreBtn.focus();
-            // }
+            if ($loadmoreBtn) {
+              $loadmoreBtn.dataset.housesOnPage = housesOnPage.length;
+              totalHouses = $loadmoreBtn.dataset.totalHousesCount;
+
+              if (housesOnPage.length < totalHouses) {
+                $loadmoreBtn.removeAttribute('hidden');
+              } else {
+                $loadmoreBtn.setAttribute('hidden', '');
+              }
+            }
           }
         });
       };
@@ -2398,22 +2465,7 @@ menu = new MobileMenu('.menu', {
 
     $filterForm.addEventListener('submit', function() {
       event.preventDefault();
-
       loadHouses(true);
-
-      // let xhr = new XMLHttpRequest(),
-      //   data = new FormData($filterForm);
-
-      // data.append('action', 'print_houses');
-      // data.append('numberposts', numberposts);
-      // data.append('post_type', postType);
-
-      // xhr.open('POST', siteUrl + '/wp-admin/admin-ajax.php');
-      // xhr.send(data);
-
-      // $filterFormPopup.closePopup();
-
-
     });
 
     $housesCards.addEventListener('click', function(e) {
@@ -2444,6 +2496,17 @@ menu = new MobileMenu('.menu', {
         targetParent.style.maxHeight = height + 'px';
       }
     });
+
+    $filterForm.addEventListener('reset', function() {
+      clearTimeout(filterTimer);
+
+      filterTimer = setTimeout(function() {
+        $filterHint.style.opacity = 0;
+        loadHouses(true);
+      });
+    });
+
+    $filterForm.addEventListener('change', setCountHouses);
 
     let sticky = function($el, fixThresholdDir, className) {
       $el = typeof $el === 'string' ? q($el) : $el;
@@ -2556,5 +2619,78 @@ menu = new MobileMenu('.menu', {
   //   }
   // });
 })()
+;
+(function() {
+  let projectsSect = id('projects-sect');
+
+  if (projectsSect) {
+
+    galleryPopup = new Popup('.gallery-popup', {
+      openButtons: '.project__img',
+      closeButtons: '.gallery-popup__close'
+    });
+
+    let galleryPopupCnt = q('.gallery-popup__cnt', galleryPopup),
+      $galleryPopupCnt = $(galleryPopupCnt);
+
+    galleryPopup.addEventListener('popupbeforeopen', function() {
+      let caller = galleryPopup.caller,
+        callerParent = caller.parentElement,
+        allSlides = qa('.project__img', callerParent);
+
+
+      if (galleryPopupCnt.classList.contains('slick-slider')) {
+
+      } else {
+        let initialSlide,
+          slidesClass = 'gallery-popup__img',
+          counterCurrentSlide = q('.slider-nav__counter-current', galleryPopupCnt),
+          counterTotalSlides = q('.slider-nav__counter-total', galleryPopupCnt),
+          counterTotal = allSlides.length;
+
+        counterTotalSlides.textContent = counterTotal;
+
+        for (let i = 0, len = allSlides.length; i < len; i++) {
+          let img = document.createElement('img');
+
+          img.classList.add(slidesClass);
+          img.src = allSlides[i].src;
+          img.alt = '';
+
+          galleryPopupCnt.appendChild(img);
+
+          if (allSlides[i].classList.contains('slick-current')) {
+            initialSlide = i;
+          }
+
+        }
+
+        $galleryPopupCnt.slick({
+          slide: '.' + slidesClass,
+          initialSlide: initialSlide,
+          infinite: false,
+          appendArrows: $('.gallery-popup__nav'),
+          prevArrow: createArrow('gallery-popup__prev', smallArrowSvg),
+          nextArrow: createArrow('gallery-popup__next', smallArrowSvg),
+          // mobileFirst: true,
+          // responsive: [{
+          //   breakpoint: 1023.98,
+          //   settings: {
+          //   }
+          // }]
+        });
+
+        $galleryPopupCnt.on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+          counterCurrentSlide.textContent = nextSlide + 1;
+        });
+      }
+
+
+
+
+      // console.log(callerIndex);
+    });
+  }
+})();
 
 });

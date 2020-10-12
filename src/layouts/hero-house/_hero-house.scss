@@ -19,6 +19,7 @@
     }
   }
   &__img {
+    margin-left: auto;
     max-width: 100%;
     object-fit: cover;
   }
@@ -27,7 +28,11 @@
     font: 600 22px/140% Montserrat;
   }
   &__descr {
-    font: 400 16px/140% Montserrat;
+    // font: 400 16px/140% Montserrat;
+    &-block {
+      margin-top: 30px;
+      font: 16px/150% Montserrat;
+    }
   }
   &__list {
     margin-top: 35px;

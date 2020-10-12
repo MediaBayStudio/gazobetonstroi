@@ -29,5 +29,6 @@ document.addEventListener('DOMContentLoaded', function() {
 //=include filter.js
 //=include loadmore.js
 //=include popups.js
+//=include projectsGallery.js
 
 });

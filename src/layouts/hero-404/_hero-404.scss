@@ -2,3 +2,28 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.hero-404 {
+  flex-grow: 1;
+  padding-top: 50px;
+  padding-bottom: 250px;
+  font: 16px/140% Montserrat;
+  color: $black;
+  background: #F8FAF1 url('../img/404.png') 100% 105%/280px no-repeat;
+  ~.ftr {
+    margin: auto 0 0;
+  }
+  &__title {
+    margin: 0 0 15px;
+    font-size: 28px;
+    line-height: 140%;
+  }
+  &__descr {
+    max-width: 280px;
+  }
+  &__link {
+    margin-top: 40px;
+    width: 230px;
+    height: 45px;
+  }
+}

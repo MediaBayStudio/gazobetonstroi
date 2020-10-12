@@ -10,9 +10,16 @@
   &__cards {
   }
   &__house {
+    
+  }
+}
+
+.projects,
+.cases {
+  &__house {
     width: 300px;
     margin: 0 20px 40px 0;
-    &:nth-last-child(-n+2) {
+    &:nth-last-of-type(-n+2) {
       margin-bottom: 0;
     }
     > .house__link {
@@ -41,10 +48,13 @@
   padding: 0 20px 20px;
   flex-shrink: 0;
   width: 300px;
-  position: static;
+  position: relative;
   visibility: visible;
   overflow: visible;
   opacity: 1;
+  &::after {
+    position: absolute;
+  }
   &.fixed {
     position: fixed;
     top: 80px;
@@ -76,7 +86,7 @@
     }
   }
   &__bottom {
-    margin-top: 35px;
+    // margin-top: 35px;
   }
   &__btn {
   }

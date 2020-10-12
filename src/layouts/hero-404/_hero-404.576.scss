@@ -2,3 +2,20 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.hero-404 {
+  padding-top: 75px;
+  padding-bottom: 275px;
+  font-size: 17px;
+  background-size: 350px;
+  ~.ftr {}
+
+  &__title {
+    margin: 0 0 20px;
+    font-size: 34px;
+  }
+
+  &__descr {}
+
+  &__link {}
+}

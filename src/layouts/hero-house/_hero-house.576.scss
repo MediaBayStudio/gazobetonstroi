@@ -23,7 +23,11 @@
 
   }
   &__descr {
-
+    &-block {
+      margin-top: 50px;
+      display: flex;
+      align-items: center;
+    }
   }
   &__list {
 

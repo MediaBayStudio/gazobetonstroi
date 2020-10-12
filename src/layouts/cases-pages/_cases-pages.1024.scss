@@ -2,3 +2,28 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+
+.projects-sect {
+}
+
+.project {
+  margin-right: 20px;
+  width: (940px - 20px) / 2;
+  &:nth-child(2n) {
+    margin-right: 0;
+  }
+  &__slider {
+  }
+  &__nav {
+    
+  }
+  &__img {
+    height: 260px;
+  }
+  &__title {
+    margin: 25px 0 15px;
+  }
+  &__descr {
+  }
+}

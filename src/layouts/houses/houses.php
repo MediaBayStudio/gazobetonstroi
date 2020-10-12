@@ -13,6 +13,7 @@
 
 <div class="houses container">
   <form action="<?php the_permalink() ?>" method="get" class="filter-form popup" id="filter-form" data-numberposts="<?php echo $numberposts ?>" data-post-type="<?php echo $post_type ?>">
+    <button class="filter-form-hint" id="filter-form-hint" data-count-houses="0">Показать</button>
     <button type="button" class="filter-form__close">
       <img src="<?php echo $template_directory ?>/img/icon-close.svg" alt="Иконка">
     </button>
@@ -65,12 +66,12 @@
     endforeach ?>
 
      <div class="filter-form__bottom">
-      <button class="filter-form__btn btn btn_green btn_text-white">Применить</button>
+      <!-- <button class="filter-form__btn btn btn_green btn_text-white">Применить</button> -->
       <button type="reset" class="filter-form__reset text_underline">Сбросить фильтр</button>
      </div>
   </form>
   <button type="button" id="filter-form-call-btn"><img src="#" data-src="<?php echo $template_directory ?>/img/icon-filter.svg" alt="" class="lazy" style="padding-right:10px">Фильтр</button>
   <div class="houses__cards" id="houses-cards"> <?php
-    print_houses( $posts, 'houses', $numberposts, $count_posts ) ?>
+    print_houses( $posts, $post_type, $post_type, $numberposts, $count_posts ) ?>
   </div>
 </div>

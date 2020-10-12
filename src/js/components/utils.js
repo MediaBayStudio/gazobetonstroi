@@ -17,10 +17,13 @@ let
     isYandex: !!window.yandex,
     isMac: window.navigator.platform.toUpperCase().indexOf('MAC') >= 0
   },
+  smallArrowSvg,
+  createArrow,
   lazy,
   menu,
   hdr,
   overlay,
+  galleryPopup,
   thanksPopup,
   thanksPopupTimer,
   body = document.body,

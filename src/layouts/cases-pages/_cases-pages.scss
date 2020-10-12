@@ -2,3 +2,36 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+
+.projects-sect {
+}
+
+.project {
+  width: 280px;
+  font: 14px/140% Montserrat;
+  &:nth-last-child(n+2) {
+    margin: 0 0 50px;
+  }
+  &__slider {
+    display: flex;
+    flex-flow: column;
+    overflow: hidden;
+  }
+  &__nav {
+    margin: 15px auto 0;
+    order: 10;
+  }
+  &__img {
+    object-fit: cover;
+    height: 180px;
+    cursor: zoom-in;
+  }
+  &__title {
+    margin: 30px 0 15px;
+    display: block;
+    font: 500 18px/160% Montserrat;
+  }
+  &__descr {
+  }
+}

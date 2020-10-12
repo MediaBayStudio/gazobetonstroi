@@ -10,6 +10,13 @@
   &__cards {
   }
   &__house {
+    
+  }
+}
+
+.projects,
+.cases {
+  &__house {
     width: (688px - 20px) / 2;
   }
 }

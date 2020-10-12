@@ -73,3 +73,6 @@ require $template_dir . '/inc/print-posts.php';
 
 // Функция вывода постов-домов
 require $template_dir . '/inc/print-houses.php';
+
+// Функция получения кол-ва домов по фильтрам
+require $template_dir . '/inc/get-count-houses.php';

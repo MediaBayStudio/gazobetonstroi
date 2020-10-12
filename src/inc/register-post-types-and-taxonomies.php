@@ -2,14 +2,6 @@
 
 add_action( 'init', function() {
 
-  $taxonomies_labels = [
-    'house_material',
-    'house_floors',
-    'house_area',
-    'house_bedrooms',
-    // 'house_split_level'
-  ];
-
   register_post_type( 'projects', [
     'label'  => null,
     'labels' => [
@@ -35,21 +27,45 @@ add_action( 'init', function() {
     'menu_icon'           => null,
     'hierarchical'        => false,
     'supports'            => [ 'title', 'thumbnail' ],
-    'taxonomies'          => [
-      // 'house_material',
-      // 'house_floors',
-      // 'house_area',
-      // 'house_bedrooms',
-      // 'house_split_level',
-      'house_properties'
+    'taxonomies'          => [ 'house_properties' ],
+    'has_archive'         => false,
+    'rewrite'             => true,
+    'query_var'           => true
+  ] );
+
+  register_post_type( 'cases', [
+    'label'  => null,
+    'labels' => [
+      'name'               => 'Наши проекты',
+      'singular_name'      => 'Проект',
+      'add_new'            => 'Добавить',
+      'add_new_item'       => 'Добавление',
+      'edit_item'          => 'Редактирование',
+      'new_item'           => 'Новое ',
+      'view_item'          => 'Смотреть',
+      'search_items'       => 'Искать',
+      'not_found'          => 'Не найдено',
+      'not_found_in_trash' => 'Не найдено в корзине',
+      'parent_item_colon'  => '',
+      'menu_name'          => 'Наши проекты',
     ],
+    'description'         => '',
+    'public'              => true,
+    'show_in_menu'        => null,
+    'show_in_rest'        => null,
+    'rest_base'           => null,
+    'menu_position'       => null,
+    'menu_icon'           => null,
+    'hierarchical'        => false,
+    'supports'            => [ 'title', 'thumbnail' ],
+    'taxonomies'          => [ 'house_properties' ],
     'has_archive'         => false,
     'rewrite'             => true,
     'query_var'           => true
   ] );
 
 
-  register_taxonomy( 'house_properties', [ 'projects' ], [ 
+  register_taxonomy( 'house_properties', [ 'projects', 'cases' ], [ 
     'label'                 => '',
     'labels'                => [
       'name'              => 'Характеристики',

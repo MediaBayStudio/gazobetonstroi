@@ -86,5 +86,10 @@
       endforeach ?>
     </ul>
   </div>
-  <img src="<?php echo $gallery[1] ?>" alt="" class="house-sect__img">
+  <div class="house-sect__descr-block">
+    <div class="house-sect__descr"> <?php
+      echo $house_fields['descr_list'] ?>
+    </div>
+    <img src="<?php echo $gallery[1] ?>" alt="" class="house-sect__img">
+  </div>
  </section>

@@ -11,11 +11,12 @@
   padding: 35px 20px;
   color: $black;
   flex-shrink: 0;
+
+  +.ftr {
+    margin: -35px 0;
+  }
 }
 
-.ftr {
-  margin: -35px 0;
-}
 
 @media (min-width: 575.98px) {
   .container {
@@ -25,11 +26,13 @@
   .sect {
     margin: 40px 0;
     padding: 40px calc(50% - 268px);
+
+    +.ftr {
+      margin: -40px 0;
+    }
   }
 
-  .ftr {
-    margin: -40px 0;
-  }
+
 }
 
 @media (min-width: 767.98px) {
@@ -50,11 +53,13 @@
   .sect {
     margin: 45px 0;
     padding: 45px calc(50% - 470px);
+
+    +.ftr {
+      margin: -45px 0;
+    }
   }
 
-  .ftr {
-    margin: -45px 0;
-  }
+
 }
 
 @media (min-width: 1439.98px) {
@@ -65,9 +70,11 @@
   .sect {
     margin: 50px 0;
     padding: 50px calc(50% - 620px);
+
+    .ftr {
+      margin: -50px 0;
+    }
   }
 
-  .ftr {
-    margin: -50px 0;
-  }
+
 }

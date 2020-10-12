@@ -6,59 +6,98 @@
 
   if ($filterForm) {
     let housesOnPage = qa('.house', $housesCards),
-      totalCountPosts = $loadmoreBtn ? $loadmoreBtn.dataset.postsCount : housesOnPage.length,
+      totalHouses = 0,
+      $filterHint = id('filter-form-hint'),
       numberposts = $filterForm.dataset.numberposts,
       postType = $filterForm.dataset.postType,
+      filterTimer,
+      setCountHouses = function(event) {
+        if (event && event.type === 'change') {
+          clearTimeout(filterTimer);
+
+          filterTimer = setTimeout(function() {
+            $filterForm.classList.add('loading');
+
+            let eventTragetParent = event.target.parentElement,
+              xhr = new XMLHttpRequest(),
+              data = new FormData($filterForm);
+
+            data.append('action', 'get_count_houses');
+            data.append('post_type', postType);
+
+            xhr.open('POST', siteUrl + '/wp-admin/admin-ajax.php');
+            xhr.send(data);
+
+            xhr.addEventListener('readystatechange', function() {
+              if (xhr.readyState === 4 && xhr.status === 200) {
+                let countHouses = xhr.response,
+                  coords = eventTragetParent.offsetTop;
+
+                $filterForm.classList.remove('loading');
+
+                $filterHint.style.top = coords + 'px';
+                $filterHint.style.opacity = 1;
+
+                $filterHint.dataset.countHouses = countHouses;
+              }
+            });
+          }, 1000);
+
+        }
+      },
       loadHouses = function(byFilter) {
+        $housesCards.classList.add('loading');
+        $filterForm.classList.add('loading');
+
         let xhr = new XMLHttpRequest(),
-          data;
+          data = new FormData($filterForm);
+
+        data.append('action', 'print_houses');
+        data.append('numberposts', numberposts);
+        data.append('post_type', postType);
 
         if (byFilter) {
-          data = new FormData($filterForm);
-          data.append('action', 'print_houses');
-          data.append('numberposts', numberposts);
-          data.append('post_type', postType);
           $filterFormPopup.closePopup();
         } else {
-          let loadmoreFilter = $loadmoreBtn.dataset.filter;
-          data = 'action=print_houses&numberposts=' + numberposts + '&post_type=' + postType + '&offset=' + housesOnPage.length;
-          if (loadmoreFilter) {
-            data += '&filter=' + loadmoreFilter;
-          }
+          data.append('offset', housesOnPage.length);
         }
-
-        console.log(data);
 
         xhr.open('POST', siteUrl + '/wp-admin/admin-ajax.php');
-        if (!byFilter) {
-          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        }
         xhr.send(data);
 
         xhr.addEventListener('readystatechange', function() {
           if (xhr.readyState === 4 && xhr.status === 200) {
+
+            $housesCards.classList.remove('loading');
+            $filterForm.classList.remove('loading');
+
             let houses = xhr.response;
 
             if (byFilter) {
               $housesCards.innerHTML = houses;
             } else {
-              $housesCards.removeChild($loadmoreBtn);
+              if ($housesCards.contains($loadmoreBtn)) {
+                $housesCards.removeChild($loadmoreBtn);
+              }
               $housesCards.insertAdjacentHTML('beforeend', houses);
             }
 
             $loadmoreBtn = id('loadmore-btn');
-            totalCountPosts = $loadmoreBtn && $loadmoreBtn.dataset.postsCount;
 
-            
             housesOnPage = qa('.house', $housesCards);
 
-            // $housesCards.style.maxHeight = $housesCards.scrollHeight + 'px';
+            $filterHint.style.opacity = 0;
 
-            // if (housesOnPage.length == totalCountPosts) {
-            //   $loadmoreBtn.setAttribute('hidden', '');
-            // } else {
-            //   $loadmoreBtn.focus();
-            // }
+            if ($loadmoreBtn) {
+              $loadmoreBtn.dataset.housesOnPage = housesOnPage.length;
+              totalHouses = $loadmoreBtn.dataset.totalHousesCount;
+
+              if (housesOnPage.length < totalHouses) {
+                $loadmoreBtn.removeAttribute('hidden');
+              } else {
+                $loadmoreBtn.setAttribute('hidden', '');
+              }
+            }
           }
         });
       };
@@ -71,22 +110,7 @@
 
     $filterForm.addEventListener('submit', function() {
       event.preventDefault();
-
       loadHouses(true);
-
-      // let xhr = new XMLHttpRequest(),
-      //   data = new FormData($filterForm);
-
-      // data.append('action', 'print_houses');
-      // data.append('numberposts', numberposts);
-      // data.append('post_type', postType);
-
-      // xhr.open('POST', siteUrl + '/wp-admin/admin-ajax.php');
-      // xhr.send(data);
-
-      // $filterFormPopup.closePopup();
-
-
     });
 
     $housesCards.addEventListener('click', function(e) {
@@ -117,6 +141,17 @@
         targetParent.style.maxHeight = height + 'px';
       }
     });
+
+    $filterForm.addEventListener('reset', function() {
+      clearTimeout(filterTimer);
+
+      filterTimer = setTimeout(function() {
+        $filterHint.style.opacity = 0;
+        loadHouses(true);
+      });
+    });
+
+    $filterForm.addEventListener('change', setCountHouses);
 
     let sticky = function($el, fixThresholdDir, className) {
       $el = typeof $el === 'string' ? q($el) : $el;

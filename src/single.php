@@ -1,4 +1,7 @@
-<?php 
-var_dump( $_POST );
-echo '<br><br><br>';
-var_dump( $_FILES );
+<?php
+
+get_header();
+
+require 'template-parts/article.php';
+
+get_footer();

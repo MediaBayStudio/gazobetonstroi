@@ -1,8 +1,16 @@
 ;
 (function() {
+  smallArrowSvg = '<svg class="arrow__svg" width="18" height="8" viewBox="0 0 18 8" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.3536 4.52494C17.5488 4.32968 17.5488 4.0131 17.3536 3.81783L14.1716 0.635853C13.9763 0.440591 13.6597 0.440591 13.4645 0.635853C13.2692 0.831115 13.2692 1.1477 13.4645 1.34296L16.2929 4.17139L13.4645 6.99981C13.2692 7.19508 13.2692 7.51166 13.4645 7.70692C13.6597 7.90218 13.9763 7.90218 14.1716 7.70692L17.3536 4.52494ZM0 4.67139H17V3.67139H0L0 4.67139Z" fill="currentColor"/></svg>';
+
+  createArrow = function(className, inside) {
+
+    className = (className.indexOf('prev') === -1 ? 'next ' : 'prev ') + className;
+
+    return `<button type="button" class="arrow arrow__${className}">${inside}</button>`;
+  };
+
   let nextArrow = '<button type="button" class="arrow"></button>',
     prevArrow = '<button type="button" class="arrow"></button>',
-    smallArrowSvg = '<svg class="arrow__svg" width="18" height="8" viewBox="0 0 18 8" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.3536 4.52494C17.5488 4.32968 17.5488 4.0131 17.3536 3.81783L14.1716 0.635853C13.9763 0.440591 13.6597 0.440591 13.4645 0.635853C13.2692 0.831115 13.2692 1.1477 13.4645 1.34296L16.2929 4.17139L13.4645 6.99981C13.2692 7.19508 13.2692 7.51166 13.4645 7.70692C13.6597 7.90218 13.9763 7.90218 14.1716 7.70692L17.3536 4.52494ZM0 4.67139H17V3.67139H0L0 4.67139Z" fill="currentColor"/></svg>',
     longArrowSvg = '<svg class="arrow__svg" width="106" height="9" fill="url(#gradient)" xmlns="http://www.w3.org/2000/svg"><path d="M105.354 4.828a.5.5 0 000-.707L102.172.939a.501.501 0 00-.708.707l2.829 2.828-2.829 2.829a.5.5 0 00.708.707l3.182-3.182zM0 4.974h105v-1H0v1z" fill="inherit" /><defs><linearGradient id="gradient"><stop offset="0%" style="stop-color: transparent"></stop><stop offset="50%" style="stop-color: transparent"></stop><stop offset="50%" style="stop-color: currentColor"></stop><stop offset="100%" style="stop-color: currentColor"></stop></linearGradient></defs></svg>',
     cornerArrowSvg = '<svg class="arrow__svg" width="11" height="20" viewBox="0 0 11 20" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M1 1l9 9-9 9" stroke="currentColor"/></svg>',
 
@@ -54,18 +62,35 @@
     newsSelector = '.post',
     newsSlides = newsSlider && qa(newsSelector, newsSlider),
 
-    createArrow = function(className, inside) {
-
-      className = (className.indexOf('prev') === -1 ? 'next ' : 'prev ') + className;
-
-      return `<button type="button" class="arrow arrow__${className}">${inside}</button>`;
-    },
     buildSliders = function() {
       for (let i = buildSlidersFunctions.length - 1; i >= 0; i--) {
         buildSlidersFunctions[i]();
       }
     },
     buildSlidersFunctions = [];
+
+  $('.project__slider').each(function() {
+    let $slider = $(this),
+      slidesSelector = '.project__img',
+      $slides = qa(slidesSelector, $slider[0]),
+      counterCurrentSlide = q(counterCurrentSelector, $slider[0]),
+      counterTotalSlides = q(counterTotalSelector, $slider[0]);
+
+    $slider.slick({
+      appendArrows: $('.slider-nav', $slider),
+      infinite: false,
+      slide: slidesSelector,
+      draggable: false,
+      prevArrow: createArrow('project__prev', smallArrowSvg),
+      nextArrow: createArrow('project__next', smallArrowSvg),
+    });
+
+    counterTotalSlides.textContent = $slides.length;
+
+    $slider.on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+      counterCurrentSlide.textContent = nextSlide + 1;
+    });
+  })
 
   if (reviewsSlider && reviewsSlides.length && reviewsSlides.length > 1) {
     let $reviewsSlider = $(reviewsSlider),

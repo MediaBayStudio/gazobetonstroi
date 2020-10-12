@@ -10,9 +10,16 @@
   &__cards {
   }
   &__house {
+    
+  }
+}
+
+.projects,
+.cases {
+  &__house {
     margin: 20px 20px 0 0;
     width: (536px - 20px) / 2;
-    &:nth-child(2n) {
+    &:nth-of-type(2n) {
       margin-right: 0;
     }
   }
