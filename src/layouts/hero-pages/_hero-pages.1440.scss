@@ -10,7 +10,8 @@
   display: grid;
   grid-template-rows: auto 1fr;
   grid-template-columns: 740px 100px auto;
-  &__decor {}
+  &__decor {
+  }
 
   &__text {
     max-width: 740px;

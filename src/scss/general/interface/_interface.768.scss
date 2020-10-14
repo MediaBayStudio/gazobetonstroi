@@ -4,6 +4,12 @@
 @import '../../assets/variables';
 
 
+.tooltip {
+  &-icon {
+    font-size: 9.5px;
+  }
+}
+
 .sect {
   &_bg {
 

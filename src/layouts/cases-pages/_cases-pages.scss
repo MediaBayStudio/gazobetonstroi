@@ -8,7 +8,7 @@
 }
 
 .project {
-  width: 280px;
+  // width: 280px;
   font: 14px/140% Montserrat;
   &:nth-last-child(n+2) {
     margin: 0 0 50px;
@@ -24,7 +24,7 @@
   }
   &__img {
     object-fit: cover;
-    height: 180px;
+    // height: 180px;
     cursor: zoom-in;
   }
   &__title {

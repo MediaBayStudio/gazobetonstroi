@@ -4,31 +4,29 @@
 @import '../../scss/assets/variables';
 
 .contacts-sect {
-  &__title {
-  }
-  &__descr {
-  }
+  &__title {}
+
+  &__descr {}
 }
 
 .contacts-form {
   width: 820px;
+
   &__field {
     width: 360px;
   }
-  &__field_name {
-  }
-  &__field_tel {
-  }
-  &__field_email {
-  }
-  &__files-upload-block {
-  }
-  &__bottom {
 
-  }
-  &__btn {
+  &__field_name {}
 
-  }
+  &__field_tel {}
+
+  &__field_email {}
+
+  &__files-upload-block {}
+
+  &__bottom {}
+
+  &__btn {}
 }
 
 
@@ -37,16 +35,14 @@
   &__contacts {
     margin-left: 60px;
   }
-  &__title {
-  }
+
+  &__title {}
 }
 
-.sect-title {
-}
+.sect-title {}
 
 .contacts-block {
-  &__img {
-  }
-  &__text {
-  }
+  &__img {}
+
+  &__text {}
 }

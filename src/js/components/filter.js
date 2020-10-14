@@ -14,6 +14,9 @@
         let eventType = event.type;
 
         if (eventType === 'change') {
+          if (matchesMedia('(max-width:1023.98px)')) {
+            return;
+          }
           clearTimeout(filterTimer);
 
           filterTimer = setTimeout(function() {
@@ -31,6 +34,7 @@
 
           return;
         }
+
         let xhr = new XMLHttpRequest(),
           data = new FormData($filterForm);
 

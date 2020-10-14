@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // фикс vh для элементов с 100vh
   window.addEventListener('resize', function() {
     setVh();
-    // mobile = mobileRegExp.test(navigator.userAgent);
   });
   setVh();
 
@@ -30,5 +29,6 @@ document.addEventListener('DOMContentLoaded', function() {
 //=include loadmore.js
 //=include popups.js
 //=include projectsGallery.js
+//=include telMask.js
 
 });

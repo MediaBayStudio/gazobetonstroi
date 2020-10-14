@@ -6,10 +6,10 @@
 .contacts-sect {
   background: $beige;
   &__title {
-    margin-bottom: 15px;
+    margin: 0 0 15px;
   }
   &__descr {
-    margin-bottom: 20px;
+    margin: 0 0 20px;
   }
 }
 
@@ -23,13 +23,13 @@
     // max-width: 320px;
   }
   &__field_name {
-    margin-bottom: 35px;
+    margin: 0 0 35px;
   }
   &__field_tel {
-    margin-bottom: 35px;
+    margin: 0 0 35px;
   }
   &__field_email {
-    margin-bottom: 35px;
+    margin: 0 0 35px;
   }
   &__files-upload-block {
     margin: 30px 0 35px;
@@ -84,7 +84,7 @@
 }
 
 .contacts-block {
-  margin-bottom: 20px;
+  margin: 0 0 20px;
   display: flex;
   align-items: center;
   &_geo {

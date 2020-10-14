@@ -84,7 +84,7 @@ $checkbox_text_width: calc(100% - #{$checkbox_size + $checkbox_margin_right});
 
       &:checked {
         background-color: $green;
-        background-size: 100%;
+        background-size: 60%;
       }
     }
   }

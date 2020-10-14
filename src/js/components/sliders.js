@@ -69,9 +69,11 @@
     },
     buildSlidersFunctions = [];
 
-  $('.project__slider').each(function() {
+  // Слайдер проектов
+  // Слайдер в главной секции на страницах
+  $('.project__slider, .hero-page-sect__figure').each(function() {
     let $slider = $(this),
-      slidesSelector = '.project__img',
+      slidesSelector = $slider.hasClass('project__slider') ? '.project__img' : '.hero-page-sect__img',
       $slides = qa(slidesSelector, $slider[0]),
       counterCurrentSlide = q(counterCurrentSelector, $slider[0]),
       counterTotalSlides = q(counterTotalSelector, $slider[0]);
@@ -90,7 +92,9 @@
     $slider.on('beforeChange', function(event, slick, currentSlide, nextSlide) {
       counterCurrentSlide.textContent = nextSlide + 1;
     });
-  })
+  });
+
+
 
   if (reviewsSlider && reviewsSlides.length && reviewsSlides.length > 1) {
     let $reviewsSlider = $(reviewsSlider),
@@ -331,6 +335,7 @@
           slide: houseSlisesSelector,
           infinite: false,
           mobileFirst: true,
+          draggable: false,
           responsive: [{
             breakpoint: 1023.98,
             settings: {

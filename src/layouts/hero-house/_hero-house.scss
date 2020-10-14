@@ -24,8 +24,10 @@
     object-fit: cover;
   }
   &__title {
-    margin: 0 0 5px;
+    padding: 0 0 20px;
+    // margin: 0 0 5px;
     font: 600 22px/140% Montserrat;
+    border-bottom: 1px solid $green;
   }
   &__descr {
     // font: 400 16px/140% Montserrat;
@@ -35,7 +37,7 @@
     }
   }
   &__list {
-    margin-top: 35px;
+    margin-top: 20px;
     font: 16px/140% Montserrat;
     color: $darkgrey;
     &-item {
@@ -98,6 +100,7 @@
   &__img {
     border: 1px solid transparent;
     object-fit: contain;
+    cursor: zoom-in;
   }
 }
 

@@ -49,9 +49,7 @@ add_action( 'wp_enqueue_scripts', function() {
 
   // Подключаем скрипты циклом
   $scripts = [
-    'sly.min',
     'slick.min',
-    // 'jquery.validate.min',
     'lazy.min',
     'MobileMenu.min',
     'Popup.min',
@@ -79,9 +77,7 @@ add_action( 'wp_enqueue_scripts', function() {
 add_filter('script_loader_tag',   function( $html, $handle ) {
 
   switch ( $handle ) {
-    case 'sly.min':
     case 'slick.min':
-    // case 'jquery.validate.min':
     case 'lazy.min':
     case 'MobileMenu.min':
     case 'Popup.min':

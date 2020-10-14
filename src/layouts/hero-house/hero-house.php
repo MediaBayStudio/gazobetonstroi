@@ -71,7 +71,12 @@
       <p class="house-sect__descr"><?php echo $excerpt ?></p> <?php
     endif ?>
     <ul class="house-sect__list"> <?php
-      foreach ( $props as $key => $value ) : ?>
+      foreach ( $props as $key => $value ) :
+        if ( $key === 'Материал' ) {
+          $value .= '<span class="tooltip"><span class="tooltip-icon">i</span><span class="tooltip-text">' . $material . '</span></span>';
+        } else {
+          $value = $value;
+        } ?>
         <li class="house-sect__list-item">
           <span class="house-sect__list-item-text"><?php echo $key ?></span>
           <span class="house-sect__list-item-text"><?php echo $value ?></span>

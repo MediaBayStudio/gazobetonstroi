@@ -13,6 +13,7 @@
 
   &_green {
     background: $lightgrey;
+
     .quiz__progress-bar {
       background-color: $white;
     }
@@ -36,9 +37,10 @@
     flex-flow: column;
     position: relative;
     z-index: 1;
+
     &.final-step {
       >.quiz__footer {
-        > .quiz__next {
+        >.quiz__next {
           display: none;
         }
       }
@@ -90,8 +92,28 @@
     margin: 0 0 20px;
     background: $white;
     position: relative;
+
     &:last-child {
       margin: 0;
+    }
+  }
+
+  &__radio {
+    >.tooltip-icon {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    >.tooltip-text {
+      width: 225px;
+      top: auto;
+      bottom: -100%;
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+      white-space: normal;
     }
   }
 
@@ -124,6 +146,18 @@
     &.disabled {
       opacity: 0.5;
       pointer-events: none;
+    }
+  }
+
+  &__prev {
+    &::before {
+      content: '';
+      margin: 0 7px 0 0;
+      display: inline-block;
+      width: 18px;
+      height: 9px;
+      background: url('../img/icon-arrow.svg') center/contain no-repeat;
+      transform: rotate(180deg);
     }
   }
 

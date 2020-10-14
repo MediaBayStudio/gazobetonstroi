@@ -3,8 +3,7 @@
 @import 'assets/mixins';
 @import 'assets/variables';
 
-.hdr__nav-list-item:hover,
-.ftr__nav-list-item:hover {
+.nav__link:hover {
   border-bottom-color: $beige;
 }
 
@@ -20,8 +19,12 @@
 }
 
 .text_underline:hover,
-.link__text:hover {
+.link:hover > .link__text {
   border-bottom-color: transparent;
+}
+
+.link:hover > .link__arrow {
+  transform: translateX(5px);
 }
 
 .arrow:hover {
@@ -44,9 +47,14 @@
 }
 
 .close:hover {
-  stroke: $green;
+  color: $green;
 }
 
 .breadcrumbs__link:hover {
   border-bottom-color: currentColor;
+}
+
+.house:hover .house__img {
+  transform: scale(1.5);
+  transition: transform 3s linear;
 }

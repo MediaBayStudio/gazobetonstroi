@@ -9,7 +9,8 @@
   &__title {
   }
   &__descr {
-    margin-bottom: 25px;
+    margin: 0 0 25px;
+    // margin-bottom: 25px;
   }
 }
 
@@ -22,7 +23,8 @@
   }
   &__field_name,
   &__field_tel {
-    margin-bottom: 55px;
+    margin: 0 0 55px;
+    // margin-bottom: 55px;
   }
   &__field_email {
     margin-bottom: 0;

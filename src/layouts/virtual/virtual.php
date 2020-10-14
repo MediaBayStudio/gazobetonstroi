@@ -28,7 +28,7 @@ $features = $section['features'] ?>
     for ( $i = 0, $len = count( $features ); $i < $len; $i++ ) :
       $order_class = $features[$i + 1] ? '' : ' last' ?>
       <div class="feat">
-        <img src="#" data-src="<?php echo $features[$i]['img'] ?>" alt="<?php echo $features[$i]['title'] ?>" class="feat__img lazy">
+        <img src="#" data-lazy="<?php echo $features[$i]['img'] ?>" alt="" class="feat__img">
         <strong class="feat__title"><?php echo $features[$i]['title'] ?></strong>
       </div> <?php
     endfor ?>

@@ -123,7 +123,7 @@ function print_houses( $posts=0, $post_type='projects', $section_class='', $numb
       </button> <?php
     endif;
   } else {
-    echo '<p>С указанными параметрами ничего не найдено</p>';
+    echo '<p class="houses__notfound">С указанными параметрами ничего не найдено</p>';
   }
   if ( isset( $_POST ) && $_POST['action'] === 'print_houses' ) {
     unset( $section_class );

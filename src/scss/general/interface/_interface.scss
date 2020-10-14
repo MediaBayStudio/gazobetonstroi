@@ -21,29 +21,45 @@
   outline: 1px dotted $black;
 }
 
+.house__img {
+  &.lazy {
+    background: url('../img/img-placeholder.svg') center/cover no-repeat;
+  }
+}
+
+.nav__link {
+  transition: border-bottom-color .5s;
+  border-bottom: 1px solid transparent;
+}
 
 .tooltip {
+  margin: 0 0 2px 5px;
+  width: 12px;
+  height: 12px;
+  display: inline-flex;
+  vertical-align: middle;
+  position: relative;
+
   &-icon {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 12px;
-    height: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 1.5em;
+    height: 1.5em;
     font-size: 8px;
-    line-height: 10px;
-    text-align: center;
+    line-height: 1em;
     border: 1px solid $black;
     border-radius: 50%;
     z-index: 1;
+    user-select: none;
   }
+
   &-text {
     padding: 10px;
-    width: 225px;
     position: absolute;
-    bottom: -100%;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 100%;
+    right: 0;
     font: lighter 10px/130% Montserrat;
     color: $black;
     background: $lightgrey;
@@ -53,10 +69,11 @@
     opacity: 0;
     visibility: hidden;
     transition: opacity .5s, visibility .5s;
+    white-space: nowrap;
   }
 }
 
-.tooltip-icon:hover ~ .tooltip-text {
+.tooltip-icon:hover~.tooltip-text {
   opacity: 1;
   visibility: visible;
 }
@@ -182,12 +199,14 @@ body {
 
   &__arrow {
     padding-left: 3px;
+    transition: transform .5s;
   }
 }
 
 .house {
   display: inline-flex;
   flex-flow: column;
+  overflow: hidden;
 
   &__link {
     padding: 15px 0 0;
@@ -195,6 +214,8 @@ body {
     display: block;
     background: rgba(255, 255, 255, 0.85);
     order: 10;
+    position: relative;
+    z-index: 1;
   }
 
   &__title {
@@ -218,6 +239,11 @@ body {
     display: flex;
     flex-flow: column;
     font: 10px/160% Montserrat;
+  }
+
+  &__img {
+    display: block;
+    transition: transform .5s linear;
   }
 
   &__row {

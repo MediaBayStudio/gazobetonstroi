@@ -9,6 +9,7 @@
   padding-bottom: $hero-pb;
   font: 14px/140% Montserrat;
   color: $black;
+  overflow: hidden;
 
   &__text {}
 
@@ -28,22 +29,39 @@
     margin: 30px auto 0;
     width: 280px;
     position: relative;
+    align-self: flex-start;
+    > .slick-list {
+      overflow: hidden;
+    }
+    &-nav {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      padding: 7.5px 10px;
+      background: $white;
+      > .slider-nav__counter {
+        margin: 0 25px;
+      }
+    }
   }
 
   &__decor {
     width: 145px;
     object-fit: contain;
     position: absolute;
-    right: 0;
+    right: -75px;
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
+    z-index: 1;
   }
 
   &__img {
     max-width: 100%;
     object-fit: cover;
   }
+
+  &__nav {}
 
   &__features {
     $mt: -75px - $hero-pb;
@@ -63,8 +81,7 @@
 }
 
 .feat {
-  &__title {
-  }
+  &__title {}
 
   &__descr {
     margin: 10px auto;

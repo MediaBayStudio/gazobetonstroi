@@ -27,6 +27,7 @@
 </footer>
 <div id="fake-scrollbar"></div> <?php
 require 'template-parts/thanks-popup.php';
+require 'template-parts/zoom-popup.php';
 require 'template-parts/gallery-popup.php';
 require 'template-parts/overlay.php';
 wp_footer() ?>

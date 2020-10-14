@@ -73,8 +73,8 @@
         endforeach ?>
       </fieldset> <?php
     endforeach ?>
-
      <div class="filter-form__bottom">
+      <button class="filter-form__btn btn btn_green btn_text-white">Применить</button>
       <button type="reset" class="filter-form__reset text_underline">Сбросить фильтр</button>
      </div>
   </form>

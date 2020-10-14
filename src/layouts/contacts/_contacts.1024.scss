@@ -5,32 +5,31 @@
 
 .contacts-sect {
   display: flex;
-  &__title {
-  }
-  &__descr {
-  }
+
+  &__title {}
+
+  &__descr {}
 }
 
 .contacts-form {
   width: 620px;
   flex-shrink: 0;
+
   &__field {
     width: 250px;
   }
-  &__field_name {
-  }
-  &__field_tel {
-  }
-  &__field_email {
-  }
-  &__files-upload-block {
-  }
-  &__bottom {
 
-  }
-  &__btn {
+  &__field_name {}
 
-  }
+  &__field_tel {}
+
+  &__field_email {}
+
+  &__files-upload-block {}
+
+  &__bottom {}
+
+  &__btn {}
 }
 
 
@@ -41,17 +40,32 @@
     column-count: 1;
     // overflow: hidden;
   }
-  &__title {
-  }
+
+  &__title {}
 }
 
-.sect-title {
-}
+.sect-title {}
 
 .contacts-block {
   width: auto;
-  &__img {
+
+  &__img {}
+
+  &__text {}
+}
+
+
+.contacts-block {
+  &_email,
+  &_geo {
+    margin: 0 0 30px;
   }
-  &__text {
-  }
+
+  &_email {}
+
+  &_insta {}
+
+  &__img {}
+
+  &__text {}
 }

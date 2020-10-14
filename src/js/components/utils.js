@@ -1,4 +1,4 @@
-let
+var
   browser = {
     // Opera 8.0+
     isOpera: (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0,
@@ -17,6 +17,7 @@ let
     isYandex: !!window.yandex,
     isMac: window.navigator.platform.toUpperCase().indexOf('MAC') >= 0
   },
+  mask,
   smallArrowSvg,
   createArrow,
   lazy,
@@ -24,6 +25,7 @@ let
   hdr,
   overlay,
   galleryPopup,
+  zoomPopup,
   thanksPopup,
   thanksPopupTimer,
   body = document.body,

@@ -7,6 +7,8 @@ $sect_btn = $section['sect_btn'];
 $data_src = '';
 $data_media = '';
 
+$sect_descr_class = is_front_page() ? ' front-page' : '';
+
 foreach ( $sect_images as $sect_img ) {
   $img_width = $sect_img['width'];
   $img_id = $sect_img['id'];
@@ -43,7 +45,7 @@ foreach ( $sect_images as $sect_img ) {
 <section class="hero-sect container lazy" data-src="<?php echo $data_src ?>" data-media="<?php echo $data_media ?>">
   <div class="hero-sect__text-block">
     <h1 class="hero-sect__title"><?php echo $sect_title ?></h1>
-    <p class="hero-sect__descr"><?php echo $sect_descr ?></p> <?php
+    <p class="hero-sect__descr<?php echo $sect_descr_class ?>"><?php echo $sect_descr ?></p> <?php
     if ( $sect_btn ) : ?>
       <button type="button" class="hero-sect__btn btn btn_green btn_text-white" data-scroll-target="<?php echo $section['sect_btn_target'] ?>"><?php echo $section['sect_btn_text'] ?></button> <?php
     endif ?>
