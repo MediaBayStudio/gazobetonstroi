@@ -60,16 +60,6 @@ $checkbox_margin_right: 10px;
 $checkbox_text_width: calc(100% - #{$checkbox_size + $checkbox_margin_right});
 // $checkbox_border_radius: 0;
 
-@keyframes bg {
-  from {
-    background-image: linear-gradient(1deg, #fff, #fff);
-  }
-
-  to {
-    background-image: url('../img/check.svg');
-  }
-}
-
 .check {
   display: flex;
   cursor: pointer;
@@ -167,7 +157,7 @@ $checkbox_text_width: calc(100% - #{$checkbox_size + $checkbox_margin_right});
       border-bottom-color: $black;
 
       ~.field__text {
-        bottom: 17px;
+        top: -16px;
         font-size: 11.5px;
       }
     }
@@ -176,9 +166,9 @@ $checkbox_text_width: calc(100% - #{$checkbox_size + $checkbox_margin_right});
   &__text {
     position: absolute;
     left: 0;
-    bottom: 1px;
+    top: 0;
     color: $grey;
-    transition: bottom .25s, font-size .25s;
+    transition: top .25s, font-size .25s;
   }
 }
 

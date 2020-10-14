@@ -14,6 +14,10 @@
     margin: 0 0 auto;
     padding-bottom: 10px;
   }
+
+  &__img {
+    min-height: 171px;
+  }
 }
 
 .post {
@@ -26,7 +30,8 @@
   }
   &:last-child {}
 
-  &__img {}
+  &__img {
+  }
 
   &__title {}
 

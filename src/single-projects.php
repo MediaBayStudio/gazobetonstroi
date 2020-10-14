@@ -5,8 +5,7 @@
 
 get_header();
 
-require 'template-parts/hero-house.php';
-
+// Получаем поля по ID страницы-шаблона
 $sections = get_field( 'sections', 248 );
 
 foreach ( $sections as $section ) {

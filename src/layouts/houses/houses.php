@@ -13,7 +13,6 @@
 
 <div class="houses container">
   <form action="<?php the_permalink() ?>" method="get" class="filter-form popup" id="filter-form" data-numberposts="<?php echo $numberposts ?>" data-post-type="<?php echo $post_type ?>">
-    <button class="filter-form-hint" id="filter-form-hint" data-count-houses="0">Показать</button>
     <button type="button" class="filter-form__close">
       <img src="<?php echo $template_directory ?>/img/icon-close.svg" alt="Иконка">
     </button>
@@ -27,23 +26,33 @@
     $child_terms = [];
 
     for ( $i = 0, $len = count( $categories ); $i < $len; $i++ ) {
-      $parent_id = $categories[$i]->parent;
-      $term_id = $categories[$i]->term_id;
+      $cat = $categories[$i];
+      $parent_id = $cat->parent;
+      $term_id = $cat->term_id;
+      $cat_title = $cat->name;
+      $cat_slug = $cat->slug;
+      $cat_count = $cat->count;
+      $show_cat_in_filters = get_field( 'show_in_filters', $cat );
 
-      if ( $parent_id !== 0 ) {
-        $child_terms[ $parent_id ][] = [
-          'title' => $categories[$i]->name,
-          'slug'  => $categories[$i]->slug,
-          'count' => $categories[$i]->count,
-          'id'  => $term_id
-        ];
-        
-      } else {
-        if ( get_field( 'show_in_filters', $categories[$i]) ) {
+      // Если у таксономии нет родителей, т.е. она сама родительская
+      if ( $parent_id === 0 ) {
+        if ( $show_cat_in_filters ) {
           $parent_terms[ $term_id ] = [
-            'title' => $categories[$i]->name,
-            'slug'  => $categories[$i]->slug,
-            'count' => $categories[$i]->count,
+            'title' => $cat_title,
+            'slug'  => $cat_slug,
+            'count' => $cat_count,
+            'id'  => $term_id
+          ];
+        }
+      // Дочерняя таксономия
+      } else {
+        if ( $show_cat_in_filters && $cat_count > 0 ) {
+          // Поднимаем двойку в квадратном метре
+          $cat_title = preg_replace( '/м2$/', 'м<sup>2</sup>', $cat_title );
+          $child_terms[ $parent_id ][] = [
+            'title' => $cat_title,
+            'slug'  => $cat_slug,
+            'count' => $cat_count,
             'id'  => $term_id
           ];
         }
@@ -66,7 +75,6 @@
     endforeach ?>
 
      <div class="filter-form__bottom">
-      <!-- <button class="filter-form__btn btn btn_green btn_text-white">Применить</button> -->
       <button type="reset" class="filter-form__reset text_underline">Сбросить фильтр</button>
      </div>
   </form>

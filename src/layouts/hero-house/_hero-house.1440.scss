@@ -47,6 +47,18 @@
       }
     }
   }
+  &__prices {}
+
+  &__price {
+    &:first-child {
+      margin: 0 40px 0 0;
+      padding: 0 40px 0 0;
+    }
+  }
+
+  &__price-num {}
+
+  &__price-text {}
 }
 
 .house-slider {

@@ -46,3 +46,7 @@
 .close:hover {
   stroke: $green;
 }
+
+.breadcrumbs__link:hover {
+  border-bottom-color: currentColor;
+}

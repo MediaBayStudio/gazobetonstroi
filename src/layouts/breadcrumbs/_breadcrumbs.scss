@@ -2,3 +2,49 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+
+.breadcrumbs {
+  padding-top: 25px;
+  font: 12px/140% Montserrat;
+  color: $darkgrey;
+
+  +.sect,
+  +.container {
+    margin-top: 0;
+    padding-top: 30px;
+  }
+
+  &__list {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  &__item {
+    display: inherit;
+    align-items: center;
+    &::after {
+      margin: 0 5px;
+      content: '';
+      display: inline-block;
+      width: 17px;
+      height: 9px;
+      background: url('../img/icon-arrow.svg') center/contain no-repeat;
+      opacity: 0.5;
+    }
+
+    &.current {
+      pointer-events: none;
+
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  &__link {
+    border-bottom: 1px solid transparent;
+    transition: border-bottom-color .5s;
+  }
+}

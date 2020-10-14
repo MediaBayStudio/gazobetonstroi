@@ -143,7 +143,7 @@
 
           _.$quiz.resetQuiz = _.resetQuiz;
 
-          _.dispatchEvent(_.$quiz, 'init', _.setEventDetails());
+          // _.dispatchEvent(_.$quiz, 'init', _.setEventDetails());
 
           _.$quiz.ctx = _;
 
@@ -501,6 +501,12 @@
                 fiteldsNameAttr,
                 fieldObject = {};
 
+              /*
+
+                СОКРАТИТЬ РАЗБОР АТРИБУТОВ У SELECT И RADIO/CHECKBOX
+
+              */ 
+
               if (fieldType === 'select') {
                 $input = _.createEl('option');
                 // Если передали строку, то вставляем ее как обычно
@@ -543,11 +549,27 @@
                   fiteldsNameAttr = 'checkbox-' + _.checkboxCount;
                 }
 
-                $input.value = values[i];
+                if (typeof values[i] === 'string') {
+                  $input.value = $title.textContent = values[i];
+                } else {
+                  let customAttributes = values[i]['attr'];
+                  $input.value = $title.textContent = values[i]['text'];
+
+                  if (customAttributes) {
+                    for (let i = 0, len = customAttributes.length; i < len; i++) {
+                      for (let attrName in customAttributes[i]) {
+                        let attrValue = customAttributes[i][attrName];
+                        $input.setAttribute(attrName, attrValue);
+                        if (attrName === 'disabled') {
+                          fieldIsNotDisabled = false;
+                        }
+                      }
+                    }
+                  }
+                }
+
                 $input.name = fiteldsNameAttr;
                 $input.type = fieldType;
-
-                $title.textContent = values[i];
                 // $pseudoInp.className = fieldClass + '-pseudo-inp';
                 $field.className = fieldClass;
                 $input.className = fieldClass + '-inp' + (required ? ' required' : '');
@@ -1224,7 +1246,31 @@
           nextBtnClass: 'quiz__next btn btn_green btn_text-black',
           $form: $quizForm,
           $result: $quizResult
-        });
+        }),
+        loadTooltip = function() {
+          let elementsWithTooltip = qa('[data-tooltip]', quiz);
+
+          for (var i = elementsWithTooltip.length - 1; i >= 0; i--) {
+            let tooltipIcon = document.createElement('span'),
+              tooltipText = tooltipIcon.cloneNode(),
+              parent = elementsWithTooltip[i].parentElement;
+
+            tooltipIcon.textContent = 'i';
+            tooltipIcon.className = 'tooltip-icon';
+
+            tooltipText.textContent = elementsWithTooltip[i].dataset.tooltip;
+            tooltipText.className = 'tooltip-text';
+
+            parent.appendChild(tooltipIcon);
+            parent.appendChild(tooltipText);
+          }
+
+        };
+
+        loadTooltip();
+        quiz.addEventListener('prevstep', loadTooltip);
+        quiz.addEventListener('nextstep', loadTooltip);
+
       }
     });
   }

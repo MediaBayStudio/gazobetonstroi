@@ -51,7 +51,7 @@ add_action( 'wp_enqueue_scripts', function() {
   $scripts = [
     'sly.min',
     'slick.min',
-    'jquery.validate.min',
+    // 'jquery.validate.min',
     'lazy.min',
     'MobileMenu.min',
     'Popup.min',
@@ -60,9 +60,6 @@ add_action( 'wp_enqueue_scripts', function() {
   ];
 
   foreach ( $scripts as $script_name ) {
-    if ( $script_name === 'sly.min' && !is_single() ) {
-      continue;
-    }
     wp_enqueue_script( "{$script_name}", $template_directory . "/js/{$script_name}.js", [], null );
   }
 
@@ -84,7 +81,7 @@ add_filter('script_loader_tag',   function( $html, $handle ) {
   switch ( $handle ) {
     case 'sly.min':
     case 'slick.min':
-    case 'jquery.validate.min':
+    // case 'jquery.validate.min':
     case 'lazy.min':
     case 'MobileMenu.min':
     case 'Popup.min':

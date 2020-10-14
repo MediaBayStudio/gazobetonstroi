@@ -21,6 +21,46 @@
   outline: 1px dotted $black;
 }
 
+
+.tooltip {
+  &-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 12px;
+    font-size: 8px;
+    line-height: 10px;
+    text-align: center;
+    border: 1px solid $black;
+    border-radius: 50%;
+    z-index: 1;
+  }
+  &-text {
+    padding: 10px;
+    width: 225px;
+    position: absolute;
+    bottom: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+    font: lighter 10px/130% Montserrat;
+    color: $black;
+    background: $lightgrey;
+    border-radius: 5px;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .5s, visibility .5s;
+  }
+}
+
+.tooltip-icon:hover ~ .tooltip-text {
+  opacity: 1;
+  visibility: visible;
+}
+
 .loadmore {
   margin: 40px auto 0;
   display: block;
@@ -208,6 +248,7 @@ body {
 
   &__img {
     width: 100%;
+    min-height: 186.5px;
     // height: 100%;
     object-fit: cover;
   }

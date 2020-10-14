@@ -3,10 +3,11 @@ $sect_title = $section['sect_title'];
 $stages = $section['stages_repeater'];
 $img_path = $template_directory . '/img/stages-bg.';
 $lg = 'linear-gradient(1deg, #fff, #fff),';
-$data_src = $lg . ' url(' . $img_path . '576.jpg)';
-$data_media = '(min-width:575.98px){'.$lg.' url(' . $img_path . '768.jpg)}(min-width:767.98px){'.$lg.' url(' . $img_path . '1024.jpg)}(min-width:1023.98px){'.$lg.' url(' . $img_path . '1440.jpg)}(min-width:1439.98px){'.$lg.' url(' . $img_path . '1920.jpg)}' ?>
+$data_src = $lg . ' url(' . $img_path . '1920.jpg)';
+// $data_src = $lg . ' url(' . $img_path . '576.jpg)';
+/*$data_media = '(min-width:575.98px){'.$lg.' url(' . $img_path . '768.jpg)}(min-width:767.98px){'.$lg.' url(' . $img_path . '1024.jpg)}(min-width:1023.98px){'.$lg.' url(' . $img_path . '1440.jpg)}(min-width:1439.98px){'.$lg.' url(' . $img_path . '1920.jpg)}'*/ ?>
 
-<section class="stages-sect sect lazy" data-src="<?php echo $data_src ?>" data-media="<?php echo $data_media ?>" data-title="<?php echo $sect_title ?>">
+<section class="stages-sect sect lazy" data-src="<?php echo $data_src ?>" data-title="<?php echo $sect_title ?>">
   <h2 class="stages-sect__title sect-title"><?php echo $sect_title ?></h2>
   <div class="stages-sect__stages" id="stages-slider">
     <div class="slider-nav stages__nav"></div>

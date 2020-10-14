@@ -3,7 +3,7 @@
   $title = get_the_title();
   $excerpt = get_the_excerpt();
   $area = $house_fields['area'];
-  $area_other = $house_fields['area_other'];
+  // $area_other = $house_fields['area_other'];
   $length = $house_fields['length'];
   $width = $house_fields['width'];
   $material = $house_fields['material'];
@@ -22,21 +22,15 @@
     'Общая площадь' => $area . 'м<sup>2</sup>'
   ];
 
-  if ( $area_other ) {
-    $props['Площадь террасы/балконов/крылец'] = $area_other . 'м<sup>2</sup>';
-  }
+  // if ( $area_other ) {
+  //   $props['Площадь террасы/балконов/крылец'] = $area_other . 'м<sup>2</sup>';
+  // }
 
   $props['Длина'] = $length . 'м';
   $props['Ширина'] = $width . 'м';
 
-  // var_dump( $props );
-
 
   $categories = get_the_terms( $post->ID, 'house_properties' );
-
-  // var_dump( $categories );
-  // $parent_terms = [];
-  // $child_terms = [];
 
   foreach ( $categories as $cat ) {
     $parent_id = $cat->parent;
@@ -53,7 +47,6 @@
     
   }
 
-  // var_dump( $props );
  ?>
 
  <section class="house-sect sect">
@@ -85,6 +78,16 @@
         </li> <?php
       endforeach ?>
     </ul>
+    <div class="house-sect__prices">
+      <div class="house-sect__price">
+        <b class="house-sect__price-num"><?php echo $first_price['price'] ?></b>
+        <span class="house-sect__price-text"><?php echo $first_price['text'] ?></span>
+      </div>
+      <div class="house-sect__price">
+        <b class="house-sect__price-num"><?php echo $second_price['price'] ?></b>
+        <span class="house-sect__price-text"><?php echo $second_price['text'] ?></span>
+      </div>
+    </div>
   </div>
   <div class="house-sect__descr-block">
     <div class="house-sect__descr"> <?php

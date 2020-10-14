@@ -1266,7 +1266,7 @@ menu = new MobileMenu('.menu', {
 
           _.$quiz.resetQuiz = _.resetQuiz;
 
-          _.dispatchEvent(_.$quiz, 'init', _.setEventDetails());
+          // _.dispatchEvent(_.$quiz, 'init', _.setEventDetails());
 
           _.$quiz.ctx = _;
 
@@ -1624,6 +1624,12 @@ menu = new MobileMenu('.menu', {
                 fiteldsNameAttr,
                 fieldObject = {};
 
+              /*
+
+                СОКРАТИТЬ РАЗБОР АТРИБУТОВ У SELECT И RADIO/CHECKBOX
+
+              */ 
+
               if (fieldType === 'select') {
                 $input = _.createEl('option');
                 // Если передали строку, то вставляем ее как обычно
@@ -1666,11 +1672,27 @@ menu = new MobileMenu('.menu', {
                   fiteldsNameAttr = 'checkbox-' + _.checkboxCount;
                 }
 
-                $input.value = values[i];
+                if (typeof values[i] === 'string') {
+                  $input.value = $title.textContent = values[i];
+                } else {
+                  let customAttributes = values[i]['attr'];
+                  $input.value = $title.textContent = values[i]['text'];
+
+                  if (customAttributes) {
+                    for (let i = 0, len = customAttributes.length; i < len; i++) {
+                      for (let attrName in customAttributes[i]) {
+                        let attrValue = customAttributes[i][attrName];
+                        $input.setAttribute(attrName, attrValue);
+                        if (attrName === 'disabled') {
+                          fieldIsNotDisabled = false;
+                        }
+                      }
+                    }
+                  }
+                }
+
                 $input.name = fiteldsNameAttr;
                 $input.type = fieldType;
-
-                $title.textContent = values[i];
                 // $pseudoInp.className = fieldClass + '-pseudo-inp';
                 $field.className = fieldClass;
                 $input.className = fieldClass + '-inp' + (required ? ' required' : '');
@@ -2347,7 +2369,31 @@ menu = new MobileMenu('.menu', {
           nextBtnClass: 'quiz__next btn btn_green btn_text-black',
           $form: $quizForm,
           $result: $quizResult
-        });
+        }),
+        loadTooltip = function() {
+          let elementsWithTooltip = qa('[data-tooltip]', quiz);
+
+          for (var i = elementsWithTooltip.length - 1; i >= 0; i--) {
+            let tooltipIcon = document.createElement('span'),
+              tooltipText = tooltipIcon.cloneNode(),
+              parent = elementsWithTooltip[i].parentElement;
+
+            tooltipIcon.textContent = 'i';
+            tooltipIcon.className = 'tooltip-icon';
+
+            tooltipText.textContent = elementsWithTooltip[i].dataset.tooltip;
+            tooltipText.className = 'tooltip-text';
+
+            parent.appendChild(tooltipIcon);
+            parent.appendChild(tooltipText);
+          }
+
+        };
+
+        loadTooltip();
+        quiz.addEventListener('prevstep', loadTooltip);
+        quiz.addEventListener('nextstep', loadTooltip);
+
       }
     });
   }
@@ -2362,59 +2408,44 @@ menu = new MobileMenu('.menu', {
   if ($filterForm) {
     let housesOnPage = qa('.house', $housesCards),
       totalHouses = 0,
-      $filterHint = id('filter-form-hint'),
       numberposts = $filterForm.dataset.numberposts,
       postType = $filterForm.dataset.postType,
       filterTimer,
-      setCountHouses = function(event) {
-        if (event && event.type === 'change') {
+      loadHouses = function(event) {
+        let eventType = event.type;
+
+        if (eventType === 'change') {
           clearTimeout(filterTimer);
 
           filterTimer = setTimeout(function() {
-            $filterForm.classList.add('loading');
-
-            let eventTragetParent = event.target.parentElement,
-              xhr = new XMLHttpRequest(),
-              data = new FormData($filterForm);
-
-            data.append('action', 'get_count_houses');
-            data.append('post_type', postType);
-
-            xhr.open('POST', siteUrl + '/wp-admin/admin-ajax.php');
-            xhr.send(data);
-
-            xhr.addEventListener('readystatechange', function() {
-              if (xhr.readyState === 4 && xhr.status === 200) {
-                let countHouses = xhr.response,
-                  coords = eventTragetParent.offsetTop;
-
-                $filterForm.classList.remove('loading');
-
-                $filterHint.style.top = coords + 'px';
-                $filterHint.style.opacity = 1;
-
-                $filterHint.dataset.countHouses = countHouses;
-              }
-            });
+            loadHouses(event.type = '');
           }, 1000);
 
-        }
-      },
-      loadHouses = function(byFilter) {
-        $housesCards.classList.add('loading');
-        $filterForm.classList.add('loading');
+          return;
 
+        } else if (eventType === 'submit') {
+          event.preventDefault();
+        } else if (eventType === 'reset') {
+          setTimeout(function() {
+            loadHouses(event.type = '');
+          });
+
+          return;
+        }
         let xhr = new XMLHttpRequest(),
           data = new FormData($filterForm);
+
+        $housesCards.classList.add('loading');
+        $filterForm.classList.add('loading');
 
         data.append('action', 'print_houses');
         data.append('numberposts', numberposts);
         data.append('post_type', postType);
 
-        if (byFilter) {
-          $filterFormPopup.closePopup();
-        } else {
+        if (eventType === 'click') { // loadmore
           data.append('offset', housesOnPage.length);
+        } else {
+          $filterFormPopup.closePopup();
         }
 
         xhr.open('POST', siteUrl + '/wp-admin/admin-ajax.php');
@@ -2428,20 +2459,18 @@ menu = new MobileMenu('.menu', {
 
             let houses = xhr.response;
 
-            if (byFilter) {
-              $housesCards.innerHTML = houses;
-            } else {
+            if (eventType === 'click') {
               if ($housesCards.contains($loadmoreBtn)) {
                 $housesCards.removeChild($loadmoreBtn);
               }
               $housesCards.insertAdjacentHTML('beforeend', houses);
+            } else {
+              $housesCards.innerHTML = houses;
             }
 
             $loadmoreBtn = id('loadmore-btn');
 
             housesOnPage = qa('.house', $housesCards);
-
-            $filterHint.style.opacity = 0;
 
             if ($loadmoreBtn) {
               $loadmoreBtn.dataset.housesOnPage = housesOnPage.length;
@@ -2463,20 +2492,16 @@ menu = new MobileMenu('.menu', {
       clickToClose: false
     });
 
-    $filterForm.addEventListener('submit', function() {
-      event.preventDefault();
-      loadHouses(true);
-    });
+    $filterForm.addEventListener('submit', loadHouses);
+
 
     $housesCards.addEventListener('click', function(e) {
       let target = e.target;
 
       if (target.id === 'loadmore-btn') {
-        loadHouses(false);
+        loadHouses(e);
       }
     });
-
-    // $housesCards.style.maxHeight = $housesCards.scrollHeight + 'px';
 
     $filterForm.addEventListener('click', function() {
       let target = event.target,
@@ -2497,16 +2522,9 @@ menu = new MobileMenu('.menu', {
       }
     });
 
-    $filterForm.addEventListener('reset', function() {
-      clearTimeout(filterTimer);
 
-      filterTimer = setTimeout(function() {
-        $filterHint.style.opacity = 0;
-        loadHouses(true);
-      });
-    });
-
-    $filterForm.addEventListener('change', setCountHouses);
+    $filterForm.addEventListener('reset', loadHouses);
+    $filterForm.addEventListener('change', loadHouses);
 
     let sticky = function($el, fixThresholdDir, className) {
       $el = typeof $el === 'string' ? q($el) : $el;

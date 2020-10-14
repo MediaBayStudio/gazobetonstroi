@@ -5,23 +5,22 @@
 
 .house-sect {
 
-  &__sliders {
-  }
+  &__sliders {}
+
   &__gallery {
     &-nav {
 
-      > .slider-nav__counter {
-
-      }
+      >.slider-nav__counter {}
     }
   }
+
   &__img {
     width: 262px;
     height: 266px;
   }
-  &__title {
 
-  }
+  &__title {}
+
   &__descr {
     &-block {
       margin-top: 50px;
@@ -29,34 +28,48 @@
       align-items: center;
     }
   }
+
   &__list {
 
     &-item {
 
       &-text {
 
-        &:first-of-type {
+        &:first-of-type {}
 
-        }
-        &:last-of-type {
-
-        }
+        &:last-of-type {}
       }
-      &-dots {
 
-      }
+      &-dots {}
     }
   }
+
+  &__prices {
+    display: flex;
+    align-items: center;
+    text-align: left;
+  }
+
+  &__price {
+    &:first-child {
+      padding: 0 40px 0 0;
+      margin: 0 40px 0 0;
+      border-right: 1px solid $green;
+    }
+  }
+
+  &__price-num {}
+
+  &__price-text {}
 }
 
 .house-slider {
   height: 380px;
-  > .slick-list,
-  > .slick-list > .slick-track {
-  }
-  &__img {
 
-  }
+  >.slick-list,
+  >.slick-list>.slick-track {}
+
+  &__img {}
 }
 
 
@@ -64,11 +77,11 @@
   width: 100%;
   margin-left: 0;
   padding: 0;
+
   &__img {
     width: 75px;
     height: 75px;
-    &.active {
 
-    }
+    &.active {}
   }
 }
