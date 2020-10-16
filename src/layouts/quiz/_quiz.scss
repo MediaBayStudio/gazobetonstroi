@@ -10,7 +10,7 @@
 .quiz-sect {
   font: 16px/140% Montserrat;
   position: relative;
-
+  overflow: hidden;
   &_green {
     background: $lightgrey;
 

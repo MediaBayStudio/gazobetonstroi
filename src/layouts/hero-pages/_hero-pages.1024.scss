@@ -4,10 +4,17 @@
 @import '../../scss/assets/variables';
 
 .hero-page-sect {
-
-  &__title {}
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-template-columns: auto auto;
+  &__title {
+    grid-row: 1;
+    grid-column: 1;
+  }
 
   &__text {
+    grid-row: 2;
+    grid-column: 1;
     max-width: 680px;
     flex: 600px;
   }
@@ -15,13 +22,22 @@
   &__descr {}
 
   &__figure {
-    // flex: 300px 1 0;
+    grid-row: 1/span 2;
+    grid-column: 2;
+    // flex: 375px 1 0;
+    max-width: 375px;
     &-nav {
       padding: 15px 20px;
     }
+    > .slick-list,
+    > .slick-list > .slick-track {
+      height: 100%;
+    }
   }
 
-  &__img {}
+  &__img {
+    height: 100%;
+  }
 
   &__features {
     padding-top: 85px;

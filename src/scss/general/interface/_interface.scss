@@ -12,6 +12,7 @@
 .turnkey-sect__btn:focus,
 .turnkey-sect__tab-cnt:focus,
 .news-sect__loadmore:focus,
+.arrow:focus,
 .check:focus-within,
 .fileupload:focus-within,
 .quiz__radio:focus-within,
@@ -243,7 +244,7 @@ body {
 
   &__img {
     display: block;
-    transition: transform .5s linear;
+    // transition: transform .5s linear;
   }
 
   &__row {

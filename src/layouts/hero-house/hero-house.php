@@ -22,6 +22,7 @@
     'Общая площадь' => $area . 'м<sup>2</sup>'
   ];
 
+
   // if ( $area_other ) {
   //   $props['Площадь террасы/балконов/крылец'] = $area_other . 'м<sup>2</sup>';
   // }
@@ -47,6 +48,12 @@
     
   }
 
+  $title = $post->post_type === 'projects' ? 'Проект ' . $title : $title;
+
+  if ( !$excerpt ) {
+    $excerpt = $house_fields['excerpt'];
+  }
+
  ?>
 
  <section class="house-sect sect">
@@ -66,10 +73,12 @@
     </div>
   </div>
   <div class="house-sect__text">
-    <h1 class="house-sect__title">Проект <?php echo $title ?></h1> <?php
-    if ( $excerpt ) : ?>
-      <p class="house-sect__descr"><?php echo $excerpt ?></p> <?php
-    endif ?>
+    <div class="house-sect__heading-block">
+      <h1 class="house-sect__title"><?php echo $title ?></h1> <?php
+      if ( $excerpt ) : ?>
+        <p class="house-sect__excerpt"><?php echo $excerpt ?></p> <?php
+      endif ?>
+    </div>
     <ul class="house-sect__list"> <?php
       foreach ( $props as $key => $value ) :
         if ( $key === 'Материал' ) {
@@ -82,22 +91,30 @@
           <span class="house-sect__list-item-text"><?php echo $value ?></span>
         </li> <?php
       endforeach ?>
-    </ul>
-    <div class="house-sect__prices">
-      <div class="house-sect__price">
-        <b class="house-sect__price-num"><?php echo $first_price['price'] ?></b>
-        <span class="house-sect__price-text"><?php echo $first_price['text'] ?></span>
-      </div>
-      <div class="house-sect__price">
-        <b class="house-sect__price-num"><?php echo $second_price['price'] ?></b>
-        <span class="house-sect__price-text"><?php echo $second_price['text'] ?></span>
-      </div>
-    </div>
+    </ul> <?php 
+    if ( $first_price['price'] || $second_price['price'] ) : ?>
+      <div class="house-sect__prices"> <?php
+        $prices = [ $first_price, $second_price ];
+        foreach ( $prices as $price ) : ?>
+          <div class="house-sect__price">
+            <b class="house-sect__price-num"><?php echo $price['price'] ?></b>
+            <span class="house-sect__price-text"><?php echo $price['text'] ?></span>
+          </div> <?php
+        endforeach ?>
+      </div> <?php
+    endif ?>
   </div>
-  <div class="house-sect__descr-block">
+  <div class="house-sect__descr-block"> <?php
+    if ( $flex_text ) :
+      foreach ( $flex_text as $text ) :
+        if ( $text['p'] ) : ?>
+          <p class="house-sect__p"><?php echo $text['p'] ?></p> <?php
+        endif;
+      endforeach;
+    endif ?>
+    <img src="<?php echo $gallery[0] ?>" alt="" class="house-sect__img">
     <div class="house-sect__descr"> <?php
       echo $house_fields['descr_list'] ?>
     </div>
-    <img src="<?php echo $gallery[1] ?>" alt="" class="house-sect__img">
   </div>
  </section>

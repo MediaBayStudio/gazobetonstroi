@@ -18,6 +18,13 @@ document.addEventListener('DOMContentLoaded', function() {
   setVh();
 
   svg4everybody();
+
+  let heroBtn = id('hero-btn');
+  houseSlider = id('house-slider');
+
+  if (heroBtn) {
+    heroBtn.addEventListener('click', scrollToTarget); 
+  }
   
   //includes
 //=include menu.js

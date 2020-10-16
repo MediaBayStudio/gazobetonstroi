@@ -6,6 +6,7 @@ $site_url = site_url();
 $is_front_page = is_front_page();
 $is_404 = is_404();
 $is_category = is_category();
+$is_admin = is_admin();
 
 $address = get_option( 'contacts_address' );
 $tel_1 = get_option( 'contacts_tel_1' );

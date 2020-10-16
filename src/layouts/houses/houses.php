@@ -36,6 +36,9 @@
 
       // Если у таксономии нет родителей, т.е. она сама родительская
       if ( $parent_id === 0 ) {
+        if ( $post_type === 'projects' && $cat_title === 'Год постройки' ) {
+          continue;
+        }
         if ( $show_cat_in_filters ) {
           $parent_terms[ $term_id ] = [
             'title' => $cat_title,

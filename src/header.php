@@ -25,7 +25,9 @@
 <head>
   <meta charset="<?php bloginfo( 'charset' ) ?>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no, viewport-fit=cover">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge"> <?php 
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="preload" as="style" href="<?php echo $template_directory ?>/css/style.css">
+  <link rel="preload" as="style" href="<?php echo $template_directory ?>/style.css"> <?php 
   # Fonts preload
   $fonts = [
     'Montserrat-Regular.woff',

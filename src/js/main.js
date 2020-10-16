@@ -34,6 +34,7 @@ var
   body = document.body,
   templateDir = body.dataset.templateDirUri,
   siteUrl = body.dataset.siteUrl,
+  houseSlider,
   // callbackPopup,
   // orderPopup,
   fakeScrollbar,
@@ -65,8 +66,19 @@ var
   matchesMedia = function(media) {
     return window.matchMedia(media).matches;
   },
-  scrollToTarget = function(target) {
+  scrollToTarget = function(event, target) {
     event.preventDefault();
+
+    target = target || this.dataset.scrollTarget;
+
+    if (target.constructor === String) {
+      target = q(target);
+    }
+
+    if (!target) {
+      console.warn('Scroll target not found');
+      return;
+    }
 
     let wndwY = window.pageYOffset,
       targetStyles = getComputedStyle(target),
@@ -105,6 +117,13 @@ document.addEventListener('DOMContentLoaded', function() {
   setVh();
 
   svg4everybody();
+
+  let heroBtn = id('hero-btn');
+  houseSlider = id('house-slider');
+
+  if (heroBtn) {
+    heroBtn.addEventListener('click', scrollToTarget); 
+  }
   
   //includes
 menu = new MobileMenu('.menu', {
@@ -511,7 +530,8 @@ menu = new MobileMenu('.menu', {
 
   let nextArrow = '<button type="button" class="arrow"></button>',
     prevArrow = '<button type="button" class="arrow"></button>',
-    longArrowSvg = '<svg class="arrow__svg" width="106" height="9" fill="url(#gradient)" xmlns="http://www.w3.org/2000/svg"><path d="M105.354 4.828a.5.5 0 000-.707L102.172.939a.501.501 0 00-.708.707l2.829 2.828-2.829 2.829a.5.5 0 00.708.707l3.182-3.182zM0 4.974h105v-1H0v1z" fill="inherit" /><defs><linearGradient id="gradient"><stop offset="0%" style="stop-color: transparent"></stop><stop offset="50%" style="stop-color: transparent"></stop><stop offset="50%" style="stop-color: currentColor"></stop><stop offset="100%" style="stop-color: currentColor"></stop></linearGradient></defs></svg>',
+    // longArrowSvg = '<svg class="arrow__svg" width="106" height="9" fill="url(#gradient)" xmlns="http://www.w3.org/2000/svg"><path d="M105.354 4.828a.5.5 0 000-.707L102.172.939a.501.501 0 00-.708.707l2.829 2.828-2.829 2.829a.5.5 0 00.708.707l3.182-3.182zM0 4.974h105v-1H0v1z" fill="inherit" /><defs><linearGradient id="gradient"><stop offset="0%" style="stop-color: transparent"></stop><stop offset="50%" style="stop-color: transparent"></stop><stop offset="50%" style="stop-color: currentColor"></stop><stop offset="100%" style="stop-color: currentColor"></stop></linearGradient></defs></svg>',
+    longArrowSvg = '<svg class="arrow__svg" width="106" height="9" fill="inherit" xmlns="http://www.w3.org/2000/svg"><path d="M105.354 4.828a.5.5 0 000-.707L102.172.939a.501.501 0 00-.708.707l2.829 2.828-2.829 2.829a.5.5 0 00.708.707l3.182-3.182zM0 4.974h105v-1H0v1z" fill="inherit" /></svg>',
     cornerArrowSvg = '<svg class="arrow__svg" width="11" height="20" viewBox="0 0 11 20" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M1 1l9 9-9 9" stroke="currentColor"/></svg>',
 
     counterCurrentSelector = '.slider-nav__counter-current',
@@ -535,7 +555,7 @@ menu = new MobileMenu('.menu', {
     featuresSelector = '.feat',
     featuresSlides = featuresSlider && qa(featuresSelector, featuresSlider),
 
-    houseSlider = id('house-slider'),
+    // houseSlider = id('house-slider'), переехал в глоабльное пространство
     houseSlisesSelector = '.house-slider__img',
     houseSlides = houseSlider && qa(houseSlisesSelector, houseSlider),
 
@@ -833,22 +853,23 @@ menu = new MobileMenu('.menu', {
           prevArrow: createArrow(prevArrowClass, longArrowSvg),
           nextArrow: createArrow(nextArrowClass, longArrowSvg),
           slide: houseSlisesSelector,
+          asNavFor: $houseSliderNav,
           infinite: false,
           mobileFirst: true,
           draggable: false,
-          responsive: [{
-            breakpoint: 1023.98,
-            settings: {
-              prevArrow: createArrow(prevArrowClass, smallArrowSvg),
-              nextArrow: createArrow(nextArrowClass, smallArrowSvg)
-            }
-          }, {
-            breakpoint: 1439.98,
-            settings: {
-              prevArrow: createArrow(prevArrowClass, longArrowSvg),
-              nextArrow: createArrow(nextArrowClass, longArrowSvg)
-            }
-          }]
+          // responsive: [{
+          //   breakpoint: 1023.98,
+          //   settings: {
+          //     prevArrow: createArrow(prevArrowClass, smallArrowSvg),
+          //     nextArrow: createArrow(nextArrowClass, smallArrowSvg)
+          //   }
+          // }, {
+          //   breakpoint: 1439.98,
+          //   settings: {
+          //     prevArrow: createArrow(prevArrowClass, longArrowSvg),
+          //     nextArrow: createArrow(nextArrowClass, longArrowSvg)
+          //   }
+          // }]
         });
 
         counterTotalSlides.textContent = counterTotal;
@@ -868,9 +889,18 @@ menu = new MobileMenu('.menu', {
           $houseSlider.slick('slickGoTo', tragetIndex);
 
         });
-      }
+      },
+      buildNavSlider = function() {
+        $houseSliderNav.slick({
+          arrows: false,
+          infinite: false,
+          slidesToShow: 4,
+          slidesToScroll: 4,
+          // draggable: false
+        });
+      };
 
-    buildSlidersFunctions.push(buildHousesSlider);
+    buildSlidersFunctions.push(buildHousesSlider, buildNavSlider);
   }
 
   if (featsSlider) {
@@ -2647,93 +2677,116 @@ menu = new MobileMenu('.menu', {
   //   }
   // });
 
-  zoomPopup = new Popup('.zoom-popup', {
-    closeButtons: '.zoom-popup__close',
-    openButtons: '.house-slider__img'
-  });
+  if (matchesMedia('(max-width:1023.98px)')) {
+    zoomPopup = new Popup('.zoom-popup', {
+      closeButtons: '.zoom-popup__close',
+      openButtons: '.house-slider__img'
+    });
 
-  zoomPopup.addEventListener('popupbeforeopen', function() {
-    let closeBtn = q('.zoom-popup__close', zoomPopup),
-      cnt = q('.zoom-popup__cnt', zoomPopup);
+    zoomPopup.addEventListener('popupbeforeopen', function() {
+      let closeBtn = q('.zoom-popup__close', zoomPopup),
+        cnt = q('.zoom-popup__cnt', zoomPopup);
 
-    q('.zoom-popup__img', zoomPopup).src = zoomPopup.caller.src;
+      q('.zoom-popup__img', zoomPopup).src = zoomPopup.caller.src;
 
-    closeBtn.style.top = cnt.getBoundingClientRect().top - closeBtn.offsetHeight - 7.5 + 'px';
-    if (matchesMedia('(min-width:1023.98px)')) {
-      closeBtn.style.left = cnt.getBoundingClientRect().right - (closeBtn.offsetWidth / 2) + 'px';
+      closeBtn.style.top = cnt.getBoundingClientRect().top - closeBtn.offsetHeight - 7.5 + 'px';
+      if (matchesMedia('(min-width:1023.98px)')) {
+        closeBtn.style.left = cnt.getBoundingClientRect().right - (closeBtn.offsetWidth / 2) + 'px';
+      }
+    });
+
+    if (houseSlider && galleryPopup) {
+      console.log(galleryPopup);
     }
-
-
-  });
+  }
 
 })()
 ;
 (function() {
-  let projectsSect = id('projects-sect');
+  let projectsSect = id('projects-sect'),
+    // houseSlider = id('house-slider') переехал в глобальное пространство
+    btns;
 
-  if (projectsSect) {
+  if (projectsSect || houseSlider) {
+
+    if (matchesMedia('(min-width:1023.98px) and (hover)')) {
+      btns = '.project__img, .house-slider__img';
+      if (zoomPopup) {
+        console.log(zoomPopup);
+      }
+    } else {
+      btns = '.project__img';
+    }
 
     galleryPopup = new Popup('.gallery-popup', {
-      openButtons: '.project__img',
+      openButtons: btns,
       closeButtons: '.gallery-popup__close'
     });
 
     let galleryPopupCnt = q('.gallery-popup__cnt', galleryPopup),
+      slidesClass = 'gallery-popup__img',
+      counterCurrentSlide = q('.slider-nav__counter-current', galleryPopupCnt),
+      counterTotalSlides = q('.slider-nav__counter-total', galleryPopupCnt),
       $galleryPopupCnt = $(galleryPopupCnt);
+
+    $galleryPopupCnt.on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+      counterCurrentSlide.textContent = nextSlide + 1;
+    });
 
     galleryPopup.addEventListener('popupbeforeopen', function() {
       let caller = galleryPopup.caller,
         callerParent = caller.parentElement,
-        allSlides = qa('.project__img', callerParent);
+        allSlides = qa(btns, callerParent);
 
 
       if (galleryPopupCnt.classList.contains('slick-slider')) {
-
-      } else {
-        let initialSlide,
-          slidesClass = 'gallery-popup__img',
-          counterCurrentSlide = q('.slider-nav__counter-current', galleryPopupCnt),
-          counterTotalSlides = q('.slider-nav__counter-total', galleryPopupCnt),
-          counterTotal = allSlides.length;
-
-        counterTotalSlides.textContent = counterTotal;
-
-        for (let i = 0, len = allSlides.length; i < len; i++) {
-          let img = document.createElement('img');
-
-          img.classList.add(slidesClass);
-          img.src = allSlides[i].src;
-          img.alt = '';
-
-          galleryPopupCnt.appendChild(img);
-
-          if (allSlides[i].classList.contains('slick-current')) {
-            initialSlide = i;
+        if (galleryPopup.dataset.slider === caller.dataset.slider) {
+          $galleryPopupCnt.slick('slickGoTo', caller.dataset.slickIndex, true);
+          counterCurrentSlide.textContent = +caller.dataset.slickIndex + 1;
+          return;
+        } else {
+          $galleryPopupCnt.slick('unslick');
+          let childs = galleryPopupCnt.children;
+          for (var i = childs.length - 1; i >= 0; i--) {
+            if (childs[i].tagName === 'IMG') {
+              galleryPopupCnt.removeChild(childs[i]);
+            }
           }
-
         }
-
-        $galleryPopupCnt.slick({
-          slide: '.' + slidesClass,
-          initialSlide: initialSlide,
-          infinite: false,
-          appendArrows: $('.gallery-popup__nav'),
-          prevArrow: createArrow('gallery-popup__prev', smallArrowSvg),
-          nextArrow: createArrow('gallery-popup__next', smallArrowSvg),
-          // mobileFirst: true,
-          // responsive: [{
-          //   breakpoint: 1023.98,
-          //   settings: {
-          //   }
-          // }]
-        });
-
-        $galleryPopupCnt.on('beforeChange', function(event, slick, currentSlide, nextSlide) {
-          counterCurrentSlide.textContent = nextSlide + 1;
-        });
       }
 
+      let initialSlide,
+        counterTotal = allSlides.length;
 
+      counterTotalSlides.textContent = counterTotal;
+
+      for (let i = 0, len = allSlides.length; i < len; i++) {
+        let img = document.createElement('img');
+
+        img.classList.add(slidesClass);
+        img.src = allSlides[i].src;
+        img.alt = '';
+
+        galleryPopupCnt.appendChild(img);
+
+        if (allSlides[i].classList.contains('slick-current')) {
+          initialSlide = i;
+        }
+
+      }
+
+      $galleryPopupCnt.slick({
+        slide: '.' + slidesClass,
+        initialSlide: initialSlide,
+        infinite: false,
+        appendArrows: $('.gallery-popup__nav'),
+        prevArrow: createArrow('gallery-popup__prev', smallArrowSvg),
+        nextArrow: createArrow('gallery-popup__next', smallArrowSvg)
+      });
+
+      counterCurrentSlide.textContent = initialSlide + 1;
+
+      galleryPopup.dataset.slider = caller.dataset.slider;
 
 
       // console.log(callerIndex);

@@ -27,9 +27,8 @@
 
   &__figure {
     margin: 30px auto 0;
-    width: 280px;
+    max-width: 280px;
     position: relative;
-    align-self: flex-start;
     > .slick-list {
       overflow: hidden;
     }

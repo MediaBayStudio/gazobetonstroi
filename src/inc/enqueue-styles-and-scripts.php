@@ -32,7 +32,7 @@ add_action( 'wp_enqueue_scripts', function() {
   
   $screen_widths = ['0', '420', '576', '768', '1024', '1440']; // на каких экранах подключать css
 
-  wp_enqueue_style( 'theme-style', get_stylesheet_uri() );        // подключить стиль темы (default)
+  wp_enqueue_style( 'theme-style', get_stylesheet_uri(), [], null );        // подключить стиль темы (default)
 
   // подключаем стили с помощью своей функции
   enqueue_style( 'style', $screen_widths );
@@ -96,6 +96,11 @@ add_filter('script_loader_tag',   function( $html, $handle ) {
 
 // Убираем id и type в тегах style
 add_filter( 'style_loader_tag', function( $html, $handle ) {
+  // Подключаем стили гутенберга только в админке
+  global $is_admin;
+  if ( $hanlde === 'wp-block-library' && !$is_admin ) {
+    return '';
+  }
   $html = str_replace( " id='$handle-css' ", '', $html );
   $html = str_replace( " type='text/css'", '', $html );
   return $html;

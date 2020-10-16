@@ -47,7 +47,7 @@ foreach ( $sect_images as $sect_img ) {
     <h1 class="hero-sect__title"><?php echo $sect_title ?></h1>
     <p class="hero-sect__descr<?php echo $sect_descr_class ?>"><?php echo $sect_descr ?></p> <?php
     if ( $sect_btn ) : ?>
-      <button type="button" class="hero-sect__btn btn btn_green btn_text-white" data-scroll-target="<?php echo $section['sect_btn_target'] ?>"><?php echo $section['sect_btn_text'] ?></button> <?php
+      <button type="button" id="hero-btn" class="hero-sect__btn btn btn_green btn_text-white" data-scroll-target="<?php echo $section['sect_btn_target'] ?>"><?php echo $section['sect_btn_text'] ?></button> <?php
     endif ?>
   </div>
 </section>

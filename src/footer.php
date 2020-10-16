@@ -8,7 +8,7 @@
     <img src="#" data-src="<?php echo $template_directory ?>/img/logo.svg" alt="Логотип Газобетонстрой" class="ftr__logo-text lazy">
     <span class="ftr__copy">
       2008-<?php echo date('Y') ?> &copy; Группа компаний <br>
-      ООО <q>СипМонтаж</q>
+      <q>СипМонтаж</q>
     </span>
   </div> <?php 
   wp_nav_menu( [
@@ -21,7 +21,7 @@
   <div class="ftr__bottom">
     <a href="policy.pdf" rel="noopener noreferrer nofollow" target="_blank" class="ftr__policy text_underline" title="Посмотреть политику конфиденциальности">Политика конфиденциальности</a>
     <div class="ftr__dev">
-    Разработка и внедрение – <a href="https://media-bay.ru" target="_blank" class="ftr__dev-link" title="Перейти на сайт разработчика">media bay</a>
+    Дизайн и разработка – <a href="https://media-bay.ru" target="_blank" class="ftr__dev-link" title="Перейти на сайт разработчика">media bay</a>
     </div>
   </div>
 </footer>

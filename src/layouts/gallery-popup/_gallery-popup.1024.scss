@@ -6,8 +6,8 @@
 .gallery-popup {
   &__cnt {
     max-width: 780px;
-    height: 85vh;
-    height: calc(var(--vh, 1vh) * 85);
+    // height: 85vh;
+    // height: calc(var(--vh, 1vh) * 85);
     max-height: 85vh;
     max-height: calc(var(--vh, 1vh) * 85);
   }

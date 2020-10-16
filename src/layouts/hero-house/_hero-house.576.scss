@@ -15,8 +15,9 @@
   }
 
   &__img {
-    width: 262px;
-    height: 266px;
+    // margin: 0 0 0 auto;
+    // width: 262px;
+    // height: 266px;
   }
 
   &__title {}
@@ -24,9 +25,14 @@
   &__descr {
     &-block {
       margin-top: 50px;
-      display: flex;
-      align-items: center;
+      // display: flex;
+      // flex-wrap: wrap;
+      // align-items: center;
     }
+  }
+
+  &__p {
+    margin: 0 0 25px;
   }
 
   &__list {
@@ -66,6 +72,11 @@
 .house-slider {
   height: 380px;
 
+  &__prev,
+  &__next {
+    width: 105px;
+  }
+
   >.slick-list,
   >.slick-list>.slick-track {}
 
@@ -76,7 +87,9 @@
 .house-nav {
   width: 100%;
   margin-left: 0;
-  padding: 0;
+  > .slick-list {
+    padding: 0;
+  }
 
   &__img {
     width: 75px;

@@ -11,7 +11,8 @@
 
   let nextArrow = '<button type="button" class="arrow"></button>',
     prevArrow = '<button type="button" class="arrow"></button>',
-    longArrowSvg = '<svg class="arrow__svg" width="106" height="9" fill="url(#gradient)" xmlns="http://www.w3.org/2000/svg"><path d="M105.354 4.828a.5.5 0 000-.707L102.172.939a.501.501 0 00-.708.707l2.829 2.828-2.829 2.829a.5.5 0 00.708.707l3.182-3.182zM0 4.974h105v-1H0v1z" fill="inherit" /><defs><linearGradient id="gradient"><stop offset="0%" style="stop-color: transparent"></stop><stop offset="50%" style="stop-color: transparent"></stop><stop offset="50%" style="stop-color: currentColor"></stop><stop offset="100%" style="stop-color: currentColor"></stop></linearGradient></defs></svg>',
+    // longArrowSvg = '<svg class="arrow__svg" width="106" height="9" fill="url(#gradient)" xmlns="http://www.w3.org/2000/svg"><path d="M105.354 4.828a.5.5 0 000-.707L102.172.939a.501.501 0 00-.708.707l2.829 2.828-2.829 2.829a.5.5 0 00.708.707l3.182-3.182zM0 4.974h105v-1H0v1z" fill="inherit" /><defs><linearGradient id="gradient"><stop offset="0%" style="stop-color: transparent"></stop><stop offset="50%" style="stop-color: transparent"></stop><stop offset="50%" style="stop-color: currentColor"></stop><stop offset="100%" style="stop-color: currentColor"></stop></linearGradient></defs></svg>',
+    longArrowSvg = '<svg class="arrow__svg" width="106" height="9" fill="inherit" xmlns="http://www.w3.org/2000/svg"><path d="M105.354 4.828a.5.5 0 000-.707L102.172.939a.501.501 0 00-.708.707l2.829 2.828-2.829 2.829a.5.5 0 00.708.707l3.182-3.182zM0 4.974h105v-1H0v1z" fill="inherit" /></svg>',
     cornerArrowSvg = '<svg class="arrow__svg" width="11" height="20" viewBox="0 0 11 20" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M1 1l9 9-9 9" stroke="currentColor"/></svg>',
 
     counterCurrentSelector = '.slider-nav__counter-current',
@@ -35,7 +36,7 @@
     featuresSelector = '.feat',
     featuresSlides = featuresSlider && qa(featuresSelector, featuresSlider),
 
-    houseSlider = id('house-slider'),
+    // houseSlider = id('house-slider'), переехал в глоабльное пространство
     houseSlisesSelector = '.house-slider__img',
     houseSlides = houseSlider && qa(houseSlisesSelector, houseSlider),
 
@@ -333,22 +334,23 @@
           prevArrow: createArrow(prevArrowClass, longArrowSvg),
           nextArrow: createArrow(nextArrowClass, longArrowSvg),
           slide: houseSlisesSelector,
+          asNavFor: $houseSliderNav,
           infinite: false,
           mobileFirst: true,
           draggable: false,
-          responsive: [{
-            breakpoint: 1023.98,
-            settings: {
-              prevArrow: createArrow(prevArrowClass, smallArrowSvg),
-              nextArrow: createArrow(nextArrowClass, smallArrowSvg)
-            }
-          }, {
-            breakpoint: 1439.98,
-            settings: {
-              prevArrow: createArrow(prevArrowClass, longArrowSvg),
-              nextArrow: createArrow(nextArrowClass, longArrowSvg)
-            }
-          }]
+          // responsive: [{
+          //   breakpoint: 1023.98,
+          //   settings: {
+          //     prevArrow: createArrow(prevArrowClass, smallArrowSvg),
+          //     nextArrow: createArrow(nextArrowClass, smallArrowSvg)
+          //   }
+          // }, {
+          //   breakpoint: 1439.98,
+          //   settings: {
+          //     prevArrow: createArrow(prevArrowClass, longArrowSvg),
+          //     nextArrow: createArrow(nextArrowClass, longArrowSvg)
+          //   }
+          // }]
         });
 
         counterTotalSlides.textContent = counterTotal;
@@ -368,9 +370,18 @@
           $houseSlider.slick('slickGoTo', tragetIndex);
 
         });
-      }
+      },
+      buildNavSlider = function() {
+        $houseSliderNav.slick({
+          arrows: false,
+          infinite: false,
+          slidesToShow: 4,
+          slidesToScroll: 4,
+          // draggable: false
+        });
+      };
 
-    buildSlidersFunctions.push(buildHousesSlider);
+    buildSlidersFunctions.push(buildHousesSlider, buildNavSlider);
   }
 
   if (featsSlider) {

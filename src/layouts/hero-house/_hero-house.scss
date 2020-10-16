@@ -8,98 +8,136 @@
   overflow: hidden;
   color: $black;
   padding-bottom: 0;
-  &__sliders {
-  }
+  margin-bottom: 0;
+  &__sliders {}
+
   &__gallery {
     &-nav {
-      margin: 10px 0 20px;
-      > .slider-nav__counter {
-        margin: 0 -10px;
+      margin: 10px 0;
+
+      >.slider-nav__counter {
+        // margin: 0 -10px;
       }
     }
   }
+
   &__img {
-    margin-left: auto;
-    max-width: 100%;
-    object-fit: cover;
+    display: none;
+    // margin: 25px 0 0 auto;
+    // max-width: 100%;
+    // object-fit: cover;
   }
+
   &__title {
-    padding: 0 0 20px;
-    // margin: 0 0 5px;
     font: 600 22px/140% Montserrat;
-    border-bottom: 1px solid $green;
   }
+
+  &__heading-block {
+    padding: 0 0 20px;
+    border-bottom: 1px solid $green;
+    font: 16px/140% Montserrat;
+  }
+  &__excerpt {
+    margin-top: 10px;
+  }
+
   &__descr {
-    // font: 400 16px/140% Montserrat;
     &-block {
       margin-top: 30px;
       font: 16px/150% Montserrat;
     }
   }
+
+  &__p {
+    margin: 0 0 10px;
+  }
+
   &__list {
     margin-top: 20px;
     font: 16px/140% Montserrat;
     color: $darkgrey;
+
     &-item {
       margin: 0 0 20px;
-      // display: grid;
-      // grid-template-rows: 100%;
-      // grid-template-columns: auto 1fr auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      // align-items: flex-end;
+
       &-text {
-        // grid-row: 1;
-        // align-self: center;
+        display: flex;
+        align-items: center;
+
         &:first-of-type {
-          // grid-column: 1;
           padding-right: 20px;
         }
+
         &:last-of-type {
-          // grid-column: 3;
           text-align: right;
         }
       }
-      &-dots {
-        // grid-column: 2;
-        // margin: 0px 5px 4px;
-        // width: 100%;
-        // min-width: 20px;
-        // border-bottom: 1px dotted $grey;
-      }
+
+      &-dots {}
     }
   }
+
   &__prices {
     margin: 50px 0;
     text-align: center;
     font: 16px/140% Montserrat;
     color: $darkgrey;
   }
+
   &__price {
     &:first-child {
       margin: 0 0 25px;
     }
   }
+
   &__price-num {
     margin: 0 0 5px;
     display: block;
     font: 500 24px/140% Montserrat;
     color: $black;
   }
-  &__price-text {
-  }
+
+  &__price-text {}
 }
 
 .house-slider {
   height: responsive('320->575', '200->380');
-  > .slick-list,
-  > .slick-list > .slick-track {
+
+  &__next,
+  &__prev {
+    position: relative;
+    width: 60px;
+    height: 9px;
+    overflow: hidden;
+    > .arrow__svg {
+      position: absolute;
+      top: 0;
+    }
+  }
+
+  &__next {
+    > .arrow__svg {
+      right: 0;
+    }
+  }
+
+  &__prev {
+    > .arrow__svg {
+      left: 0;
+    }
+  }
+
+  >.slick-list,
+  >.slick-list>.slick-track {
     height: 100%;
   }
+
   &__img {
     border: 1px solid transparent;
-    object-fit: contain;
+    // object-fit: contain;
     cursor: zoom-in;
   }
 }
@@ -107,17 +145,19 @@
 
 .house-nav {
   width: 100vw;
-  margin: 20px 0 20px -20px;
-  padding: 0 20px 10px;
-  display: flex;
-  overflow-x: auto;
-  overflow-y: hidden;
+  margin: 10px 0 20px -20px;
+  // padding: 0 20px 10px;
+  overflow: hidden;
+  > .slick-list {
+    padding: 0 20px;
+  }
   &__img {
     width: calc(100% / 4);
     padding: 5px;
     object-fit: cover;
     border: 1px solid transparent;
     transition: border-color .5s;
+
     &.active {
       border-color: $black;
     }

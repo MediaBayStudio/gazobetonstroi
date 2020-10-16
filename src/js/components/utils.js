@@ -31,6 +31,7 @@ var
   body = document.body,
   templateDir = body.dataset.templateDirUri,
   siteUrl = body.dataset.siteUrl,
+  houseSlider,
   // callbackPopup,
   // orderPopup,
   fakeScrollbar,
@@ -62,8 +63,19 @@ var
   matchesMedia = function(media) {
     return window.matchMedia(media).matches;
   },
-  scrollToTarget = function(target) {
+  scrollToTarget = function(event, target) {
     event.preventDefault();
+
+    target = target || this.dataset.scrollTarget;
+
+    if (target.constructor === String) {
+      target = q(target);
+    }
+
+    if (!target) {
+      console.warn('Scroll target not found');
+      return;
+    }
 
     let wndwY = window.pageYOffset,
       targetStyles = getComputedStyle(target),

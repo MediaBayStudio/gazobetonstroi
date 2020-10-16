@@ -4,6 +4,7 @@
 @import '../../scss/assets/variables';
 
 .thanks-popup {
+  z-index: 3;
   &__cnt {
     max-width: 265px;
   }
