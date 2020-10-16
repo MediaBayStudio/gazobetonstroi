@@ -2738,6 +2738,7 @@ menu = new MobileMenu('.menu', {
         callerParent = caller.parentElement,
         allSlides = qa(btns, callerParent);
 
+      caller.blur();
 
       if (galleryPopupCnt.classList.contains('slick-slider')) {
         if (galleryPopup.dataset.slider === caller.dataset.slider) {
@@ -2771,9 +2772,16 @@ menu = new MobileMenu('.menu', {
 
         if (allSlides[i].classList.contains('slick-current')) {
           initialSlide = i;
+          img.setAttribute('autofocus', '');
         }
 
       }
+
+      $galleryPopupCnt.on('init', function(event, slick) {
+        setTimeout(function(){
+          q('.slick-current', galleryPopupCnt).focus();
+        }, 100);
+      });
 
       $galleryPopupCnt.slick({
         slide: '.' + slidesClass,
@@ -2783,6 +2791,7 @@ menu = new MobileMenu('.menu', {
         prevArrow: createArrow('gallery-popup__prev', smallArrowSvg),
         nextArrow: createArrow('gallery-popup__next', smallArrowSvg)
       });
+
 
       counterCurrentSlide.textContent = initialSlide + 1;
 

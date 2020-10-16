@@ -94,13 +94,14 @@ li.slick-active > .dot {
 }
 
 .slider-nav {
+  width: 125px;
   display: none;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   font: 16px/100% Montserrat;
   color: $black;
   &__counter {
-    margin: 0 40px;
+    // margin: 0 40px;
     &-current {
       color: $green;
     }
