@@ -12,6 +12,18 @@
   &__house {
     
   }
+
+  &__notfound {
+    font-size: 18px;
+    &::before {
+    }
+    &-text {
+      width: 325px;
+    }
+    &-btn {
+      font-size: 16px;
+    }
+  }
 }
 
 .projects,

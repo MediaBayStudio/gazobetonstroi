@@ -12,6 +12,17 @@
   &__house {
     
   }
+  &__notfound {
+    text-align: center;
+    font-size: 20px;
+    &::before {
+    }
+    &-text {
+      width: 350px;
+    }
+    &-btn {
+    }
+  }
 }
 
 .projects,
@@ -32,6 +43,7 @@
   padding-top: 80px;
   display: flex;
   &__cards {
+    width: 100%;
     text-align: left;
   }
 }

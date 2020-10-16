@@ -98,9 +98,12 @@ li.slick-active > .dot {
   align-items: center;
   justify-content: center;
   font: 16px/100% Montserrat;
-  color: $darkgrey;
+  color: $black;
   &__counter {
     margin: 0 40px;
+    &-current {
+      color: $green;
+    }
   }
 }
 

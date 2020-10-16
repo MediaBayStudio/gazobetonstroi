@@ -63,6 +63,10 @@
 
 .house-slider {
   height: 520px;
+  &__prev,
+  &__next {
+    width: 60px;
+  }
   > .slick-list,
   > .slick-list > .slick-track {
 

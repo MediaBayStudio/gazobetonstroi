@@ -4,7 +4,7 @@
 @import '../../scss/assets/variables';
 
 .stages-sect {
-  background: url(#) 0 0/100% 50% no-repeat, url(#) 0 100% no-repeat;
+  background: url(#) 0 0/100% 50% no-repeat, url(#) 0 100%/cover no-repeat;
   will-change: height;
   position: relative;
   overflow: hidden;
@@ -54,6 +54,9 @@
     font: bold 15px/100% Montserrat;
     color: $lightgrey;
     z-index: 1;
+    > .slider-nav__counter-current {
+      color: $lightgrey;
+    }
   }
 }
 
