@@ -7,16 +7,16 @@
 .house-sect {
   overflow: hidden;
   color: $black;
-  padding-bottom: 0;
-  margin-bottom: 0;
+  // padding-bottom: 0;
+  // margin-bottom: 0;
   &__sliders {}
 
   &__gallery {
     &-nav {
-      margin: 10px 0;
-
+      margin: 15px auto 0;
+      width: 235px;
       >.slider-nav__counter {
-        font-weight: bold;
+        font-weight: 600;
         // margin: 0 -10px;
       }
     }
@@ -138,7 +138,8 @@
 
   &__img {
     border: 1px solid transparent;
-    // object-fit: contain;
+    // object-fit: cover;
+    object-fit: contain;
     cursor: zoom-in;
   }
 }
@@ -146,14 +147,22 @@
 
 .house-nav {
   width: 100vw;
-  margin: 10px 0 20px -20px;
-  // padding: 0 20px 10px;
+  margin: 5px 0 20px -20px;
+  padding: 1px;
   overflow: hidden;
   > .slick-list {
     padding: 0 20px;
+    > .slick-track {
+      // align-items: center;
+    }
   }
+
   &__img {
-    width: calc(100% / 4);
+    flex-shrink: 0;
+    width: 70px;
+    height: 70px;
+    // min-height: 100%;
+    // width: calc(280px / 4);
     padding: 5px;
     object-fit: cover;
     border: 1px solid transparent;

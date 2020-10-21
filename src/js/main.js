@@ -34,7 +34,7 @@ var
     call: function(event) {
       let funcs = windowFuncs[event.type] || event;
       for (let i = funcs.length - 1; i >= 0; i--) {
-        console.log(funcs[i].name);
+        // console.log(funcs[i].name);
         funcs[i]();
       }
     }
@@ -871,37 +871,47 @@ document.addEventListener('DOMContentLoaded', function() {
         $houseSliderNav = $(houseSliderNav),
         counterCurrentSlide = q(counterCurrentSelector, $houseSliderParent),
         counterTotalSlides = q(counterTotalSelector, $houseSliderParent),
+  
         buildHousesSlider = function() {
           $houseSlider.slick({
             appendArrows: $('.house-sect__gallery-nav'),
             prevArrow: createArrow(prevArrowClass, longArrowSvg),
             nextArrow: createArrow(nextArrowClass, longArrowSvg),
             slide: houseSlisesSelector,
-            asNavFor: $houseSliderNav,
             infinite: false,
-            mobileFirst: true,
-            draggable: false,
-            // responsive: [{
-            //   breakpoint: 1023.98,
-            //   settings: {
-            //     prevArrow: createArrow(prevArrowClass, smallArrowSvg),
-            //     nextArrow: createArrow(nextArrowClass, smallArrowSvg)
-            //   }
-            // }, {
-            //   breakpoint: 1439.98,
-            //   settings: {
-            //     prevArrow: createArrow(prevArrowClass, longArrowSvg),
-            //     nextArrow: createArrow(nextArrowClass, longArrowSvg)
-            //   }
-            // }]
+            draggable: false
           });
   
           counterTotalSlides.textContent = counterTotal;
   
           $houseSlider.on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+            let houseNavSlidesNextEl = houseSlidesNav[nextSlide];
+  
             counterCurrentSlide.textContent = nextSlide + 1;
-            houseSlidesNav[currentSlide].classList.remove('active');
-            houseSlidesNav[nextSlide].classList.add('active');
+            for (var i = houseSlidesNav.length - 1; i >= 0; i--) {
+              houseSlidesNav[i].classList.remove('active');
+            }
+  
+            houseNavSlidesNextEl.classList.add('active');
+  
+            let activeSlides = qa('.slick-active', houseSliderNav),
+              activeSlideLeft = false; // Активный слайд ушел из области просмотра (4 слайда)
+  
+            for (var i = activeSlides.length - 1; i >= 0; i--) {
+              if (activeSlides[i] === houseNavSlidesNextEl) {
+                activeSlideLeft = false;
+                break;
+              }
+              activeSlideLeft = true;
+            }
+  
+            if (activeSlideLeft) {
+              if (currentSlide < nextSlide) {
+                $houseSliderNav.slick('slickNext');
+              } else {
+                $houseSliderNav.slick('slickPrev');
+              }
+            }
           });
   
           houseSlidesNav[0].classList.add('active');
@@ -919,10 +929,10 @@ document.addEventListener('DOMContentLoaded', function() {
             arrows: false,
             infinite: false,
             slidesToShow: 4,
-            slidesToScroll: 4,
-            // draggable: false
+            slidesToScroll: 4
           });
         };
+  
   
       // buildSlidersFunctions.push(buildHousesSlider, buildNavSlider);
       windowFuncs.resize.push(buildHousesSlider, buildNavSlider);

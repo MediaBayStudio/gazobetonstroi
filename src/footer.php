@@ -30,6 +30,9 @@ require 'template-parts/thanks-popup.php';
 require 'template-parts/zoom-popup.php';
 require 'template-parts/gallery-popup.php';
 require 'template-parts/overlay.php';
+if ( is_super_admin() || is_admin_bar_showing() ) {
+  require 'template-parts/import-popup.php';
+}
 wp_footer() ?>
   </body>
 </html>

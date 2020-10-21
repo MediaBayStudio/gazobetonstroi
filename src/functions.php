@@ -6,7 +6,8 @@ $site_url = site_url();
 $is_front_page = is_front_page();
 $is_404 = is_404();
 $is_category = is_category();
-$is_admin = is_admin();
+// $is_admin = is_admin();
+// $is_single = is_single();
 
 $address = get_option( 'contacts_address' );
 $tel_1 = get_option( 'contacts_tel_1' );
@@ -83,3 +84,8 @@ require $template_dir . '/inc/print-houses.php';
 
 // Функция получения кол-ва домов по фильтрам
 require $template_dir . '/inc/get-count-houses.php';
+
+// Функция иморта проектов из csv файла
+if ( is_super_admin() || is_admin_bar_showing() ) {
+  require $template_dir . '/inc/import.php';
+}
