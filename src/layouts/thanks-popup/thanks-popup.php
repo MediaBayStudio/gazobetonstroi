@@ -8,6 +8,5 @@
     </button>
     <span class="popup__title thanks-popup__title">Спасибо!</span>
     <p class="popup__descr thanks-popup__descr">Мы свяжемся с вами в ближайшее время.</p>
-    </div>
   </div>
 </div>

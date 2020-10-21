@@ -4,7 +4,7 @@
 @import '../../scss/assets/variables';
 
 .stages-sect {
-  background: url(#) 0 0/100% 50% no-repeat, url(#) 0 100%/cover no-repeat;
+  background: url(#) 0 0/100% 50% no-repeat, url(#) 0 100% repeat;
   will-change: height;
   position: relative;
   overflow: hidden;

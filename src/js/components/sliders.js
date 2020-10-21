@@ -20,6 +20,13 @@
 
     slickSliderClass = 'slick-slider',
 
+    hasSlickClass = function($el) {
+      return $el.hasClass('slick-slider');
+    },
+    unslick = function($el) {
+      $el.slick('unslick');
+    },
+
     reviewsSlider = id('reviews-slider'),
     reviewsSelector = '.review',
     reviewsSlides = reviewsSlider && qa(reviewsSelector, reviewsSlider),
@@ -63,12 +70,11 @@
     newsSelector = '.post',
     newsSlides = newsSlider && qa(newsSelector, newsSlider),
 
-    buildSliders = function() {
-      for (let i = buildSlidersFunctions.length - 1; i >= 0; i--) {
-        buildSlidersFunctions[i]();
-      }
-    },
-    buildSlidersFunctions = [];
+    // Медиазапросы для сокращения записи
+    mw576 = '(min-width: 575.98px)',
+    mw767 = '(min-width: 767.98px)',
+    mw1024 = '(min-width: 1023.98px)',
+    mw1440 = '(min-width: 1439.98px)';
 
   // Слайдер проектов
   // Слайдер в главной секции на страницах
@@ -104,24 +110,24 @@
       buildReviewsSlider = function() {
         // если ширина экрана больше 576px и слайдов меньше 3, то слайдера не будет
         // показываем по 2 слайда
-        if (matchesMedia('(min-width: 575.98px)') && reviewsSlides.length < 3) {
-          if (reviewsSlider.classList.contains(slickSliderClass)) {
-            $reviewsSlider.slick('unslick');
+        if (matchesMedia(mw576) && reviewsSlides.length < 3) {
+          if (hasSlickClass($reviewsSlider)) {
+            unslick($reviewsSlider);
           }
           // если ширина экрана больше 1024px и слайдов меньше 5, то слайдера не будет
           // показываем по 4 слайда
-        } else if (matchesMedia('(min-width: 767.98px)') && reviewsSlides.length < 3) {
-          if (reviewsSlider.classList.contains(slickSliderClass)) {
-            $reviewsSlider.slick('unslick');
+        } else if (matchesMedia(mw767) && reviewsSlides.length < 3) {
+          if (hasSlickClass($reviewsSlider)) {
+            unslick($reviewsSlider);
           }
           // в других случаях делаем слайдер
-        } else if (matchesMedia('(min-width: 1439.98px)') && reviewsSlides.length < 4) {
-          if (reviewsSlider.classList.contains(slickSliderClass)) {
-            $reviewsSlider.slick('unslick');
+        } else if (matchesMedia(mw1440) && reviewsSlides.length < 4) {
+          if (hasSlickClass($reviewsSlider)) {
+            unslick($reviewsSlider);
           }
           // в других случаях делаем слайдер
         } else {
-          if (reviewsSlider.classList.contains(slickSliderClass)) {
+          if (hasSlickClass($reviewsSlider)) {
             // слайдер уже создан
             return;
           }
@@ -152,9 +158,9 @@
 
           let counterTotal = reviewsSlides.length;
 
-          if (matchesMedia('(min-width:1439.98px)')) {
+          if (matchesMedia(mw1440)) {
             counterTotal = counterTotal - 2;
-          } else if (matchesMedia('(min-width:575.98px)')) {
+          } else if (matchesMedia(mw576)) {
             counterTotal--;
           } else {
             counterTotal = reviewsSlides.length;
@@ -168,7 +174,8 @@
         }
       }
 
-    buildSlidersFunctions.push(buildReviewsSlider);
+    // buildSlidersFunctions.push(buildReviewsSlider);
+    windowFuncs.resize.push(buildReviewsSlider);
   }
 
   if (casesSlider && casesSlides.length && casesSlides.length > 1) {
@@ -177,12 +184,12 @@
       counterCurrentSlide = q(counterCurrentSelector, casesSliderParent),
       counterTotalSlides = q(counterTotalSelector, casesSliderParent),
       buildCasesSlider = function() {
-        if (matchesMedia('(min-width: 575.98px)')) {
-          if (casesSlider.classList.contains(slickSliderClass)) {
-            $casesSlider.slick('unslick');
+        if (matchesMedia(mw576)) {
+          if (hasSlickClass($casesSlider)) {
+            unslick($casesSlider);
           }
         } else {
-          if (casesSlider.classList.contains(slickSliderClass)) {
+          if (hasSlickClass($casesSlider)) {
             // слайдер уже создан
             return;
           }
@@ -206,7 +213,8 @@
         }
       }
 
-    buildSlidersFunctions.push(buildCasesSlider);
+    // buildSlidersFunctions.push(buildCasesSlider);
+    windowFuncs.resize.push(buildCasesSlider);
   }
 
   if (stagesSlider && stagesSlides.length && stagesSlides.length > 1) {
@@ -214,7 +222,7 @@
       counterCurrentSlide = q(counterCurrentSelector, stagesSlider),
       counterTotalSlides = q(counterTotalSelector, stagesSlider),
       buildStagesSlider = function() {
-        if (stagesSlider.classList.contains(slickSliderClass)) {
+        if (hasSlickClass($stagesSlider)) {
           // слайдер уже создан
           return;
         }
@@ -237,7 +245,8 @@
       counterCurrentSlide.textContent = nextSlide + 1;
     });
 
-    buildSlidersFunctions.push(buildStagesSlider);
+    // buildSlidersFunctions.push(buildStagesSlider);
+    windowFuncs.resize.push(buildStagesSlider);
   }
 
   if (featuresSlider && featuresSlides.length && featuresSlides.length > 1) {
@@ -249,19 +258,19 @@
       buildFeaturesSlider = function() {
         // если ширина экрана больше 576px и слайдов меньше 3, то слайдера не будет
         // показываем по 2 слайда
-        if (matchesMedia('(min-width: 575.98px)') && featuresSlides.length < 3) {
-          if (featuresSlider.classList.contains(slickSliderClass)) {
-            $featuresSlider.slick('unslick');
+        if (matchesMedia(mw576) && featuresSlides.length < 3) {
+          if (hasSlickClass($featuresSlider)) {
+            unslick($featuresSlider);
           }
           // если ширина экрана больше 1024px и слайдов меньше 5, то слайдера не будет
           // показываем по 4 слайда
-        } else if (matchesMedia('(min-width: 1439.98px)') && featuresSlides.length < 4) {
-          if (featuresSlider.classList.contains(slickSliderClass)) {
-            $featuresSlider.slick('unslick');
+        } else if (matchesMedia(mw1440) && featuresSlides.length < 4) {
+          if (hasSlickClass($featuresSlider)) {
+            unslick($featuresSlider);
           }
           // в других случаях делаем слайдер
         } else {
-          if (featuresSlider.classList.contains(slickSliderClass)) {
+          if (hasSlickClass($featuresSlider)) {
             // слайдер уже создан
             return;
           }
@@ -302,9 +311,9 @@
 
           let counterTotal = featuresSlides.length;
 
-          if (matchesMedia('(min-width:1439.98px)')) {
+          if (matchesMedia(mw1440)) {
             counterTotal = counterTotal - 2;
-          } else if (matchesMedia('(min-width:575.98px)')) {
+          } else if (matchesMedia(mw576)) {
             counterTotal--;;
           }
 
@@ -316,7 +325,8 @@
         }
       }
 
-    buildSlidersFunctions.push(buildFeaturesSlider);
+    // buildSlidersFunctions.push(buildFeaturesSlider);
+    windowFuncs.resize.push(buildFeaturesSlider);
   }
 
   if (houseSlider) {
@@ -381,7 +391,8 @@
         });
       };
 
-    buildSlidersFunctions.push(buildHousesSlider, buildNavSlider);
+    // buildSlidersFunctions.push(buildHousesSlider, buildNavSlider);
+    windowFuncs.resize.push(buildHousesSlider, buildNavSlider);
   }
 
   if (featsSlider) {
@@ -390,12 +401,12 @@
       counterTotalSlides = q(counterTotalSelector, featsSlider),
       buildFeatsSlider = function() {
         // Если размер экрана больше 768px и если есть слайдер, то уберем его
-        if (matchesMedia('(min-width: 767.98px)')) {
-          if (featsSlider.classList.contains(slickSliderClass)) {
-            $featsSlider.slick('unslick');
+        if (matchesMedia(mw768)) {
+          if (hasSlickClass($featsSlider)) {
+            unslick($featsSlider);
           }
         } else {
-          if (featsSlider.classList.contains(slickSliderClass)) {
+          if (hasSlickClass($featsSlider)) {
             return;
           }
           $featsSlider.slick({
@@ -419,9 +430,9 @@
 
           let counterTotal = featsSlides.length;
 
-          if (matchesMedia('(min-width:1439.98px)')) {
+          if (matchesMedia(mw1440)) {
             counterTotal = counterTotal - 2;
-          } else if (matchesMedia('(min-width:575.98px)')) {
+          } else if (matchesMedia(mw576)) {
             counterTotal--;
           }
 
@@ -433,7 +444,8 @@
         }
       }
 
-    buildSlidersFunctions.push(buildFeatsSlider);
+    // buildSlidersFunctions.push(buildFeatsSlider);
+    windowFuncs.resize.push(buildFeatsSlider);
   }
 
   if (teamSlider && teamSlides.length && teamSlides.length > 1) {
@@ -442,20 +454,20 @@
       counterCurrentSlide = q(counterCurrentSelector, $teamSliderParent),
       counterTotalSlides = q(counterTotalSelector, $teamSliderParent),
       buildTeamSlider = function() {
-        if (matchesMedia('(min-width: 575.98px)') && teamSlides.length < 3) {
-          if (teamSlider.classList.contains(slickSliderClass)) {
-            $teamSlider.slick('unslick');
+        if (matchesMedia(mw576) && teamSlides.length < 3) {
+          if (hasSlickClass($teamSlider)) {
+            unslick($teamSlider);
           }
-        } else if (matchesMedia('(min-width: 1023.98px)') && teamSlides.length < 4) {
-          if (teamSlider.classList.contains(slickSliderClass)) {
-            $teamSlider.slick('unslick');
+        } else if (matchesMedia(mw1024) && teamSlides.length < 4) {
+          if (hasSlickClass($teamSlider)) {
+            unslick($teamSlider);
           }
-        } else if (matchesMedia('(min-width: 1439.98px)') && teamSlides.length < 5) {
-          if (teamSlider.classList.contains(slickSliderClass)) {
-            $teamSlider.slick('unslick');
+        } else if (matchesMedia(mw1440) && teamSlides.length < 5) {
+          if (hasSlickClass($teamSlider)) {
+            unslick($teamSlider);
           }
         } else {
-          if (teamSlider.classList.contains(slickSliderClass)) {
+          if (hasSlickClass($teamSlider)) {
             return;
           }
           $teamSlider.slick({
@@ -491,11 +503,11 @@
 
           let counterTotal = teamSlides.length;
 
-          if (matchesMedia('(min-width:1439.98px)')) {
+          if (matchesMedia(mw1440)) {
             counterTotal = counterTotal - 3;
-          } else if (matchesMedia('(min-width:1023.98px)')) {
+          } else if (matchesMedia(mw1024)) {
             counterTotal = counterTotal - 2;
-          } else if (matchesMedia('(min-width:575.98px)')) {
+          } else if (matchesMedia(mw576)) {
             counterTotal--;
           }
 
@@ -507,7 +519,8 @@
         }
       }
 
-    buildSlidersFunctions.push(buildTeamSlider);
+    // buildSlidersFunctions.push(buildTeamSlider);
+    windowFuncs.resize.push(buildTeamSlider);
   }
 
   if (materialsSlider) {
@@ -515,12 +528,12 @@
       counterCurrentSlide = q(counterCurrentSelector, materialsSlider),
       counterTotalSlides = q(counterTotalSelector, materialsSlider),
       buildFeatsSlider = function() {
-        if (matchesMedia('(min-width: 575.98px)')) {
-          if (materialsSlider.classList.contains(slickSliderClass)) {
-            $materialsSlider.slick('unslick');
+        if (matchesMedia(mw576)) {
+          if (hasSlickClass($materialsSlider)) {
+            unslick($materialsSlider);
           }
         } else {
-          if (materialsSlider.classList.contains(slickSliderClass)) {
+          if (hasSlickClass($materialsSlider)) {
             return;
           }
           $materialsSlider.slick({
@@ -541,7 +554,8 @@
         }
       }
 
-    buildSlidersFunctions.push(buildFeatsSlider);
+    // buildSlidersFunctions.push(buildFeatsSlider);
+    windowFuncs.resize.push(buildFeatsSlider);
   }
 
   if (newsSlider && newsSlides.length && newsSlides.length > 1) {
@@ -550,20 +564,20 @@
       counterCurrentSlide = q(counterCurrentSelector, newsSliderParent),
       counterTotalSlides = q(counterTotalSelector, newsSliderParent),
       buildTeamSlider = function() {
-        if (matchesMedia('(min-width: 575.98px)') && newsSlides.length < 3) {
-          if (newsSlider.classList.contains(slickSliderClass)) {
-            $newsSlider.slick('unslick');
+        if (matchesMedia(mw576) && newsSlides.length < 3) {
+          if (hasSlickClass($newsSlider)) {
+            unslick($newsSlider);
           }
-        } else if (matchesMedia('(min-width: 1023.98px)') && newsSlides.length < 4) {
-          if (newsSlider.classList.contains(slickSliderClass)) {
-            $newsSlider.slick('unslick');
+        } else if (matchesMedia(mw1024) && newsSlides.length < 4) {
+          if (hasSlickClass($newsSlider)) {
+            unslick($newsSlider);
           }
-        } else if (matchesMedia('(min-width: 1439.98px)') && newsSlides.length < 5) {
-          if (newsSlider.classList.contains(slickSliderClass)) {
-            $newsSlider.slick('unslick');
+        } else if (matchesMedia(mw1440) && newsSlides.length < 5) {
+          if (hasSlickClass($newsSlider)) {
+            unslick($newsSlider);
           }
         } else {
-          if (newsSlider.classList.contains(slickSliderClass)) {
+          if (hasSlickClass($newsSlider)) {
             return;
           }
           $newsSlider.slick({
@@ -599,11 +613,11 @@
 
           let counterTotal = newsSlides.length;
 
-          if (matchesMedia('(min-width:1439.98px)')) {
+          if (matchesMedia(mw1440)) {
             counterTotal = counterTotal - 3;
-          } else if (matchesMedia('(min-width:1023.98px)')) {
+          } else if (matchesMedia(mw1024)) {
             counterTotal = counterTotal - 2;
-          } else if (matchesMedia('(min-width:575.98px)')) {
+          } else if (matchesMedia(mw576)) {
             counterTotal--;
           }
 
@@ -615,13 +629,14 @@
         }
       }
 
-    buildSlidersFunctions.push(buildTeamSlider);
+    // buildSlidersFunctions.push(buildTeamSlider);
+    windowFuncs.resize.push(buildTeamSlider);
   }
 
-  if (buildSlidersFunctions.length > 0) {
-    window.addEventListener('resize', buildSliders);
-    buildSliders();
-  }
+  // if (buildSlidersFunctions.length > 0) {
+  //   window.addEventListener('resize', buildSliders);
+  //   buildSliders();
+  // }
 
   // настройки grab курсора на всех слайдерах
   $('.slick-list.draggable').on('mousedown', function() {

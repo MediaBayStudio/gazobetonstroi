@@ -26,6 +26,12 @@ if ( strpos( $_SERVER['HTTP_ACCEPT'], 'image/webp' ) !== false || strpos( $_SERV
 }
 
 
+// Удаление неправильного атрибута у html тегов honeypot
+add_filter('wpcf7_honeypot_html_output', function( $html, $args ) {
+    return str_replace( ' autocomplete="nope"', '', $html );
+}, 10, 2 );
+
+
 // Пишем в админку
 add_action( 'admin_head', function() {
   print

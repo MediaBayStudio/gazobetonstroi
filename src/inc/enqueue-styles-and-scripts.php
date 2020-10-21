@@ -74,7 +74,7 @@ add_action( 'wp_enqueue_scripts', function() {
 } );
 
 // Убираем id и type в тегах script, добавляем нужным атрибут defer
-add_filter('script_loader_tag',   function( $html, $handle ) {
+add_filter( 'script_loader_tag',   function( $html, $handle ) {
 
   switch ( $handle ) {
     case 'slick.min':
@@ -97,8 +97,8 @@ add_filter('script_loader_tag',   function( $html, $handle ) {
 // Убираем id и type в тегах style
 add_filter( 'style_loader_tag', function( $html, $handle ) {
   // Подключаем стили гутенберга только в админке
-  global $is_admin;
-  if ( $hanlde === 'wp-block-library' && !$is_admin ) {
+  global $is_admin, $template_directory;
+  if ( $handle === 'wp-block-library' && !$is_admin ) {
     return '';
   }
   $html = str_replace( " id='$handle-css' ", '', $html );

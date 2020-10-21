@@ -7,6 +7,5 @@
       </svg>
     </button>
     <img src="#" alt="" class="zoom-popup__img">
-    </div>
   </div>
 </div>

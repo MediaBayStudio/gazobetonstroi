@@ -27,7 +27,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no, viewport-fit=cover">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="preload" as="style" href="<?php echo $template_directory ?>/css/style.css">
-  <link rel="preload" as="style" href="<?php echo $template_directory ?>/style.css"> <?php 
+  <link rel="preload" as="style" href="<?php echo $template_directory ?>/style.css">
+  <?php
+  if ( is_front_page() ) {
+    echo '<link rel="preload" as="style" href="' . $template_directory . '/css/index.css">';
+  }
   # Fonts preload
   $fonts = [
     'Montserrat-Regular.woff',

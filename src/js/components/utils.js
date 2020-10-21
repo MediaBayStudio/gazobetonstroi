@@ -1,4 +1,5 @@
 var
+// Определяем бразуер пользователя
   browser = {
     // Opera 8.0+
     isOpera: (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0,
@@ -17,7 +18,26 @@ var
     isYandex: !!window.yandex,
     isMac: window.navigator.platform.toUpperCase().indexOf('MAC') >= 0
   },
-  mask,
+/*
+Объединение слушателей для window на события 'load', 'resize', 'scroll'
+Все слушатели на окно следует задавать через него, например:
+  window.resize.push(functionName)
+Все ф-ии, добавленные в [] window.resize, будут заданы одним слушателем
+*/
+  windowFuncs = {
+    load: [],
+    resize: [],
+    scroll: [],
+    call: function(event) {
+      let funcs = windowFuncs[event.type] || event;
+      for (let i = funcs.length - 1; i >= 0; i--) {
+        console.log(funcs[i].name);
+        funcs[i]();
+      }
+    }
+  },
+
+  mask, // ф-я маски телефонов в поля ввода (в файле telMask.js)
   smallArrowSvg,
   createArrow,
   lazy,
@@ -35,34 +55,30 @@ var
   // callbackPopup,
   // orderPopup,
   fakeScrollbar,
-  // page = document.body.dataset.page,
-  // mobileRegExp = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i,
-  // mobile = mobileRegExp.test(navigator.userAgent),
-  // IE = navigator.userAgent.indexOf("MSIE ") > -1 || navigator.userAgent.indexOf("Trident/") > -1,
+// Сокращение записи querySelector 
   q = function(selector, element) {
     element = element || body;
     return element.querySelector(selector);
   },
+// Сокращение записи querySelectorAll + перевод в массив
   qa = function(selectors, element, toArray) {
     element = element || body;
     return toArray ? Array.prototype.slice.call(element.querySelectorAll(selectors)) : element.querySelectorAll(selectors);
   },
+// Сокращение записи getElementById
   id = function(selector) {
     return document.getElementById(selector);
   },
-  // showLoader = function() {
-  //   loader.classList.add('active');
-  // },
-  // hideLoader = function() {
-  //   loader.style.opacity = 0;
-  // },
+// Фикс 100% высоты экрана для моб. браузеров
   setVh = function() {
     let vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', vh + 'px');
   },
+// Сокращение записи window.matchMedia('query').matches
   matchesMedia = function(media) {
     return window.matchMedia(media).matches;
   },
+// Прокрутка до элемента при помощи requestAnimationFrame
   scrollToTarget = function(event, target) {
     event.preventDefault();
 
