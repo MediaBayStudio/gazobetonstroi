@@ -19,7 +19,7 @@
     'items_wrap'      => '<ul class="%2$s">%3$s</ul>'
   ] ) ?>
   <div class="ftr__bottom">
-    <a href="policy.pdf" rel="noopener noreferrer nofollow" target="_blank" class="ftr__policy text_underline" title="Посмотреть политику конфиденциальности">Политика конфиденциальности</a>
+    <a href="/policy.pdf" rel="noopener noreferrer nofollow" target="_blank" class="ftr__policy text_underline" title="Посмотреть политику конфиденциальности">Политика конфиденциальности</a>
     <div class="ftr__dev">
     Дизайн и разработка – <a href="https://media-bay.ru" target="_blank" class="ftr__dev-link" title="Перейти на сайт разработчика">media bay</a>
     </div>

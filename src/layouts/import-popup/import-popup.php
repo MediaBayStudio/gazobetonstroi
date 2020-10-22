@@ -1,6 +1,6 @@
-<!-- <div style="opacity: 1 !important; visibility: visible !important;" class="import-popup popup stage-1" id="import-popup">
+<div style="opacity: 1 !important; visibility: visible !important;" class="import-popup popup stage-1" id="import-popup">
   <div class="import-popup__cnt popup__cnt">
-    <button type="button" class="popup__close import-popup__close close" onclick="hideImportPopup()">
+    <button type="button" class="popup__close import-popup__close close">
       <svg class="close__svg" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="inherit" xmlns="http://www.w3.org/2000/svg">
         <path d="M19.6777 1.99994L2 19.6776" stroke="inherit" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M2.00006 2.00006L19.6777 19.6777" stroke="inherit" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -44,7 +44,22 @@
       importPopupForm = document.getElementById('import-form-block');
 
     importPopupForm.addEventListener('submit', function() {
-        
+      event.preventDefault();
+
+      let xhr = new XMLHttpRequest(),
+        data = new FormData(importPopupForm);
+
+      data.append('action', 'import');
+      
+      xhr.open(importPopupForm.method, importPopupForm.action);
+      xhr.send(data);
+
+      xhr.addEventListener('readystatechange', function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          console.log(xhr.response);
+        }
+      });
+
     });
   });
-</script> -->
+</script>
