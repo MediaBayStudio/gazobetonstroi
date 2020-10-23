@@ -1,4 +1,4 @@
-<div style="opacity: 1 !important; visibility: visible !important;" class="import-popup popup stage-1" id="import-popup">
+<div style="" class="import-popup popup stage-1" id="import-popup">
   <div class="import-popup__cnt popup__cnt">
     <button type="button" class="popup__close import-popup__close close">
       <svg class="close__svg" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="inherit" xmlns="http://www.w3.org/2000/svg">
@@ -42,6 +42,11 @@
   document.addEventListener('DOMContentLoaded', function() {
     let importPopup = document.getElementById('import-popup'),
       importPopupForm = document.getElementById('import-form-block');
+
+    importPopup = new Popup('#import-popup', {
+      closeButtons: '.import-popup__close',
+      openButtons: '#wp-admin-bar-import-btn'
+    });
 
     importPopupForm.addEventListener('submit', function() {
       event.preventDefault();

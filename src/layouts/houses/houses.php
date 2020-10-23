@@ -1,7 +1,7 @@
 <?php
   $post_type = $section['post_type'];
-  // $numberposts = $section['numberposts'];
-  $numberposts = 2;
+  $numberposts = $section['numberposts'];
+  // $numberposts = 2;
   $count_posts = wp_count_posts( $post_type )->publish;
 
   $posts = get_posts( [
@@ -65,7 +65,7 @@
     foreach ( $parent_terms as $term ) :
       $childs = $child_terms[ $term['id'] ];
       $childs_count = count( $childs );
-      $fieldset_class = $childs_count > 3 ? ' dropdown' : '' ?>
+      // $fieldset_class = $childs_count > 5 ? ' dropdown' : '' ?>
       <fieldset class="filter-form__group<?php echo $fieldset_class ?>">
         <legend class="filter-form__group-title"><?php echo $term['title'] ?></legend> <?php
         foreach ( $childs as $child ) : ?>

@@ -36,9 +36,9 @@
       }
     });
 
-    if (houseSlider && galleryPopup) {
-      console.log(galleryPopup);
-    }
+    // if (houseSlider && galleryPopup) {
+      // console.log(galleryPopup);
+    // }
   }
 
 })()

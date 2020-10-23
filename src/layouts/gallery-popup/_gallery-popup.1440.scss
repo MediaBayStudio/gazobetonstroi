@@ -2,3 +2,17 @@
 @import '../../scss/assets/colors';
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
+
+.gallery-popup {
+  &__cnt {
+    // max-width: 1560px;
+  }
+
+  &__close {}
+
+  &__title {}
+
+  &__img {}
+
+  &__descr {}
+}

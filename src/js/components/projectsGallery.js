@@ -84,6 +84,8 @@
         slide: '.' + slidesClass,
         initialSlide: initialSlide,
         infinite: false,
+        // variableWidth: true,
+        adaptiveHeight: true,
         appendArrows: $('.gallery-popup__nav'),
         prevArrow: createArrow('gallery-popup__prev', smallArrowSvg),
         nextArrow: createArrow('gallery-popup__next', smallArrowSvg)

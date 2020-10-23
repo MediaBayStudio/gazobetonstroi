@@ -76,12 +76,20 @@ function print_houses( $posts=0, $post_type='projects', $section_class='', $numb
           <span class="house__descr"> <?php
 
           $parent_categories_ids = [];
-          $categories_values = [];
+
+          // Будем формировать массив в виде
+          /*
+              $categories = [
+                'parent_id' => ['tax_name', 'tax_name']
+              ]
+          */
+          $child_categories = [];
 
             foreach ( $post_cat as $cat ) :
               if ( $cat->parent ) {
                 $parent_categories_ids[] = $cat->parent;
-                $categories_values[] = $cat->name;
+
+                $child_categories[$cat->parent][] = $cat->name;
               }
             endforeach;
 
@@ -91,13 +99,14 @@ function print_houses( $posts=0, $post_type='projects', $section_class='', $numb
               'orderby' => 'include'
             ] );
 
+
             for ( $i = 0, $len = count( $categories_parents ); $i < $len; $i++ ) :
               $show_in_card = get_field( 'show_in_card', $categories_parents[$i] );
 
               if ( $show_in_card ) :
                 $col_class = $categories_parents[$i]->slug;
                 $left_col = get_field( 'title_in_card', $categories_parents[$i] );
-                $right_col = $categories_values[$i];
+                $right_col = implode(', ', $child_categories[ $categories_parents[$i]->term_id ]);
 
                 if ( $left_col === 'Площадь' ) {
                   $right_col = get_field( 'house_fields' )['area'] . 'м<sup>2</sup>';

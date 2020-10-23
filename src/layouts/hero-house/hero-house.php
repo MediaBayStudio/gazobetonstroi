@@ -7,6 +7,7 @@
   $length = $house_fields['length'];
   $width = $house_fields['width'];
   $material = $house_fields['material'];
+  $garage = $house_fields['garage'];
   $first_price = $house_fields['first_price'];
   $second_price = $house_fields['second_price'];
   $flex_text = $house_fields['flexible'];
@@ -30,8 +31,14 @@
   $props['Длина'] = $length . 'м';
   $props['Ширина'] = $width . 'м';
 
+  if ( $garage ) {
+    $props['Гараж'] = $garage;
+  }
+
 
   $categories = get_the_terms( $post->ID, 'house_properties' );
+
+  $other_categories = [];
 
   foreach ( $categories as $cat ) {
     $parent_id = $cat->parent;
@@ -43,7 +50,13 @@
     }
 
     if ( $parent_cat->name !== 'Площадь дома' ) {
-      $props[ $parent_cat->name ] = $cat->name;
+      if ( $parent_cat->name === 'Другое' ) {
+        if ( $cat->name !== 'Гараж' ) {
+          $other_categories[] = $cat->name;
+        }
+      } else {
+        $props[ $parent_cat->name ] = $cat->name;
+      }
     }
     
   }
@@ -52,6 +65,10 @@
 
   if ( !$excerpt ) {
     $excerpt = $house_fields['excerpt'];
+  }
+
+  foreach ( $other_categories as $other_cat ) {
+    $props[ $other_cat ] = 'Да';
   }
 
  ?>
@@ -112,7 +129,7 @@
         endif;
       endforeach;
     endif ?>
-    <img src="<?php echo $gallery[0] ?>" alt="" class="house-sect__img">
+    <img src="<?php echo $gallery[1] ?>" alt="" class="house-sect__img">
     <div class="house-sect__descr"> <?php
       echo $house_fields['descr_list'] ?>
     </div>

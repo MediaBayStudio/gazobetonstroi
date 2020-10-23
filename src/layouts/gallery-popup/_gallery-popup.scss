@@ -24,8 +24,9 @@
   }
 
   &__img {
-    width: 280px;
-    object-fit: cover;
+    // width: 280px;
+    // object-fit: cover;
+    object-fit: contain;
   }
 
   &__nav {

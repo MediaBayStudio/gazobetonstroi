@@ -162,6 +162,12 @@
     };
 
     if (matchesMedia('(min-width:1023.98px)')) {
+      /*
+        Много сложностей с фиксацией
+        Нет высоты
+        Закрывает футер
+        Криво прелодер
+      */
       // sticky($filterForm, 'top');
     } else {
       sticky('#filter-form-call-btn');

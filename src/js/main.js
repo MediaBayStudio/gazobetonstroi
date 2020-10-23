@@ -2638,6 +2638,12 @@ document.addEventListener('DOMContentLoaded', function() {
       };
   
       if (matchesMedia('(min-width:1023.98px)')) {
+        /*
+          Много сложностей с фиксацией
+          Нет высоты
+          Закрывает футер
+          Криво прелодер
+        */
         // sticky($filterForm, 'top');
       } else {
         sticky('#filter-form-call-btn');
@@ -2734,9 +2740,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       });
   
-      if (houseSlider && galleryPopup) {
-        console.log(galleryPopup);
-      }
+      // if (houseSlider && galleryPopup) {
+        // console.log(galleryPopup);
+      // }
     }
   
   })()
@@ -2826,6 +2832,8 @@ document.addEventListener('DOMContentLoaded', function() {
           slide: '.' + slidesClass,
           initialSlide: initialSlide,
           infinite: false,
+          // variableWidth: true,
+          adaptiveHeight: true,
           appendArrows: $('.gallery-popup__nav'),
           prevArrow: createArrow('gallery-popup__prev', smallArrowSvg),
           nextArrow: createArrow('gallery-popup__next', smallArrowSvg)
