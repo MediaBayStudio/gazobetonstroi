@@ -69,6 +69,10 @@
 
 .callback-sect {
   overflow: hidden;
+  > .callback-form-wrap,
+  > .callback-sect__text-block {
+    margin-top: 0;
+  }
 }
 
 .callback-sect__text-block {

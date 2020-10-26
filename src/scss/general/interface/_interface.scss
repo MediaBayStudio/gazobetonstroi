@@ -3,6 +3,15 @@
 @import '../../assets/mixins';
 @import '../../assets/variables';
 
+
+#wpadminbar {
+  display: none !important;
+}
+
+html[lang] {
+  margin-top: 0 !important;
+}
+
 #filter-form-call-btn:focus,
 .filter-form__reset:focus,
 .btn:focus,
@@ -213,7 +222,7 @@ body {
     padding: 15px 0 0;
     width: 100%;
     display: block;
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.7);
     order: 10;
     position: relative;
     // z-index: 1;
@@ -276,6 +285,7 @@ body {
   &__img {
     width: 100%;
     min-height: 186.5px;
+    max-height: 186.5px;
     // height: 100%;
     object-fit: cover;
   }

@@ -8,6 +8,8 @@
   &__filter {
   }
   &__cards {
+    display: flex;
+    flex-wrap: wrap;
   }
   &__house {
     
@@ -28,7 +30,7 @@
 .projects,
 .cases {
   &__house {
-    margin: 20px 20px 0 0;
+    margin: 20px auto 0 0;
     width: (536px - 20px) / 2;
     &:nth-of-type(2n) {
       margin-right: 0;

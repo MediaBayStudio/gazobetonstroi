@@ -9,6 +9,9 @@
   color: $black;
   // padding-bottom: 0;
   // margin-bottom: 0;
+  + .callback-sect {
+    margin-top: 0;
+  }
   &__sliders {}
 
   &__gallery {

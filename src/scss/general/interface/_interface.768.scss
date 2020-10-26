@@ -37,7 +37,9 @@
     }
   }
   &__img {
-    min-height: 360px;
+    min-height: 334px;
+    max-height: 334px;
+    // min-height: 360px;
   }
   &__descr {
     font-size: 12px;

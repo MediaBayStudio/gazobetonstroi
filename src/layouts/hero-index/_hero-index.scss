@@ -5,21 +5,36 @@
 
 .hero-sect {
   margin-top: -40px;
-  padding-top: 160px;
-  padding-bottom: 100px;
+  padding-top: 190px;
+  padding-bottom: 55px;
   color: $white;
   font: 16px/140% Montserrat;
   background: $black url(#) 0 0/cover no-repeat;
+
   &__text-block {
     max-width: 350px;
   }
+
   &__title {
     font: bold 28px/140% Montserrat;
   }
+
   &__descr {
-    margin-top: 1em;
+    margin-top: 6px;
   }
+
   &__btn {
     margin: 35px 0 60px;
+  }
+}
+
+#index-page {
+  >.hero-sect {
+    padding-top: 155px;
+    padding-bottom: 135px;
+  }
+
+  .hero-sect__descr {
+    margin-top: 25px;
   }
 }

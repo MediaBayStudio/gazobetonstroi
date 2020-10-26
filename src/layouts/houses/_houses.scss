@@ -3,18 +3,27 @@
 @import '../../scss/assets/mixins';
 @import '../../scss/assets/variables';
 
+// Стили для карточек домов в interface.scss
+
 .houses {
   padding-top: 20px;
-  padding-bottom: 85px;
+  padding-bottom: 85px + 40px;
   font: 16px/140% Montserrat;
   position: relative;
+
+  &__loadmore {
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    bottom: -40px;
+    transform: translate(-50%, 100%);
+  }
 
   &__filter {}
 
   &__cards {
     text-align: center;
     position: relative;
-
     &::after {
       content: '';
       position: absolute;

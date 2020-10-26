@@ -15,6 +15,8 @@
     $email,
     $insta;
 
+    $page_id = is_front_page() ? 'index' : $post->post_name;
+
     if ( is_single() ) {
       $body_data_attr = ' data-project="' . $post->post_title . '"';
     } else {
@@ -56,7 +58,7 @@
   wp_head() ?>
 </head>
 
-<body<?php echo $body_data_attr ?> data-template-dir-uri="<?php echo $template_directory ?>" data-site-url="<?php echo $site_url ?>"> <?php
+<body<?php echo $body_data_attr ?> data-template-dir-uri="<?php echo $template_directory ?>" data-site-url="<?php echo $site_url ?>" id="<?php echo $page_id ?>-page"> <?php
   wp_body_open() ?>
   <noscript>
     <!-- <noindex> -->Для полноценного использования сайта включите JavaScript в настройках вашего браузера.<!-- </noindex> -->
