@@ -106,12 +106,12 @@
 }
 
 .filter-form {
-  padding: 35px 20px;
   display: block;
+  padding: 0;
   // flex-flow: column;
   max-height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
+  // overflow-x: hidden;
+  // overflow-y: auto;
   position: fixed;
   top: 0;
   left: 0;
@@ -141,6 +141,11 @@
       opacity: 1;
       visibility: visible;
     }
+  }
+  &__cnt {
+    padding: 35px 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   &-hint {

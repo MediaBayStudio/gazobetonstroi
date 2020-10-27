@@ -57,7 +57,7 @@
 
 .filter-form {
   margin: 0 20px 0 0;
-  padding: 0 20px 20px;
+  // padding: 0 20px 20px;
   flex-shrink: 0;
   width: 300px;
   position: relative;
@@ -68,14 +68,21 @@
   &::after {
     position: absolute;
   }
-  &.fixed {
-    position: fixed;
+  &__cnt {
+    padding: 0 20px 20px;
     top: 80px;
-    left: calc(50% - 470px);
-    max-height: calc(100vh - 246px);
-    overflow-x: hidden;
-    overflow-y: auto;
-    padding-bottom: 100px;
+    left: 0;
+    position: sticky;
+    max-height: calc(100vh - 80px);
+  }
+  &.fixed {
+    // position: fixed;
+    // top: 80px;
+    // left: calc(50% - 470px);
+    // max-height: calc(100vh - 246px);
+    // overflow-x: hidden;
+    // overflow-y: auto;
+    // padding-bottom: 100px;
   }
   &__title {
     display: none;
