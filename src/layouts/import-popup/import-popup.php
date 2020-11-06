@@ -21,7 +21,7 @@
         </ul>
       </div>
     </div>
-    <form action="wp-admin/admin-ajax.php" method="POST" enctype="multipart/form-data" id="import-form-block">
+    <form action="<?php echo site_url() ?>/wp-admin/admin-ajax.php" method="POST" enctype="multipart/form-data" id="import-form-block">
       <div class="import-popup__select-block">
         <span class="import-popup__select-title">Тип записей:</span>
         <select name="post-type" id="import-select">
@@ -29,6 +29,10 @@
           <option value="cases">cases</option>
         </select>
       </div>
+      <label class="import-popup__check check check_fill">
+        <input type="checkbox" name="refresh" class="check__inp" checked>
+        <span class="check__text">Обновлять существующие (дольше)</span>
+      </label>
       <input type="file" name="csv" id="csv-inp">
       <button class="btn btn_green" id="import-btn">Отправить</button>
     </form>
@@ -41,7 +45,54 @@
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     let importPopup = document.getElementById('import-popup'),
-      importPopupForm = document.getElementById('import-form-block');
+      importPopupForm = document.getElementById('import-form-block'),
+      numberposts = 20,
+      offset = 0,
+      max = -1,
+      loadPosts = function() {
+        if (max !== -1 && offset >= max) {
+          console.log('Преравно');
+          return;
+        }
+        let xhr = new XMLHttpRequest(),
+          data = new FormData(importPopupForm),
+          totalPosts,
+          updatedPosts,
+          uploadedPosts;
+
+        data.append('action', 'import');
+        data.append('numberposts', numberposts);
+        data.append('offset', offset);
+        data.append('max', max);
+        
+        xhr.open(importPopupForm.method, importPopupForm.action);
+        xhr.send(data);
+
+        xhr.addEventListener('readystatechange', function() {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            let response = JSON.parse(xhr.response);
+
+            if (!totalPosts) {
+              totalPosts = response.total;
+              console.log('Всего записей: ' + totalPosts);
+            }
+
+            updatedPosts = response.updated;
+            uploadedPosts = response.uploaded;
+
+            console.log('Загружено: ' + uploadedPosts.length, uploadedPosts);
+            console.log('Обновлено: ' + updatedPosts.length, updatedPosts);
+
+            if (uploadedPosts.length + updatedPosts.length < totalPosts) {
+              console.log('Загружаю еще...');
+              offset += numberposts;
+              loadPosts();
+            } else {
+              console.log('Загрузка завершена');
+            }
+          }
+        });
+      }
 
     importPopup = new Popup('#import-popup', {
       closeButtons: '.import-popup__close',
@@ -50,21 +101,7 @@
 
     importPopupForm.addEventListener('submit', function() {
       event.preventDefault();
-
-      let xhr = new XMLHttpRequest(),
-        data = new FormData(importPopupForm);
-
-      data.append('action', 'import');
-      
-      xhr.open(importPopupForm.method, importPopupForm.action);
-      xhr.send(data);
-
-      xhr.addEventListener('readystatechange', function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          console.log(xhr.response);
-        }
-      });
-
+      loadPosts();
     });
   });
 </script>

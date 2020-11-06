@@ -4,17 +4,29 @@
 @import '../../scss/assets/variables';
 
 .hero-sect {
+  &__slide {
+    padding: 0 calc(50vw - 470px) 21vh;
+    // background-attachment: scroll, fixed;
+    background-position: top left, center;
+    background-size: 84% 100%, cover;
+    &-title {
+      // margin: auto 0 15px;
+    }
+    &-descr {
+      max-width: 440px;
+    }
+  }
   &__text-block {
-    max-width: 780px;
-    padding: 60px 55px;
+    // max-width: 780px;
+    // padding: 60px 55px;
   }
   &__title {
-    font-size: 51px;
+    // font-size: 51px;
   }
   &__descr {
-    max-width: 570px;
+    // max-width: 570px;
   }
   &__btn {
-    margin-top: 70px;
+    // margin-top: 70px;
   }
 }

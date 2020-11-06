@@ -9,7 +9,8 @@
     return `<button type="button" class="arrow arrow__${className}">${inside}</button>`;
   };
 
-  let nextArrow = '<button type="button" class="arrow"></button>',
+  let dot = '<button type="button" class="hero-sect__dot dot"></button>',
+    nextArrow = '<button type="button" class="arrow"></button>',
     prevArrow = '<button type="button" class="arrow"></button>',
     // longArrowSvg = '<svg class="arrow__svg" width="106" height="9" fill="url(#gradient)" xmlns="http://www.w3.org/2000/svg"><path d="M105.354 4.828a.5.5 0 000-.707L102.172.939a.501.501 0 00-.708.707l2.829 2.828-2.829 2.829a.5.5 0 00.708.707l3.182-3.182zM0 4.974h105v-1H0v1z" fill="inherit" /><defs><linearGradient id="gradient"><stop offset="0%" style="stop-color: transparent"></stop><stop offset="50%" style="stop-color: transparent"></stop><stop offset="50%" style="stop-color: currentColor"></stop><stop offset="100%" style="stop-color: currentColor"></stop></linearGradient></defs></svg>',
     longArrowSvg = '<svg class="arrow__svg" width="106" height="9" fill="inherit" xmlns="http://www.w3.org/2000/svg"><path d="M105.354 4.828a.5.5 0 000-.707L102.172.939a.501.501 0 00-.708.707l2.829 2.828-2.829 2.829a.5.5 0 00.708.707l3.182-3.182zM0 4.974h105v-1H0v1z" fill="inherit" /></svg>',
@@ -26,6 +27,10 @@
     unslick = function($el) {
       $el.slick('unslick');
     },
+
+    heroSlider = id('hero-slider'),
+    heroSlidesSelector = '.hero-sect__slide',
+    heroSlides = heroSlider && qa(heroSlidesSelector, heroSlider),
 
     reviewsSlider = id('reviews-slider'),
     reviewsSelector = '.review',
@@ -101,6 +106,30 @@
     });
   });
 
+
+  if (heroSlider && heroSlides.length && heroSlides.length > 1) {
+    let $heroSlider = $(heroSlider),
+      buildHeroSlider = function() {
+        if (hasSlickClass($heroSlider)) {
+          // слайдер уже создан
+          return;
+        }
+        $heroSlider.slick({
+          arrows: false,
+          slide: heroSlidesSelector,
+          infinite: false,
+          variableWidth: true,
+          dots: true,
+          dotsClass: 'hero-sect__dots',
+          customPaging: function() {
+            return dot;
+          }
+        });
+      }
+
+    // buildSlidersFunctions.push(buildReviewsSlider);
+    windowFuncs.resize.push(buildHeroSlider);
+  }
 
 
   if (reviewsSlider && reviewsSlides.length && reviewsSlides.length > 1) {

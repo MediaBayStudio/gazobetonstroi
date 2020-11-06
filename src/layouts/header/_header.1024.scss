@@ -4,6 +4,15 @@
 @import '../../scss/assets/variables';
 
 .hdr {
+  &.fixed {
+    height: 50px;
+    .hdr__logo-img {
+      width: 180px;
+    }
+    > .hdr__nav {
+      font-size: 14px;
+    }
+  }
   &__nav {
     display: block;
     font: 16px/100% Montserrat;

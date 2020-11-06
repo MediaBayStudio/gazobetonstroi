@@ -23,17 +23,18 @@
 }
 
 .house {
-  position: relative;
+  // position: relative;
   &__link {
-    padding: 15px;
-    position: absolute;
-    left: 0;
-    bottom: 0;
+    padding: 15px 0 0;
     height: auto;
+    // position: absolute;
+    // left: 0;
+    // bottom: 0;
+    // height: auto;
   }
   &__title {
     &::after {
-      margin: 0 0 0 30px;
+      margin: 0 0 0 auto;
     }
   }
   &__img {

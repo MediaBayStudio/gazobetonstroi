@@ -1,15 +1,13 @@
 <?php
   $post_type = $section['post_type'];
   $numberposts = $section['numberposts'];
-  // $numberposts = 2;
+  // $numberposts = -1;
   $count_posts = wp_count_posts( $post_type )->publish;
 
   $posts = get_posts( [
     'post_type' => $post_type,
     'numberposts' => $numberposts
   ] ); ?>
-
-  <?php #var_dump( $posts ) ?>
 
 <div class="houses container">
   <form action="<?php the_permalink() ?>" method="get" class="filter-form popup" id="filter-form" data-numberposts="<?php echo $numberposts ?>" data-post-type="<?php echo $post_type ?>">
@@ -20,8 +18,11 @@
       <span class="filter-form__title">Фильтр</span> <?php
       $categories = get_categories( [
         'taxonomy'  => 'house_properties',
-        'hide_empty' => 0
+        'hide_empty' => 0,
+        // 'orderby' => 'meta_value_num',
+        // 'meta_key' => 'index'
       ] );
+
 
       $parent_terms = [];
       $child_terms = [];
@@ -62,6 +63,7 @@
           }
         }
       }
+      // var_dump( $parent_terms );
 
       foreach ( $parent_terms as $term ) :
         $childs = $child_terms[ $term['id'] ];

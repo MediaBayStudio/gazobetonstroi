@@ -5,36 +5,87 @@
 
 .hero-sect {
   margin-top: -40px;
-  padding-top: 190px;
-  padding-bottom: 55px;
   color: $white;
   font: 16px/140% Montserrat;
-  background: $black url(#) 0 0/cover no-repeat;
+  height: 100vh;
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+
+  &__dots {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+
+    >li {
+      &:nth-last-child(n+2) {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  &__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid;
+    transition: background .5s;
+  }
+
+  &__slide {
+    padding: 0 20px 13vh;
+    width: 100vw;
+    height: 100vh;
+    display: flex !important;
+    flex-flow: column;
+    align-items: flex-start;
+    background: linear-gradient(to top, rgba(0, 0, 0, .53)55%, rgba(0, 0, 0, 0)97%) bottom right/100% 57% no-repeat, url(#) center/cover no-repeat, $black;
+
+    &-title {
+      margin: auto 0 10px;
+      font: bold 28px/140% Montserrat;
+    }
+
+    &-descr {
+      max-width: 350px;
+    }
+
+    &-link {
+      margin-top: 25px;
+      width: 200px;
+      height: 45px;
+    }
+  }
 
   &__text-block {
-    max-width: 350px;
+    // max-width: 350px;
   }
 
   &__title {
-    font: bold 28px/140% Montserrat;
+    // font: bold 28px/140% Montserrat;
   }
 
   &__descr {
-    margin-top: 6px;
+    // margin-top: 6px;
   }
 
   &__btn {
-    margin: 35px 0 60px;
+    // margin: 35px 0 60px;
   }
 }
 
 #index-page {
   >.hero-sect {
-    padding-top: 155px;
-    padding-bottom: 135px;
+    // padding-top: 155px;
+    // padding-bottom: 135px;
+    // background-attachment: fixed;
   }
 
   .hero-sect__descr {
-    margin-top: 25px;
+    // margin-top: 25px;
   }
 }

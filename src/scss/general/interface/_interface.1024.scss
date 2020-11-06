@@ -20,15 +20,19 @@
 }
 
 .house {
-  max-height: 334px;
+  // max-height: 334px;
   &__link {
-    padding: 20px;
-    width: 81.525%;
+    padding: 20px 0 0;
+    // width: 81.525%;
   }
   &__title {
-    margin: 0 0 20px;
+    margin: 0 0 10px;
     padding: 0;
     font-size: 18px;
+  }
+  &__img {
+    min-height: 300px;
+    max-height: 300px;
   }
   &__descr {
     // flex-flow: row;

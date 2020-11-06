@@ -5,22 +5,23 @@
 
 .hero-sect {
   margin-top: -80px;
-  padding-top: 200px;
-  &__text-block {
-    padding: 50px 40px 40px;
+  &__dots {
+    bottom: 30px;
   }
-  &__title {
-    margin-bottom: 30px;
-    font-size: 45px;
-  }
-  &__descr {
-    &.front-page {
-      font-size: 24px;
+  &__slide {
+    padding: 0 calc(50vw - 344px) 15vh;
+    &-title {
+      font-size: 42px;
+    }
+    &-descr {
+      max-width: 70%;
+      font-size: 20px;
       line-height: 140%;
     }
-  }
-  &__btn {
-    margin: 45px 0;
-    font-size: 18px;
+    &-link {
+      margin-top: 30px;
+      width: 256px;
+      height: 52px;
+    }
   }
 }

@@ -62,6 +62,11 @@ function import() {
       И задать категории можно также
     */
 
+    $numberposts = $_POST['numberposts'];
+    $offset = $_POST['offset'];
+    $refresh = $_POST['refresh'];
+
+    // Записи для сравнения
     $posts = get_posts( [
       'post_type' => $_POST['post-type'],
       'numberposts' => -1
@@ -81,6 +86,19 @@ function import() {
         case 'Материал':
           continue;
           break;
+        case 'Второй свет':
+        case 'Бассейн':
+          // Есил "другое", то там только да или нет
+          // получим эти дочерние таксономии и найдем да или нет
+          // Формируем объект -> Второй свет => ['да' => 'id', 'нет' => 'id']
+          $term_childs = get_term_children( $term->term_id, 'house_properties' );
+          if ( $term_childs ) {
+            foreach ( $term_childs as $term_child ) {
+              $term_child_object = get_term_by( 'id', $term_child, 'house_properties' );
+              $house_categories[ $term->name ][ $term_child_object->name ] = $term_child_object->term_id;
+            }
+          }
+          break;
         default:
           $house_categories[ $term->name ] = $term->term_id;
           break;
@@ -90,8 +108,18 @@ function import() {
     // var_dump( $house_categories );
 
     $i = 0;
-    $response = [];
+    $uploaded_posts = [];
+    $updated_posts = [];
+    $response;
+
+    $elements = array_slice( $elements, $offset );
+    
     foreach ( $elements as $elem ) {
+
+      // if ( $elem['Проект'] !== '40-46L' ) {
+        // continue;
+      // }
+
       // Для проверки на существование
       $exist_post_id = false;
       // Сохраним нужные переменные для вставки в acf
@@ -142,29 +170,17 @@ function import() {
         'Первая цена подпись' => trim( 'Стандарт' ),
         'Вторая цена' => trim( '2 000 000' ),
         'Вторая цена подпись' => trim( 'Престиж' ),
-        'Кол-во этажей' => trim( $house_floor )
+        'Кол-во этажей' => trim( $house_floor ),
+        'Второй свет' => trim( my_mb_ucfirst( $elem['Второй свет'] ) ),
+        'Сауна' => trim( my_mb_ucfirst( $elem['Сауна'] ) ),
+        'Бассейн' => trim( my_mb_ucfirst( $elem['Бассейн'] ) ),
+        'Гараж' => trim( my_mb_ucfirst( $elem['гараж'] ) )
       ];
-
-      if ( strtolower( $elem['Второй свет'] ) !== 'нет') {
-        $house_props['Второй свет'] = 'Да';
-      }
-      if ( strtolower( $elem['Сауна'] ) !== 'нет') {
-        $house_props['Сауна'] = 'Да';
-      }
-      if ( strtolower( $elem['Бассейн'] ) !== 'нет') {
-        $house_props['Бассейн'] = 'Да';
-      }
-      if ( strtolower( $elem['гараж'] ) !== 'нет' )  {
-        $house_props['Гараж'] = $elem['гараж'];
-      }
-
-      // var_dump( $elem );
 
       // Будем искать элемент в существующих записях
       foreach ( $posts as $post ) {
+        // Элемент, который мы пытаемся добавить, по названию проекта совпал с тем, что уже есть в БД
         if ( strtolower( $post->post_title ) === strtolower( $house_name ) ) {
-          // Элемент, который мы пытаемся добавить, по названию проекта совпал с тем, что уже есть в БД
-
           // Удаляем связь с миниатюрой
           delete_post_thumbnail( $post );
 
@@ -183,17 +199,18 @@ function import() {
           delete_field( 'house_fields', $post->ID );
 
           // Собираем массив существуюших записей
-          $resonse[] = fillFields( $post->ID, $house_name, $house_props, $house_categories );
+          fillFields( $post->ID, $house_name, $house_props, $house_categories );
           $exist_post_id = $post->ID;
         }
       } // end foreach posts
 
       // Если запись обновлена, то идем дальше
       if ( $exist_post_id ) {
-        // if ( $i === 25 ) {
-        //   break;
-        // }
-        continue;
+        $updated_posts[] = [
+          'id' => $exist_post_id,
+          'title' => $house_name
+        ];
+        // continue;
       } else {
         // Иначе будем создавать новую запись
 
@@ -206,21 +223,35 @@ function import() {
           'post_author'     => 1,
           'post_category'   => []
         ];
+        // echo "house_props/";
+        // var_dump( $house_props );
+        // echo "house_categories/";
+        // var_dump( $house_categories );
 
         // Вставляем запись в бд
         $post_id = wp_insert_post( $post_data );
 
-        $response[] = fillFields( $post_id, $house_name, $house_props, $house_categories );
+        fillFields( $post_id, $house_name, $house_props, $house_categories );
+
+        $uploaded_posts[] = [
+          'id' => $post_id,
+          'title' => $house_name
+        ];
       }
 
 
-      if ( $i === 25 ) {
+      if ( $i === 19 ) {
         break;
       }
       $i++;
-      var_dump( $response );
     } // endforeach elements
   }
+  $response = [
+    'total' => count( $elements ),
+    'uploaded' => $uploaded_posts,
+    'updated' => $updated_posts
+  ];
+  echo json_encode( $response );
   die();
 }
 
@@ -231,15 +262,24 @@ function fillFields( $post_id=null, $post_title=null, $house_props=null, $house_
   // Будем формировать массив id категорий
   foreach ( $house_props as $key => $value ) {
     if ( $house_categories[ $key ] ) {
-      $terms_ids[] = $house_categories[ $key ];
-      // var_dump( 'Найдено ' . $key );
+      // Если на пути массив (['Бассейн'] => ['да' => 'id'])
+      if ( is_array( $house_categories[ $key ] ) ) {
+        $terms_ids[] = $house_categories[ $key ][ $value ];
+      } else {
+        $terms_ids[] = $house_categories[ $key ];
+      }
+      // var_dump( 'Найдено $key = ' . $key );
     } else if ( $house_categories[ $value ] ) {
-      $terms_ids[] = $house_categories[ $value ];
-      // var_dump( 'Найдено ' . $value );
+      if ( $key !== 'Гараж' && $key !== 'Второй свет' && $key !== 'Сауна' && $key !== 'Бассейн' && $key !== 'Мансардный этаж' ) {
+        $terms_ids[] = $house_categories[ $value ];
+        // var_dump( 'Найдено $value = ' . $value );
+      }
     } else {
       // var_dump( 'Не найдено ' . $key . ' || ' . $value );
     }
   }
+
+  // var_dump( $terms_ids );
 
   // Вставим изображения и миниатюру
   $images_data = insertImages( $post_title, $post_id );
@@ -249,7 +289,7 @@ function fillFields( $post_id=null, $post_title=null, $house_props=null, $house_
 
   // Массив для вставки в группу полей house_fields
   $values = [
-    'garage' => $house_props['Гараж'],
+    // 'garage' => $house_props['Гараж'],
     'length' => $house_props['Длина'],
     'width' => $house_props['Ширина'],
     'material' => $house_props['Полное название материала стен'],
@@ -269,13 +309,25 @@ function fillFields( $post_id=null, $post_title=null, $house_props=null, $house_
   // Обновляем поля
   update_field( 'house_fields', $values, $post_id );
 
-  $response = [
-    'name' => $post_title,
-    'images' => $images_urls,
-    'props' => $values
-  ];
+  // $response = [
+  //   'name' => $post_title,
+  //   'images' => $images_urls,
+  //   'props' => $values
+  // ];
 
-  return $response;
+  $elements_count = count( $elements );
+  $left_elements_count = $elements_count - $i;
+
+  // $response = 'Импортированно ' . $i ' шт.';
+  
+
+  // if ( $elements_count - $left_elements_count  > 0 ) {
+  //   $response .= ' Осталось импортировать: ' . $elements_count - $left_elements_count;
+  // } else {
+  //   $response .= ' Импорт законечен.';
+  // }
+
+  // return $response;
 }
 
 // Функция для поиска и вставки картинок в галерею и миниатюру
@@ -319,7 +371,7 @@ function insertImages( $house_name=null, $post_id=null ) {
 
       // Обязательно проверяем существование файла
           // т.к. в массиве папки присутсвует какой-то мусор
-      if ( file_exists( $img_path ) && $img !== '.' && $img !== '..' ) {
+      if ( file_exists( $img_path ) && exif_imagetype( $img_path ) !== false /*$img !== '.' && $img !== '..' && $img !== '.DS_Store' */) {
         /*
           Соберем все нужные данные
             для корректной вставки файла в базу данных
@@ -351,6 +403,8 @@ function insertImages( $house_name=null, $post_id=null ) {
           'post_status'    => 'inherit'
         ];
 
+        $colors_count = imagecolorstotal( $img_path );
+
         // Вставляем запись в бд и связываем с текущей записью через $post->ID
         $attach_id = wp_insert_attachment( $attachment, $filename, $post_id );
 
@@ -373,6 +427,8 @@ function insertImages( $house_name=null, $post_id=null ) {
         $thumbnail_filesize = filesize( $thumbnail );
         $img_filesize = filesize( $img_path );
 
+
+        // Потом проверяем на вес файла
         if ( $img_filesize > $thumbnail_filesize ) {
           $thumbnail = $img_path;
           $thumbnail_id = $attach_id;
