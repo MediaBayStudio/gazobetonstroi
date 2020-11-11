@@ -112,6 +112,7 @@ function import() {
     $updated_posts = [];
     $response;
 
+    // Отщепляем кусок от массива
     $elements = array_slice( $elements, $offset );
     
     foreach ( $elements as $elem ) {
@@ -125,6 +126,7 @@ function import() {
       // Сохраним нужные переменные для вставки в acf
       $house_area = $elem['S общ'];
       $house_name = $elem['Проект'];
+      $house_material = my_mb_ucfirst( trim( $elem['Оптимизированный'] ) );
 
       // Формируем название категории для площади дома
       if ( $house_area < 100 ) {
@@ -164,11 +166,11 @@ function import() {
         'Ширина' => trim( str_replace( ',', '.', $elem['Ширина'] ) ),
         'S' => trim( str_replace( ',', '.', $elem['S общ'] ) ),
         'Площадь' => trim( $house_area_category ),
-        'Материал' => my_mb_ucfirst( trim( $elem['Оптимизированный'] ) ),
+        'Материал' => $house_material,
         'Полное название материала стен' => my_mb_ucfirst( trim( $elem['Материал стен (подробный)'] ) ),
-        'Первая цена' => trim( '1 000 000' ),
+        'Первая цена' => preg_replace( '/,.*/', '', trim( $elem[' Стоимость стандарт'] ) ) . ' ₽',
         'Первая цена подпись' => trim( 'Стандарт' ),
-        'Вторая цена' => trim( '2 000 000' ),
+        'Вторая цена' => preg_replace( '/,.*/', '', trim( $elem[' Стоимость престиж'] ) ) . ' ₽',
         'Вторая цена подпись' => trim( 'Престиж' ),
         'Кол-во этажей' => trim( $house_floor ),
         'Второй свет' => trim( my_mb_ucfirst( $elem['Второй свет'] ) ),
@@ -176,6 +178,9 @@ function import() {
         'Бассейн' => trim( my_mb_ucfirst( $elem['Бассейн'] ) ),
         'Гараж' => trim( my_mb_ucfirst( $elem['гараж'] ) )
       ];
+
+      // var_dump( $house_props );
+      // break;
 
       // Будем искать элемент в существующих записях
       foreach ( $posts as $post ) {
@@ -208,7 +213,8 @@ function import() {
       if ( $exist_post_id ) {
         $updated_posts[] = [
           'id' => $exist_post_id,
-          'title' => $house_name
+          'title' => $house_name,
+          'material' => $house_material 
         ];
         // continue;
       } else {

@@ -15,7 +15,7 @@ $details_text_block = '';
 
 ?>
 
-<section class="details-sect sect lazy" data-src="<?php echo $data_src ?>" data-media="<?php echo $data_media ?>">
+<section class="details-sect sect_bg lazy" data-src="<?php echo $data_src ?>" data-media="<?php echo $data_media ?>">
   <h2 class="details-sect__title sect-title"><?php echo $sect_title ?></h2>
 
   <div class="details details-sect__details">

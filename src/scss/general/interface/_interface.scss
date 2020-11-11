@@ -229,7 +229,7 @@ body {
   }
 
   &__title {
-    margin: 0 0 15px;
+    margin: 0 0 5px;
     display: flex;
     align-items: flex-start;
     font-size: 16px;
@@ -246,9 +246,12 @@ body {
   }
 
   &__descr {
-    display: flex;
-    flex-flow: column;
-    font: 10px/160% Montserrat;
+    // display: flex;
+    font: 12px/160% Montserrat;
+  }
+
+  &__sep {
+    margin: 0 3px;
   }
 
   &__img {

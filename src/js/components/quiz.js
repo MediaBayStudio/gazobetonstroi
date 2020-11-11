@@ -1224,7 +1224,7 @@
 
           }, 10);
 
-        _.$progressBar.style.backgroundSize = percent + '%, 100%';
+        _.$progressBar.style.backgroundSize = percent + '%, 6px';
       };
 
       return Quiz;

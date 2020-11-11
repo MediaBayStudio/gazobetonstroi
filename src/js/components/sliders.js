@@ -90,20 +90,22 @@
       counterCurrentSlide = q(counterCurrentSelector, $slider[0]),
       counterTotalSlides = q(counterTotalSelector, $slider[0]);
 
-    $slider.slick({
-      appendArrows: $('.slider-nav', $slider),
-      infinite: false,
-      slide: slidesSelector,
-      draggable: false,
-      prevArrow: createArrow('project__prev', smallArrowSvg),
-      nextArrow: createArrow('project__next', smallArrowSvg),
-    });
+    if ($slides.length > 1) {
+      $slider.slick({
+        appendArrows: $('.slider-nav', $slider),
+        infinite: false,
+        slide: slidesSelector,
+        draggable: false,
+        prevArrow: createArrow('project__prev', smallArrowSvg),
+        nextArrow: createArrow('project__next', smallArrowSvg),
+      });
 
-    counterTotalSlides.textContent = $slides.length;
+      counterTotalSlides.textContent = $slides.length;
 
-    $slider.on('beforeChange', function(event, slick, currentSlide, nextSlide) {
-      counterCurrentSlide.textContent = nextSlide + 1;
-    });
+      $slider.on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+        counterCurrentSlide.textContent = nextSlide + 1;
+      });
+    }
   });
 
 
@@ -120,6 +122,7 @@
           infinite: false,
           variableWidth: true,
           dots: true,
+          touchThreshold: 10,
           dotsClass: 'hero-sect__dots',
           customPaging: function() {
             return dot;
@@ -232,7 +235,7 @@
             centerPadding: '0px',
           });
 
-          let counterTotal = reviewsSlides.length;
+          let counterTotal = casesSlides.length;
 
           counterTotalSlides.textContent = counterTotal;
 
@@ -440,7 +443,7 @@
       counterTotalSlides = q(counterTotalSelector, featsSlider),
       buildFeatsSlider = function() {
         // Если размер экрана больше 768px и если есть слайдер, то уберем его
-        if (matchesMedia(mw768)) {
+        if (matchesMedia(mw767)) {
           if (hasSlickClass($featsSlider)) {
             unslick($featsSlider);
           }

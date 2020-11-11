@@ -70,6 +70,8 @@
 
         xhr.addEventListener('readystatechange', function() {
           if (xhr.readyState === 4 && xhr.status === 200) {
+            // console.log(xhr.response);
+            // return;
             let response = JSON.parse(xhr.response);
 
             if (!totalPosts) {

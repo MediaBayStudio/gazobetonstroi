@@ -31,9 +31,11 @@
     
   }*/
   &__features {
-    margin-top: 60px;
     display: flex;
     flex-flow: column;
+    &-wrap {
+      margin-top: 60px;
+    }
   }
 }
 

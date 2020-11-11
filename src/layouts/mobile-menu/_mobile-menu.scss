@@ -13,6 +13,7 @@
   opacity: 0;
   visibility: hidden;
   transition: opacity .5s, visibility .5s;
+  z-index: 1;
   &.active {
     opacity: 1;
     visibility: visible;

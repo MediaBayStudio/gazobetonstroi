@@ -2,7 +2,7 @@
 $sect_title = $section['sect_title'];
 $sect_descr = $section['sect_descr'] ?>
 
-<section class="contacts-sect sect lazy" data-src="linear-gradient(1deg, rgba(242, 236, 233, 0.8), rgba(242, 236, 233, 0.8)), url(<?php echo $template_directory ?>/img/contacts-bg.jpg)" data-media="">
+<section class="contacts-sect sect_bg lazy" data-src="linear-gradient(1deg, rgba(242, 236, 233, 0.8), rgba(242, 236, 233, 0.8)), url(<?php echo $template_directory ?>/img/contacts-bg.jpg)" data-media="">
   <?php echo do_shortcode( '[contact-form-7 id="10" html_class="contacts-form" html_id="contacts-form"]' ) ?>
   <div class="contacts-sect__contacts">
     <h2 class="contacts-sect__title sect-title">Контакты</h2>

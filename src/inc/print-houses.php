@@ -96,8 +96,12 @@ function print_houses( $posts=0, $post_type='projects', $section_class='', $numb
             $categories_parents = get_categories( [
               'taxonomy' => 'house_properties',
               'include' => $parent_categories_ids,
-              'orderby' => 'include'
+              'orderby' => 'name',
+              'meta_key' => 'show_in_card',
+              'meta_value' => true
             ] );
+
+            // var_dump( $categories_parents );
 
 
             for ( $i = 0, $len = count( $categories_parents ); $i < $len; $i++ ) :
@@ -110,11 +114,14 @@ function print_houses( $posts=0, $post_type='projects', $section_class='', $numb
 
                 if ( $left_col === 'Площадь' ) {
                   $right_col = get_field( 'house_fields' )['area'] . 'м<sup>2</sup>';
+                }
+                if ( $i < 2 ) {
+                  $sep = '<span class="house__sep"> | </span>';
+                } else {
+                  $sep = '';
                 } ?>
-                <span class="house__row <?php echo $col_class ?>">
-                  <span class="house__left-col"><?php echo $left_col ?></span>
-                  <span class="house__right-col"><?php echo $right_col ?></span>
-                </span> <?php
+                <span class="house__prop <?php echo $col_class ?>"><?php echo $right_col ?></span> <?php
+                echo $sep;
               endif;
             endfor ?>
           </span>

@@ -69,7 +69,7 @@
         $childs = $child_terms[ $term['id'] ];
         $childs_count = count( $childs );
         // $fieldset_class = $childs_count > 5 ? ' dropdown' : '' ?>
-        <fieldset class="filter-form__group<?php echo $fieldset_class ?>">
+        <fieldset class="filter-form__group<?php echo $fieldset_class ?>" id="i<?php echo $term['id'] ?>">
           <legend class="filter-form__group-title"><?php echo $term['title'] ?></legend> <?php
           foreach ( $childs as $child ) : ?>
             <label class="check check_fill filter-form__check">

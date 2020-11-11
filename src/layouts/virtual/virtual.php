@@ -21,16 +21,19 @@ $features = $section['features'] ?>
   if ( $callback_form ) {
     require 'callback.php';
   } ?>
-  <div class="virtual-sect__features" id="features-slider">
-    <div class="slider-nav features__nav">
-      <div class="slider-nav__counter features__counter"><span class="features__counter-current">1</span>/<span class="features__counter-total">6</span></div>
-    </div> <?php
-    for ( $i = 0, $len = count( $features ); $i < $len; $i++ ) :
-      $order_class = $features[$i + 1] ? '' : ' last' ?>
-      <div class="feat">
-        <img src="#" data-lazy="<?php echo $features[$i]['img'] ?>" alt="" class="feat__img">
-        <strong class="feat__title"><?php echo $features[$i]['title'] ?></strong>
+  <div class="virtual-sect__features-wrap">
+    <h2 class="virtual-sect__title sect-title">Наши преимущества</h2>
+    <div class="virtual-sect__features" id="features-slider">
+      <div class="slider-nav features__nav">
+        <div class="slider-nav__counter features__counter"><span class="features__counter-current">1</span>/<span class="features__counter-total">6</span></div>
       </div> <?php
-    endfor ?>
+      for ( $i = 0, $len = count( $features ); $i < $len; $i++ ) :
+        $order_class = $features[$i + 1] ? '' : ' last' ?>
+        <div class="feat">
+          <img src="#" data-lazy="<?php echo $features[$i]['img'] ?>" alt="" class="feat__img">
+          <strong class="feat__title"><?php echo $features[$i]['title'] ?></strong>
+        </div> <?php
+      endfor ?>
+    </div>
   </div>
 </section>

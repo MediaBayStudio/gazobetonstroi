@@ -27,13 +27,15 @@
     }
   }
   &__features {
-    margin-top: 90px;
     position: relative;
     > .slick-list {
       margin: auto;
       width: 587px;
       overflow: hidden;
       z-index: 1;
+    }
+    &-wrap {
+      margin-top: 90px;
     }
   }
 }

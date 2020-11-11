@@ -13,6 +13,6 @@
       'menu_class'      => 'menu__nav-list',
       'items_wrap'      => '<ul class="%2$s">%3$s</ul>'
     ] ) ?>
-    <button type="button" class="btn btn_green btn_text-white">Рассчитать стоимость</button>
+    <a href="/#quiz" class="btn btn_green btn_text-white">Рассчитать стоимость</a>
   </div>
 </aside>

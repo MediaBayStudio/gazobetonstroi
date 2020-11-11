@@ -31,9 +31,11 @@
     }
   }
   &__features {
-    margin-top: 135px;
     > .slick-list {
       width: 1170px;
+    }
+    &-wrap {
+      margin-top: 135px;
     }
   }
 }

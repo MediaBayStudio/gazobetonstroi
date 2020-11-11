@@ -144,6 +144,8 @@
   }
   &__cnt {
     padding: 35px 20px;
+    display: flex;
+    flex-flow: column;
     overflow-x: hidden;
     overflow-y: auto;
     background: $lightgrey;
@@ -189,6 +191,9 @@
     display: flex;
     flex-flow: column;
     align-items: flex-start;
+    &#i132 {
+      order: 9;
+    }
 
     &:nth-child(n+2) {
       margin-top: 25px;
@@ -228,6 +233,7 @@
   }
 
   &__bottom {
+    order: 10;
     max-width: 185px;
     margin: 15px auto 0;
     text-align: center;

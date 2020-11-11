@@ -7,13 +7,18 @@
 }
 
 .sect {
-  margin: 35px 0;
-  padding: 35px 20px;
+  padding: 40px 20px;
   color: $black;
   flex-shrink: 0;
 
-  +.ftr {
-    margin: -35px 0;
+  &_bg {
+    margin: 40px 0;
+    padding: 40px 20px;
+    flex-shrink: 0;
+
+    +.ftr {
+      margin: -40px 0;
+    }
   }
 }
 
@@ -24,15 +29,16 @@
   }
 
   .sect {
-    margin: 40px 0;
-    padding: 40px calc(50% - 268px);
+    padding: 50px calc(50% - 268px);
 
-    +.ftr {
-      margin: -40px 0;
+    &_bg {
+      margin: 50px 0;
+
+      +.ftr {
+        margin: -50px 0;
+      }
     }
   }
-
-
 }
 
 @media (min-width: 767.98px) {
@@ -41,7 +47,16 @@
   }
 
   .sect {
-    padding: 40px calc(50% - 344px);
+    padding: 60px calc(50% - 344px);
+
+    &_bg {
+      margin: 60px 0;
+      padding: 60px calc(50% - 344px);
+
+      +.ftr {
+        margin: -60px 0;
+      }
+    }
   }
 }
 
@@ -51,15 +66,17 @@
   }
 
   .sect {
-    margin: 45px 0;
-    padding: 45px calc(50% - 470px);
+    padding: 80px calc(50% - 470px);
 
-    +.ftr {
-      margin: -45px 0;
+    &_bg {
+      margin: 80px 0;
+      padding: 80px calc(50% - 470px);
+
+      +.ftr {
+        margin: -80px 0;
+      }
     }
   }
-
-
 }
 
 @media (min-width: 1439.98px) {
@@ -68,13 +85,11 @@
   }
 
   .sect {
-    margin: 50px 0;
-    padding: 50px calc(50% - 620px);
+    padding: 80px calc(50% - 620px);
 
-    +.ftr {
-      margin: -50px 0;
+    &_bg {
+      padding: 80px calc(50% - 620px);
     }
+
   }
-
-
 }
