@@ -44,6 +44,9 @@
     margin: 35px auto 0;
     order: 10;
   }
+  &__counter-current {
+    color: $green;
+  }
 }
 
 .feat {
@@ -57,7 +60,8 @@
 
   &__img {
     width: 57px;
-    height: 57px;
+    min-height: 57px;
+    max-height: 57px;
     object-fit: contain;
   }
 

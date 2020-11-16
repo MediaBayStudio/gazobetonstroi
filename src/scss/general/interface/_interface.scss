@@ -248,6 +248,10 @@ body {
   &__descr {
     // display: flex;
     font: 12px/160% Montserrat;
+    &.have-rows {
+      display: flex;
+      flex-flow: column;
+    }
   }
 
   &__sep {
@@ -269,11 +273,11 @@ body {
     }
 
     &.ploshhad-doma {
-      order: 2;
+      order: 3;
     }
 
     &.etazhi {
-      order: 3;
+      order: 2;
     }
   }
 

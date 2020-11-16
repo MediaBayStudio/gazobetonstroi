@@ -70,7 +70,7 @@ function print_houses( $posts=0, $post_type='projects', $section_class='', $numb
     foreach ( $posts as $post ) :
       setup_postdata( $post );
       $post_cat = get_the_terms( $post->ID, 'house_properties' );
-      $post_title = $post->post_title ?><div class="house<?php echo $section_class ?>">
+      $post_title = ($post_type === 'projects' ? 'Проект ' : '') . $post->post_title ?><div class="house<?php echo $section_class ?>">
         <a href="<?php the_permalink() ?>" class="house__link">
           <strong class="house__title"><?php echo $post_title ?></strong>
           <span class="house__descr"> <?php

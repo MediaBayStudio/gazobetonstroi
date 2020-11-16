@@ -4,7 +4,7 @@
 @import '../../scss/assets/variables';
 
 .hero-sect {
-  margin: -80px 0 80px;
+  margin: -80px 0 0;
   &__slide {
     padding: 0 calc(50vw - 470px) 21vh;
     // background-attachment: scroll, fixed;
@@ -29,5 +29,11 @@
   }
   &__btn {
     // margin-top: 70px;
+  }
+}
+
+#index-page {
+  >.hero-sect {
+    margin: -80px 0 80px;
   }
 }

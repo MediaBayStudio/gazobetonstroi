@@ -117,7 +117,7 @@ var
   scrollToTarget = function(event, target) {
     event.preventDefault();
 
-    target = target || this.dataset.scrollTarget;
+    target = target || this.dataset.scrollTarget || this.getAttribute('href');
 
     if (target.constructor === String) {
       target = q(target);
@@ -172,13 +172,21 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   //includes
-  menu = new MobileMenu('.menu', {
-    openButton: '.hdr__burger',
-    closeButtons: '.hdr__burger',
-    overlay: '#overlay',
-    toRight: true,
-    fixHeader: '.hdr'
-  });
+  ;
+  (function() {
+    menu = new MobileMenu('.menu', {
+      openButton: '.hdr__burger',
+      closeButtons: '.hdr__burger',
+      overlay: '#overlay',
+      toRight: true,
+      fixHeader: '.hdr'
+    });
+  
+    q('.btn', menu).addEventListener('click', function() {
+      menu.closeMenu();    
+    });
+  
+  })();
   ;
   (function() {
     let $contactsForm = id('contacts-form'),
@@ -2486,7 +2494,8 @@ document.addEventListener('DOMContentLoaded', function() {
   
             }, 10);
   
-          _.$progressBar.style.backgroundSize = percent + '%, 6px';
+          // _.$progressBar.style.backgroundSize = percent + '%, 6px';
+          _.$progressBar.style.fontSize = (percent / 100 * _.$progressBar.offsetWidth) + 'px';
         };
   
         return Quiz;
@@ -2962,6 +2971,18 @@ document.addEventListener('DOMContentLoaded', function() {
       input[i].addEventListener('blur', mask);
     }
   
+  })();
+  ;(function() {
+    let article = id('article');
+    if (article) {
+      let links = qa('a[href^="#"]', article);
+  
+      for (var i = links.length - 1; i >= 0; i--) {
+        links[i].addEventListener('click', scrollToTarget);
+      }
+  
+      console.log(links);
+    }
   })();
 
 

@@ -71,7 +71,8 @@
     $props[ $other_cat ] = 'Да';
   }
 
- ?>
+  $first_price_tooltip = preg_replace( '/В престиж входит[\s\S]*/', '', $house_fields['descr_list'] );
+  $second_price_tooltip = preg_replace( '/[\s\S]*(?=В престиж входит)/', '', $house_fields['descr_list'] ) ?>
 
  <section class="house-sect sect">
   <div class="house-sect__sliders">
@@ -112,12 +113,23 @@
     if ( $first_price['price'] || $second_price['price'] ) : ?>
       <div class="house-sect__prices"> <?php
         $prices = [ $first_price, $second_price ];
-        foreach ( $prices as $price ) : ?>
+
+        if ( $first_price_tooltip && $second_price_tooltip ) {
+          $prices_tooltips = [ $first_price_tooltip, $second_price_tooltip ];
+        } else {
+           $prices_tooltips = null;
+        }
+
+        for ( $i = 0, $len = count( $prices ); $i < $len; $i++ ) : ?>
           <div class="house-sect__price">
-            <b class="house-sect__price-num"><?php echo $price['price'] ?></b>
-            <span class="house-sect__price-text"><?php echo $price['text'] ?></span>
+            <b class="house-sect__price-num"><?php echo $prices[ $i ]['price'] ?></b>
+            <span class="house-sect__price-text"><?php
+              echo $prices[ $i ]['text'];
+              if ( $prices_tooltips ) : ?>
+                <span class="tooltip"><span class="tooltip-icon">i</span><span class="tooltip-text"><?php echo $prices_tooltips[ $i ] ?></span></span></span> <?php
+              endif ?>
           </div> <?php
-        endforeach ?>
+        endfor ?>
       </div> <?php
     endif ?>
   </div>

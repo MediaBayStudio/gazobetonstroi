@@ -127,6 +127,8 @@ function import() {
       $house_area = $elem['S общ'];
       $house_name = $elem['Проект'];
       $house_material = my_mb_ucfirst( trim( $elem['Оптимизированный'] ) );
+      $first_price = preg_replace( '/,.*/', '', trim( $elem[' Стоимость стандарт'] ) ) . ' ₽';
+      $second_price = preg_replace( '/,.*/', '', trim( $elem[' Стоимость престиж'] ) ) . ' ₽';
 
       // Формируем название категории для площади дома
       if ( $house_area < 100 ) {
@@ -168,9 +170,9 @@ function import() {
         'Площадь' => trim( $house_area_category ),
         'Материал' => $house_material,
         'Полное название материала стен' => my_mb_ucfirst( trim( $elem['Материал стен (подробный)'] ) ),
-        'Первая цена' => preg_replace( '/,.*/', '', trim( $elem[' Стоимость стандарт'] ) ) . ' ₽',
+        'Первая цена' => $first_price,
         'Первая цена подпись' => trim( 'Стандарт' ),
-        'Вторая цена' => preg_replace( '/,.*/', '', trim( $elem[' Стоимость престиж'] ) ) . ' ₽',
+        'Вторая цена' => $second_price,
         'Вторая цена подпись' => trim( 'Престиж' ),
         'Кол-во этажей' => trim( $house_floor ),
         'Второй свет' => trim( my_mb_ucfirst( $elem['Второй свет'] ) ),
@@ -213,8 +215,12 @@ function import() {
       if ( $exist_post_id ) {
         $updated_posts[] = [
           'id' => $exist_post_id,
-          'title' => $house_name,
-          'material' => $house_material 
+          'Название' => $house_name,
+          'Материал' => $house_material,
+          'Этажность' => trim( $house_floor ),
+          'Площадь' => trim( $house_area_category ),
+          'Первая цена' => $first_price,
+          'Вторая цена' => $second_price
         ];
         // continue;
       } else {
@@ -240,8 +246,13 @@ function import() {
         fillFields( $post_id, $house_name, $house_props, $house_categories );
 
         $uploaded_posts[] = [
-          'id' => $post_id,
-          'title' => $house_name
+          'id' => $exist_post_id,
+          'Название' => $house_name,
+          'Материал' => $house_material,
+          'Этажность' => trim( $house_floor ),
+          'Площадь' => trim( $house_area_category ),
+          'Первая цена' => $first_price,
+          'Вторая цена' => $second_price
         ];
       }
 

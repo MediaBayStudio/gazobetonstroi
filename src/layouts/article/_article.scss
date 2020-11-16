@@ -134,6 +134,18 @@
     text-align: center;
   }
 
+  a {
+    color: $green;
+    text-decoration: underline;
+    transition: text-decoration-color .5s;
+    &:hover {
+      text-decoration-color: transparent;
+    }
+    &:visited {
+      color: $grey;
+    }
+  }
+
   .blocks-gallery-grid > li::before {
     display: none;
   }

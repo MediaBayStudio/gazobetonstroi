@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
   //=include popups.js
   //=include projectsGallery.js
   //=include telMask.js
+  //=include article.js
 
 
 // Задаем обработчики событий 'load', 'resize', 'scroll'

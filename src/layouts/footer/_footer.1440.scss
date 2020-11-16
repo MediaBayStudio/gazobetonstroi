@@ -12,7 +12,14 @@
     width: 65px;
   }
   &__nav {
-    max-width: 295px;
+    max-width: 325px;
+    &-list {
+      &-item {
+        &:nth-child(odd) {
+          margin-right: 65px;
+        }
+      }
+    }
   }
   &__policy {
     margin: 0 0 20px;

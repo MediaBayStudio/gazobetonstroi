@@ -52,7 +52,7 @@
   }
 
   &__notfound {
-    margin-top: 25px;
+    margin: 25px auto;
     display: flex;
     flex-flow: column;
     align-items: center;
@@ -226,6 +226,7 @@
   }
 
   &__check {
+    display: block;
     margin: 0 0 10px;
     &:focus-within {
       outline: 0;

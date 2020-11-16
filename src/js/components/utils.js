@@ -114,7 +114,7 @@ var
   scrollToTarget = function(event, target) {
     event.preventDefault();
 
-    target = target || this.dataset.scrollTarget;
+    target = target || this.dataset.scrollTarget || this.getAttribute('href');
 
     if (target.constructor === String) {
       target = q(target);

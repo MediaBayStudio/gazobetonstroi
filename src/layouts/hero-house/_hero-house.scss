@@ -89,11 +89,15 @@
     text-align: center;
     font: 16px/140% Montserrat;
     color: $darkgrey;
+    white-space: nowrap;
   }
 
   &__price {
     &:first-child {
       margin: 0 0 25px;
+      .tooltip-text > br:last-child {
+        display: none;
+      }
     }
   }
 

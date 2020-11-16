@@ -41,10 +41,13 @@
 
 .callback-sect {
   display: flex;
+  > .callback-form-wrap {
+    margin: 0;
+  }
 }
 
 .callback-sect__text-block {
-  margin: 100px 20px 0 0;
+  margin: 0 20px 0 0;
   padding: 25px 20px 20px;
   width: 300px;
   > .b {

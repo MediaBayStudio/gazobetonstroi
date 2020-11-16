@@ -15,6 +15,12 @@ function print_posts( $posts=null ) {
 
   foreach ( $posts as $post )  :
     setup_postdata($post);
+    $post_excerpt = get_excerpt( [
+      'maxchar' => 120,
+      'text'        => get_the_excerpt(), 
+      'autop'       => false,
+      'ignore_more' => true
+    ] );
     $post_href = get_the_permalink();
     $post_datetime = get_the_date( 'Y-m-d' );
     $post_date = get_the_date( 'd.m.Y' ) ?><article class="post">
@@ -24,7 +30,7 @@ function print_posts( $posts=null ) {
       <a href="<?php echo $post_href ?>" class="post__link" tabindex="-1">
         <h3 class="post__title"><?php the_title() ?></h3>
       </a>
-      <p class="post__descr"><?php echo get_the_excerpt() ?></p>
+      <p class="post__descr"><?php echo $post_excerpt ?></p>
       <time datetime="<?php echo $post_datetime ?>" class="post__date"><?php echo $post_date ?></time>
     </article><?php
   endforeach;

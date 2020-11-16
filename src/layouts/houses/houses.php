@@ -8,7 +8,6 @@
     'post_type' => $post_type,
     'numberposts' => $numberposts
   ] ); ?>
-
 <div class="houses container">
   <form action="<?php the_permalink() ?>" method="get" class="filter-form popup" id="filter-form" data-numberposts="<?php echo $numberposts ?>" data-post-type="<?php echo $post_type ?>">
     <div class="filter-form__cnt">

@@ -4,23 +4,17 @@
   $orderby = $section['houses_sort'];
   $posts_count = $section['posts_count'];
   $houses = $section['houses'];
+  $post_type = 'projects';
 
   if ( $orderby === 'manual' ) {
     $posts = $houses;
   } else {
     $posts = get_posts( [
-      'post_type' => 'projects',
+      'post_type' => $post_type,
       'numberposts' => $posts_count,
       'orderby' => $orderby
     ] );
-  }
-
-  // var_dump( $orderby );
-// 
-  // echo "<br><br>";
-
-  // var_dump( $posts );
- ?>
+  } ?>
 <section class="cases-sect sect">
   <h2 class="cases-sect__title sect-title"><?php echo $sect_title ?></h2>
   <a href="<?php echo $sect_link['url'] ?>" class="cases-sect__link link">
@@ -33,10 +27,10 @@
     foreach ( $posts as $post ) :
       setup_postdata( $post );
       $post_cat = get_the_terms( get_the_ID(), 'house_properties' );
-      $post_title = $post->post_title ?><div class="house cases-sect__house">
+      $post_title = ($post_type === 'projects' ? 'Проект ' : '') . $post->post_title ?><div class="house cases-sect__house">
         <a href="<?php the_permalink() ?>" class="house__link">
           <strong class="house__title"><?php echo $post_title ?></strong>
-          <span class="house__descr"> <?php
+          <span class="house__descr have-rows"> <?php
 
           $parent_categories_ids = [];
           $categories_values = [];
