@@ -2,11 +2,17 @@
 add_action( 'wp_ajax_nopriv_print_houses', 'print_houses' ); 
 add_action( 'wp_ajax_print_houses', 'print_houses' );
 
-function print_houses( $posts=0, $post_type='projects', $section_class='', $numberposts=0, $count_posts=0 ) {
+function print_houses( $posts=0, $post_type='projects', $section_class='', $numberposts=0, $count_posts=0, $page_factor=1 ) {
   global $post, $wpdb, $template_directory;
+
+  $lazy = ' lazy';
+  $img_src = 'src="#" data-src=';
 
   if ( $_POST && $_POST['action'] === 'print_houses' ) {
     $section_class = $post_type;
+
+    $lazy = '';
+    $img_src = 'src=';
 
     $filter_query = []; // Параметры запроса, будет вставлено в tax_query
     $numberposts = $_POST['numberposts'];
@@ -46,6 +52,7 @@ function print_houses( $posts=0, $post_type='projects', $section_class='', $numb
       $posts = $query->posts;
       
       // Изменяем сформированный sql-запрос на подсчет кол-ва записей
+        // Меняем SELECT ... FROM на SELECT count( * ) FROM
       $count_request = preg_replace( '/(?<=SELECT).*(?=FROM)/', ' count( * ) ', $query->request );
       $count_request = preg_replace( '/(?<=\'publish\'\)\)).*/', '', $count_request );
       // Получаем количество записей
@@ -66,7 +73,8 @@ function print_houses( $posts=0, $post_type='projects', $section_class='', $numb
   if ( $section_class ) {
     $section_class = ' ' . $section_class . '__house';
   }
-  if ( $posts ) {
+  if ( $posts ) { ?>
+    <span id="posts-count" hidden><?php echo $count_posts ?></span> <?php
     foreach ( $posts as $post ) :
       setup_postdata( $post );
       $post_cat = get_the_terms( $post->ID, 'house_properties' );
@@ -126,18 +134,13 @@ function print_houses( $posts=0, $post_type='projects', $section_class='', $numb
             endfor ?>
           </span>
         </a>
-        <a href="<?php the_permalink() ?>">
-          <img src="<?php the_post_thumbnail_url() ?>" alt="<?php echo $post_title ?>" class="house__img">
+        <a href="<?php the_permalink() ?>"> <?php
+         $img_attr = $img_src . '"' . get_the_post_thumbnail_url( $post ) .'"' ?>
+          <img <?php echo $img_attr ?> alt="<?php echo $post_title ?>" class="house__img<?php echo $lazy ?>">
         </a>
       </div><?php
     endforeach;
     wp_reset_postdata();
-    if ( $count_posts > $numberposts ) : ?>
-      <button type="button" class="houses__loadmore loadmore" id="loadmore-btn" data-total-houses-count="<?php echo $count_posts ?>"<?php echo $loadmore_data_filter ?>>
-        <span class="loadmore__text">Показать еще</span>
-        <img src="<?php echo $template_directory ?>/img/icon-loadmore.svg" alt="" class="loadmore__icon"></img>
-      </button> <?php
-    endif;
   } else {
     echo '<div class="houses__notfound"><p class="houses__notfound-text">Увы! С указанными параметрами ничего не найдено.</p><button type="reset" form="filter-form" class="houses__notfound-btn text_underline">Сбросить фильтр</button></div>';
   }

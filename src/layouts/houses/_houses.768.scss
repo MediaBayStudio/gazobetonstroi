@@ -5,6 +5,12 @@
 
 .houses {
 
+  &-count {
+    margin-top: -60px;
+    padding: 12px 0;
+    &-num {}
+  }
+
   &__filter {
   }
   &__cards {
@@ -29,7 +35,18 @@
 .projects,
 .cases {
   &__house {
-    width: (688px - 20px) / 2;
+    width: (688px - 30px) / 3;
+    // width: (688px - 20px) / 2;
+    &:nth-child(n) {
+      margin-right: 15px;
+    }
+    &:nth-child(3n+3) {
+      margin-right: 0;
+    }
+    .house__img {
+      min-height: 150px;
+      max-height: 150px;
+    }
   }
 }
 

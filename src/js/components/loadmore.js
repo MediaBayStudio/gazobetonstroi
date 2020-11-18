@@ -7,13 +7,16 @@
     let totalCountPosts = $newsSect.dataset.postsCount,
       numberposts = $newsSect.dataset.numberposts,
       pageUri = $newsSect.dataset.pageUri,
+      // pageFactor = +$loadmoreBtn.dataset.page,
       postsOnPage = qa('.post', $newsSect),
       loadPosts = function(event) {
         $loadmoreBtn.classList.add('loading');
         $loadmoreBtn.blur();
 
+        // pageFactor++;
+
         let xhr = new XMLHttpRequest(),
-          data = 'action=print_posts&numberposts=' + numberposts + '&offset=' + postsOnPage.length;
+          data = 'action=print_posts&numberposts=' + numberposts + '&offset=' + postsOnPage.length/* + '$page_facor=' + pageFactor*/;
 
         xhr.open('POST', siteUrl + '/wp-admin/admin-ajax.php');
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -33,6 +36,7 @@
               $loadmoreBtn.setAttribute('hidden', '');
             } else {
               $loadmoreBtn.focus();
+              // $loadmoreBtn.dataset.page = pageFactor;
             }
 
           }

@@ -12,6 +12,10 @@
   &__house {
     
   }
+
+  &__loadmore {
+    margin-right: 462.5px;
+  }
 }
 
 .projects,
@@ -71,5 +75,11 @@
     &:focus {
 
     }
+  }
+}
+
+.houses {
+  &__cards {
+    width: 925px;
   }
 }

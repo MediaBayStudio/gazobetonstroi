@@ -5,22 +5,28 @@
 
 .houses {
 
-  &__filter {
+  &-count {
+    margin-top: -50px;
+
+    &-num {}
   }
+
+  &__filter {}
+
   &__cards {
     display: flex;
     flex-wrap: wrap;
   }
-  &__house {
-    
-  }
+
+  &__house {}
 
   &__notfound {
     font-size: 16px;
-    &::before {
-    }
-    &-text {
-    }
+
+    &::before {}
+
+    &-text {}
+
     &-btn {
       font-size: 15px;
     }
@@ -32,6 +38,7 @@
   &__house {
     margin: 20px auto 0 0;
     width: (536px - 20px) / 2;
+
     &:nth-of-type(2n) {
       margin-right: 0;
     }
@@ -40,43 +47,33 @@
 
 #filter-form-call-btn {
 
-  &:focus {
-
-  }
+  &:focus {}
 }
 
 .filter-form {
 
-  &__title {
- 
-  }
-  &__close {
+  &__title {}
 
-  }
+  &__close {}
+
   &__group {
 
-    &:nth-child(n+2) {
-
-    }
+    &:nth-child(n+2) {}
   }
-  &__group-title {
 
-  }
+  &__group-title {}
+
   &__check {
 
-    &:focus-within {
+    &:focus-within {}
+  }
 
-    }
-  }
-  &__bottom {
+  &__bottom {}
 
-  }
-  &__btn {
-  }
+  &__btn {}
+
   &__reset {
 
-    &:focus {
-
-    }
+    &:focus {}
   }
 }

@@ -41,7 +41,7 @@ add_action( 'wp_enqueue_scripts', function() {
     enqueue_style( 'index', $screen_widths );
   } else if ( is_page( 'news' ) || is_page( 'projects' ) || is_page( 'cases' ) || is_single() || is_404() ) {
     enqueue_style( 'single', $screen_widths );
-  } else if ( is_page( 'about' ) || is_page( 'building' ) || is_page( 'improvement' ) ) {
+  } else if ( is_page( 'about' ) || is_page( 'building' ) || is_page( 'improvement' ) || is_page( 'federal-projects') ) {
     enqueue_style( 'pages', $screen_widths );
   }
 
