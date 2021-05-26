@@ -6,6 +6,6 @@
         <path d="M2.00006 2.00006L19.6777 19.6777" stroke="inherit" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </button>
-    <img src="#" alt="" class="zoom-popup__img">
+    <img src="#" alt="#" class="zoom-popup__img">
   </div>
 </div>

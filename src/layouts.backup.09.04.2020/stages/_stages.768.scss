@@ -1,0 +1,44 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.stages-sect {
+  margin: 0 0 60px;
+  &::before {
+    font-size: 112px;
+  }
+  &__title {
+
+  }
+  &__stages {
+
+    > .slick-list {
+
+      > .slick-track {
+
+      }
+    }
+  }
+}
+
+.stages {
+  &__nav {
+    width: 588px;
+  }
+  &__counter {
+    font-size: 40px;
+  }
+}
+
+.stage {
+
+  &__number {
+
+  }
+  &__title {
+
+  }
+  &__descr {
+  }
+}

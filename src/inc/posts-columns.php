@@ -1,6 +1,6 @@
 <?php
 
-add_filter( 'manage_posts_columns', function( $columns ) {
+function manage_columns( $columns ) {
   $num = 1; // после какой по счету колонки вставлять новые
 
   $new_columns = [
@@ -12,11 +12,9 @@ add_filter( 'manage_posts_columns', function( $columns ) {
   ];
 
   return array_slice($columns, 0, $num) + $new_columns + array_slice($columns, $num);
-  // return array_slice($columns, 0, $num) + $new_columns;
-}, 4);
+}
 
-
-add_action( 'manage_posts_custom_column', function( $colname, $post_id ) {
+function namage_custom_column( $colname, $post_id ) {
   $house_fields = get_field( 'house_fields', $post_id );
   $post_type = get_post_type( $post_id );
 
@@ -53,10 +51,21 @@ add_action( 'manage_posts_custom_column', function( $colname, $post_id ) {
       }
       break;
   }
-}, 5, 2);
+}
 
-// добавляем возможность сортировать колонку
-add_filter( 'manage_' . 'edit-post' . '_sortable_columns', function( $sortable_columns ) {
+function namage_sortable_columns( $sortable_columns ) {
   $sortable_columns['modified'] = ['modified_modified', false];
   return $sortable_columns;
-} );
+}
+
+// Создание новых колонок
+add_filter( 'manage_projects_posts_columns', 'manage_columns', 4 );
+add_filter( 'manage_cases_posts_columns', 'manage_columns', 4 );
+
+// Заполнение колонок нужными данными
+add_action( 'manage_projects_posts_custom_column', 'namage_custom_column', 5, 2);
+add_action( 'manage_cases_posts_custom_column', 'namage_custom_column', 5, 2);
+
+// добавляем возможность сортировать колонку
+add_filter( 'manage_edit-projects_sortable_columns', 'namage_sortable_columns' );
+add_filter( 'manage_edit-cases_sortable_columns', 'namage_sortable_columns' );

@@ -1,0 +1,53 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.details-sect {
+  &::after {}
+
+  &__title {}
+
+  &__details {}
+}
+
+.details {
+  &__btns {
+    font-size: 17px;
+  }
+
+  &__btn {
+    margin-bottom: 20px;
+
+    &::before {}
+
+    &-text {
+
+      &::after {}
+    }
+
+    &.is-active {
+      &::before {}
+
+      >.details__btn-text {
+        &::after {}
+      }
+    }
+  }
+
+  &__text-block {
+    margin-top: 30px;
+    font-size: 15px;
+  }
+
+  &__text {
+
+    &.is-active {}
+  }
+
+  &__text-title {
+    font-size: 23px;
+  }
+
+  &__text-descr {}
+}

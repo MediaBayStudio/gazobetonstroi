@@ -1,0 +1,39 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+
+.activity-block {
+}
+
+.activity {
+  width: 100%;
+  min-height: 300px;
+  display: inline-flex;
+  &__text {
+    display: flex;
+    flex-flow: column;
+    width: 295px;
+  }
+  &__title,
+  &__list {
+    margin: 0 0 auto;
+    padding: 0 0 5px;
+  }
+  &__descr {
+  }
+  &__list {
+    // padding: 0 0 5px;
+  }
+  &__list-item {
+  }
+  &__link {
+    margin: auto 0 0;
+  }
+  &__img {
+    margin: 0 0 0 auto;
+    width: 235px;
+    // height: 300px;
+  }
+}

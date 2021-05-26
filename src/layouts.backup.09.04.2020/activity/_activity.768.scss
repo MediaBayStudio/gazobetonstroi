@@ -1,0 +1,33 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+
+.activity-block {
+}
+
+.activity {
+  margin: 0 0 100px;
+  min-height: 330px;
+  &__text {
+    display: flex;
+    flex-flow: column;
+    // width: 295px;
+  }
+  &__title {
+    // margin: 0 0 30px;
+  }
+  &__descr {
+  }
+  &__list {
+  }
+  &__list-item {
+  }
+  &__link {
+    // margin-top: auto;
+  }
+  &__img {
+    width: 335px;
+  }
+}

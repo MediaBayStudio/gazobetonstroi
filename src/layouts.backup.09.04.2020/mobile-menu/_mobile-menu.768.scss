@@ -1,0 +1,19 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.menu {
+  // max-width: 455px;
+  &__cnt {
+    padding-left: calc(50vw - 344px);
+  }
+  &__logo {
+    &-img {
+      // стили в header.768.scss
+    }
+  }
+  &__hdr {
+    // стили в header.768.scss
+  }
+}

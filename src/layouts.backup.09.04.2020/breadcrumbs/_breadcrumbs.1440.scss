@@ -1,0 +1,26 @@
+// assets import
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+
+
+.breadcrumbs {
+  font-size: 18px;
+  +.sect,
+  +.container {}
+
+  &__list {}
+
+  &__item {
+    &::after {}
+
+    &.current {
+
+      &::after {}
+    }
+  }
+
+  &__link {}
+}

@@ -1,0 +1,57 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.callback-form-wrap {
+  margin-top: 100px;
+  display: inline-block;
+  width: 620px;
+}
+
+.callback-form {
+  padding: 33px 20px;
+  &__title {
+
+  }
+  &__field {
+    width: 180px;
+    > .field__text {
+
+    }
+  }
+  &__field_name,
+  &__field_tel {
+
+  }
+  &__field_tel {
+
+  }
+  &__field_email {
+
+  }
+  &__bottom {
+
+  }
+  &__btn {
+
+  }
+}
+
+
+.callback-sect {
+  display: flex;
+  > .callback-form-wrap {
+    margin: 0;
+  }
+}
+
+.callback-sect__text-block {
+  margin: 0 20px 0 0;
+  padding: 25px 20px 20px;
+  width: 300px;
+  > .b {
+    margin: 0 0 20px;
+    line-height: 140%;
+  }
+}

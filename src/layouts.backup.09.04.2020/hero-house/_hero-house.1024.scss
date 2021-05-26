@@ -1,0 +1,111 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.house-sect {
+
+  &__sliders {
+    margin-right: 50px;
+    width: 480px;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  &__text {
+    width: 400px;
+  }
+
+  &__gallery {
+    width: 100%;
+
+    &-nav {
+      padding: 0 15px;
+      // margin: 0;
+      // padding: 0 0 10px;
+      width: 160px;
+
+      >.slider-nav__counter {
+        margin: 0 20px;
+        font-size: 18px;
+      }
+    }
+
+    &-bottom {
+      margin: 0;
+      width: 315px;
+    }
+  }
+
+  &__img {
+    width: 400px;
+    height: 405px;
+  }
+
+  &__title {}
+
+  &__heading-block {
+    padding: 0 0 30px;
+  }
+
+  &__descr {}
+
+  &__list {
+    margin-top: 30px;
+    font-size: 16px;
+
+    &-item {
+
+      &-text {
+
+        &:first-of-type {}
+
+        &:last-of-type {}
+      }
+
+      &-dots {}
+    }
+  }
+
+  &__prices {
+    justify-content: center;
+  }
+
+  &__price {
+    &:first-child {
+      margin: 0 35px 0 0;
+      padding: 0 35px 0 0;
+    }
+  }
+
+  &__price-num {
+    font-size: 24px;
+  }
+
+  &__price-text {}
+}
+
+.house-slider {
+  margin: 0 0 10px;
+  height: 320px;
+
+  &__prev,
+  &__next {
+    width: 25px;
+  }
+
+  >.slick-list,
+  >.slick-list>.slick-track {}
+
+  &__img {}
+}
+
+
+.house-nav {
+
+  &__img {
+
+    &.active {}
+  }
+}

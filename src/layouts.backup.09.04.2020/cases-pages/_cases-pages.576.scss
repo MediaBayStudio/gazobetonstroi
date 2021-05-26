@@ -1,0 +1,33 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+
+.projects-sect {
+}
+
+.project {
+  // width: 100%;
+  &:nth-last-child(n+2) {
+    // margin: 0 0 50px;
+  }
+  &__slider {
+    position: relative;
+  }
+  &__nav {
+    padding: 15px 10px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background: $white;
+  }
+  &__img {
+    height: 350px;
+  }
+  &__title {
+  }
+  &__descr {
+  }
+}

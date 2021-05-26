@@ -1,0 +1,46 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.gallery-popup {
+  &__cnt {
+    max-width: 100%;
+    padding: 0;
+    overflow: hidden;
+    background: 0 0;
+    padding: 0 0 18px;
+    >.slick-list,
+    >.slick-list>.slick-track {
+      max-height: 100%;
+    }
+  }
+
+  &__close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+  }
+
+  &__img {
+    // width: 280px;
+    // object-fit: cover;
+    object-fit: contain;
+  }
+
+  &__nav {
+    width: 120px;
+    padding: 10px 5px;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    background: $white;
+    z-index: 1;
+  }
+
+  &__title {}
+
+  &__descr {}
+}

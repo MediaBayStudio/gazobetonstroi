@@ -1,0 +1,115 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.houses {
+
+  &-count {
+    margin-top: -60px;
+    padding: 12px 0;
+    &-num {}
+  }
+
+  &__filter {
+  }
+  &__cards {
+  }
+  &__house {
+    
+  }
+
+  &__notfound {
+    font-size: 18px;
+    &::before {
+    }
+    &-text {
+      width: 325px;
+    }
+    &-btn {
+      font-size: 16px;
+    }
+  }
+}
+
+.projects,
+.cases {
+  &__house {
+    width: (688px - 30px) / 3;
+    // width: (688px - 20px) / 2;
+    &:nth-child(n) {
+      margin-right: 15px;
+    }
+    &:nth-child(3n+3) {
+      margin-right: 0;
+    }
+    .house__img {
+      min-height: 150px;
+      max-height: 150px;
+    }
+  }
+}
+
+.houses {
+  padding-bottom: 135px;
+}
+
+#filter-form-call-btn {
+  &.fixed {
+    top: 80px;
+  }
+  &:focus {
+
+  }
+}
+
+.filter-form {
+  padding: 50px calc(50vw - 344px);
+  &__title {
+    width: 100%;
+  }
+  &__close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+  }
+  &__cnt {
+    padding: 80px 50px 45px;
+    display: flex;
+    flex-flow:  row wrap;
+    justify-content: space-between;
+    position: relative;
+  }
+  &__group {
+    width: 50%;
+    &:nth-child(n+2) {
+      margin-top: 35px;
+    }
+  }
+  &__group-title {
+
+  }
+  &__check {
+
+    &:focus-within {
+
+    }
+  }
+  &__bottom {
+    margin: 60px 0 0;
+    max-width: none;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &__btn {
+    margin: 0 55px 0 0;
+  }
+  &__reset {
+
+    &:focus {
+
+    }
+  }
+}

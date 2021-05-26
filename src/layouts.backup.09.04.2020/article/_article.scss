@@ -1,0 +1,152 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.article {
+  padding: 35px 20px 0;
+  font: 14px/140% Montserrat;
+  color: $black;
+
+  &__title {
+    margin: 0 0 20px;
+    font: bold 24px/140% Montserrat;
+  }
+
+  &__date {
+    color: $grey;
+  }
+
+  &__thumbnail {
+    margin: 20px 0 50px;
+    display: block;
+    max-width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+    object-fit: cover;
+  }
+
+  // .alignleft {
+  //   margin: 0 15px 0 0;
+  //   float: left;
+  // }
+
+  // .alignright {
+  //   margin: 0 0 0 15px;
+  //   float: right;
+  // }
+
+  // h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    padding: 0.18em 0;
+    margin: 0.4em 0;
+    letter-spacing: 0.05em;
+  }
+
+  // h1 {
+  //   font: bold 28px/140% Montserrat;
+  // }
+
+  h2 {
+    font: bold 26px/140% Montserrat;
+  }
+
+  h3 {
+    font: bold 24px/140% Montserrat;
+  }
+
+  h4 {
+    font: bold 22px/140% Montserrat;
+  }
+
+  h5 {
+    font: bold 20px/140% Montserrat;
+  }
+
+  h6 {
+    font: bold 18px/140% Montserrat;
+  }
+
+  p {
+    padding: 5px 0;
+    margin: 0.5em 0;
+  }
+
+  ul {
+    >li {
+      &::before {
+        content: '';
+        margin: 0 8px 0 0;
+        display: inline-block;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        vertical-align: middle;
+        background: $green;
+      }
+    }
+  }
+
+  ol {
+    counter-reset: ol;
+
+    >li {
+      counter-increment: ol;
+
+      &::before {
+        content: counter(ol)'.';
+        margin: 0 8px 0 0;
+        display: inline-block;
+        vertical-align: middle;
+        color: $green;
+      }
+    }
+  }
+
+  figure {
+    display: block;
+  }
+
+  table {
+    margin: 20px 0;
+    border-collapse: collapse;
+    font: 14px/143% Montserrat;
+    overflow: auto;
+  }
+
+  td {
+    padding: 10px;
+    min-width: 150px;
+    border-bottom: 1px solid #d2d8d6;
+
+    >strong {
+      color: #000;
+    }
+  }
+
+  figcaption {
+    text-align: center;
+  }
+
+  a {
+    color: $green;
+    text-decoration: underline;
+    transition: text-decoration-color .5s;
+    &:hover {
+      text-decoration-color: transparent;
+    }
+    &:visited {
+      color: $grey;
+    }
+  }
+
+  .blocks-gallery-grid > li::before {
+    display: none;
+  }
+}

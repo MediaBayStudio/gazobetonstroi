@@ -4,7 +4,7 @@
   $images = $section['images'] ?>
 
 <section class="material-sect sect">
-  <img src="#" data-src="<?php echo $template_directory ?>/img/materials-decor.png" alt="" class="material-sect__decor lazy">
+  <img src="#" data-src="<?php echo $template_directory ?>/img/materials-decor.png" alt="#" class="material-sect__decor lazy">
   <div class="material-sect__text">
     <h2 class="material-sect__title sect-title"><?php echo $sect_title ?></h2> <?php
     foreach ( $paragraphs as $p )  :?>

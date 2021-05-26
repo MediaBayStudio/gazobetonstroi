@@ -29,7 +29,7 @@ if ( $posts ) : ?>
         <div class="slider-nav__counter"><span class="slider-nav__counter-current">1</span>/<span class="slider-nav__counter-total">6</span></div>
       </div> <?php
     elseif ( $other_news ) : ?>
-      <a href="news" class="news-slider__link text_underline">Все новости</a> <?php
+      <a href="/news/" class="news-slider__link text_underline">Все новости</a> <?php
     endif;
     unset( $numberposts );
     unset( $orderby );

@@ -1,0 +1,68 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.turnkey-sect {
+  font: 400 14px/140% Montserrat;
+  &__title {
+    margin: 0 0 25px;
+  }
+  &__text {
+  }
+  &__descr {
+    &:nth-last-child(n+2) {
+      margin: 0 0 25px;
+    }
+  }
+  &__decor,
+  &__tabs-btns {
+    display: none;
+  }
+  &__btn {
+  }
+  &__btn-text {
+  }
+  &__tabs-cnt {
+    margin-top: 20px;
+    font: 16px/140% Montserrat;
+  }
+  &__tab-cnt {
+    padding: 0 0 35px 20px;
+    position: relative;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 8px;
+      left: 0;
+      display: block;
+      width: 0px;
+      height: 100%;
+      border-left: 1px dashed;
+    }
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+  &__tab-cnt-title {
+    margin: 0 0 5px;
+    display: block;
+    font-weight: 600;
+    font-size: 18px;
+    position: relative;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: -24px;
+      transform: translateY(-50%);
+      display: block;
+      width: 9px;
+      height: 9px;
+      background: $green;
+      border-radius: 50%;
+    }
+  }
+  &__tab-cnt-descr {
+  }
+}

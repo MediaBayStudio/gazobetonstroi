@@ -1,0 +1,28 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.gallery-popup {
+  &__cnt {
+    max-width: 1000px;
+    // height: 85vh;
+    // height: calc(var(--vh, 1vh) * 85);
+  }
+
+  &__close {}
+
+  &__title {}
+
+  &__img {
+    // max-width: 1000px;
+  }
+
+  &__descr {}
+}
+
+.gallery-popup__cnt,
+.gallery-popup__cnt > .slick-list {
+  max-height: 85vh;
+  max-height: calc(var(--vh, 1vh) * 85);
+}

@@ -1,0 +1,35 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.news-slider {
+  display: flex;
+  flex-flow: column;
+  overflow: hidden;
+  &__title {
+    margin: 0 0 20px;
+    order: 0;
+  }
+  &__nav {
+    margin: 0 auto 20px;
+    // margin: 0 0 20px;
+    order: 1;
+  }
+  &__link {
+    margin: 0 auto 20px 0;
+    order: 1;
+    font: 16px/100% Montserrat;
+  }
+  &__posts {
+    padding: 1px 0;
+    order: 2;
+    width: 100%;
+  }
+}
+
+#news-slider {
+  .slick-slide {
+    margin: 0 responsive('320->575', '20->148') 0 0;
+  }
+}

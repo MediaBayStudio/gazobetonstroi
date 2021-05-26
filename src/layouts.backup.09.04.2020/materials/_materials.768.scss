@@ -1,0 +1,38 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.material-sect {
+  font-size: 16px;
+  &__decor {
+    width: 100px;
+  }
+
+  &__text {}
+
+  &__title {}
+
+  &__descr {
+    &:nth-last-child(n+2) {}
+
+    >.small {
+      font-size: 10px;
+    }
+  }
+
+  &__images {
+    font-size: 14px;
+  }
+
+  &__figure {
+    margin: 0 auto;
+    width: 250px;
+  }
+
+  &__img {}
+
+  &__figcaption {}
+
+  &__nav {}
+}

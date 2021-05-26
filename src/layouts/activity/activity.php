@@ -3,8 +3,7 @@
 
 <div class="activity-block sect"> <?php
   foreach ( $sect_links as $link )  :
-    $href = $link['link']['url'] ?><!-- 
-     --><div class="activity">
+    $href = $link['link']['url'] ?><div class="activity">
       <div class="activity__text">
         <strong class="activity__title"><?php echo $link['link']['title'] ?></strong>
         <p class="activity__descr"><?php echo $link['descr'] ?></p>
@@ -14,8 +13,7 @@
           endforeach ?>
         </ul>
         <a href="<?php echo $href ?>" class="activity__link btn btn_yellow btn_text-black">Подробнее</a>
-      </div><!-- 
-       --><img src="#" data-src="<?php echo $link['img'] ?>" alt="" class="activity__img lazy">
-    </div><!--   --><?php
+      </div><img src="#" data-src="<?php echo $link['img'] ?>" alt="#" class="activity__img lazy">
+    </div><?php
   endforeach ?>
 </div>

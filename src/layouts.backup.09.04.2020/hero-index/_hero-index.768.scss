@@ -1,0 +1,27 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.hero-sect {
+  margin: -80px 0 60px;
+  &__dots {
+    bottom: 30px;
+  }
+  &__slide {
+    padding: 0 calc(50vw - 344px) 15vh;
+    &-title {
+      font-size: 42px;
+    }
+    &-descr {
+      max-width: 70%;
+      font-size: 20px;
+      line-height: 140%;
+    }
+    &-link {
+      margin-top: 30px;
+      width: 256px;
+      height: 52px;
+    }
+  }
+}

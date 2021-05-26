@@ -1,0 +1,27 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.thanks-popup {
+  &__cnt {
+    padding: 120px 0;
+    max-width: 780px;
+    width: 100%;
+  }
+  &__close {
+    width: 25px;
+    height: 25px;
+    top: -35px;
+    right: -25px;
+  }
+  &__title {
+    margin: 0 0 30px;
+    font-size: 40px;
+  }
+  &__descr {
+    margin: auto;
+    max-width: 280px;
+    font-size: 18px;
+  }
+}

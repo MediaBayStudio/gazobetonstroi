@@ -1,0 +1,31 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.cases-sect {
+
+  &__title {
+
+  }
+  &__link {
+
+  }
+  &__cases {
+    margin-top: 45px;
+  }
+  &__house {
+    width: (688px - 20px) / 2;
+    // height: 320px;
+
+  }
+}
+
+.slider-nav {
+  &__counter {
+  }
+  &__counter-current {
+  }
+  &__counter-total {
+  }
+}

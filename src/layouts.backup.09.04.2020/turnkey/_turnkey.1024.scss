@@ -1,0 +1,168 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.turnkey-sect {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  position: relative;
+  font-size: 16px;
+
+  &__title {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  &__text {
+    grid-row: 1/span 2;
+    grid-column: 2;
+    width: 460px;
+  }
+
+  &__decor {
+    display: block;
+    width: 160px;
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+  }
+
+  &__descr {
+    &:nth-last-child(n+2) {}
+  }
+
+  &__tabs-btns {
+    align-self: end;
+    height: 400px;
+    display: block;
+    grid-row: 2/span 2;
+    grid-column: 1;
+    position: relative;
+
+    &::before {
+      content: url('../img/turnkey-line.1024.svg');
+      position: absolute;
+      top: 51px;
+      left: 0;
+      pointer-events: none;
+    }
+  }
+
+  &__btn {
+    position: absolute;
+    max-width: 142px;
+    text-align: left;
+    text-decoration: underline transparent;
+    transition: text-decoration-color .5s, color .5s;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 10px;
+      height: 10px;
+      position: absolute;
+      bottom: -14px;
+      left: -8px;
+      background: $lightgrey;
+      border-radius: 50%;
+      transition: background .5s;
+    }
+
+    &.is-active {
+      color: $green;
+      text-decoration-color: $green;
+
+      &::before {
+        background: $yellow;
+      }
+    }
+
+    &:nth-child(1) {
+      top: 0;
+      left: 0;
+    }
+
+    &:nth-child(2) {
+      top: 5px;
+      left: 165px;
+    }
+
+    &:nth-child(3) {
+      top: 75px;
+      left: 287px;
+    }
+
+    &:nth-child(4) {
+      top: 165px;
+      left: 322px;
+    }
+
+    &:nth-child(5) {
+      top: 265px;
+      left: 331px;
+    }
+  }
+
+  &__btn-text {
+    pointer-events: none;
+  }
+
+  &__img {
+    width: 280px;
+    position: absolute;
+    bottom: 60px;
+    left: 0;
+    z-index: -1;
+  }
+
+  &__tabs-cnt {
+    grid-row: 3;
+    grid-column: 2;
+    position: relative;
+    width: 460px;
+    height: 228px;
+  }
+
+  &__tab-cnt {
+    width: 100%;
+    padding: 25px 20px 20px;
+    background: $lightgrey;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .5s, visibility .5s;
+
+    &.is-active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    &:last-child {
+      padding-bottom: 20px;
+    }
+
+    &::before {
+      top: 50%;
+      transform: translate(-100%, -50%);
+      display: inline-block;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 7.5px 13px 7.5px 0;
+      border-color: transparent $lightgrey transparent transparent;
+
+    }
+  }
+
+  &__tab-cnt-title {
+
+    &::before {
+      display: none;
+    }
+  }
+
+  &__tab-cnt-descr {}
+}

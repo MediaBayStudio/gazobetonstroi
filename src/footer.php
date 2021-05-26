@@ -25,6 +25,7 @@
     </div>
   </div>
 </footer>
+<span class="info">Сайт носит информационный характер и не является публичной офертой</span>
 <div id="fake-scrollbar"></div> <?php
 require 'template-parts/thanks-popup.php';
 require 'template-parts/zoom-popup.php';

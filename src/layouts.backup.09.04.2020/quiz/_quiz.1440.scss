@@ -1,0 +1,112 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.quiz-form {
+  &__field {
+    width: (750px - 40px) / 3;
+  }
+}
+
+.quiz-sect {
+
+  &_green {}
+
+  &__text {
+    margin: 0 60px 0 0;
+    padding: 0 50px 0 0;
+    display: inline-block;
+    vertical-align: top;
+    width: 420px;
+    border-right: 1px solid;
+  }
+
+  &__title {
+    margin: 0 0 40px;
+  }
+
+  &__descr {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  &__quiz {
+    display: inline-flex;
+    width: 750px;
+  }
+
+  &__img {
+    right: calc(50vw - 715px);
+  }
+}
+
+.quiz-form-wrap {}
+
+.quiz {
+  &__form-result {}
+}
+
+
+.quiz {
+  &__header {
+    margin: 0 0 35px;
+  }
+
+  &__step-title {}
+
+  &__body,
+  &__group-inputs {}
+
+  &__group-inputs {
+    margin-right: 60px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &__radio,
+  &__select {
+    width: 308px;
+    &:nth-child(n) {
+      margin-right: 60px;
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+    &:nth-child(2n+2) {
+      margin-right: 0;
+    }
+    &:first-of-type {
+      margin-right: 60px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  &__text {
+    width: 308px;
+  }
+
+  &__radio-inp {}
+
+  &__radio-pseudo-inp {}
+
+  &__radio-title {}
+
+  &__select {}
+
+  &__select-inp {}
+
+  &__footer {}
+
+  &__prev {
+    &.disabled {}
+  }
+}
+
+.required {}
+
+.disabled {}

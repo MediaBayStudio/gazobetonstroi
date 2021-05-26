@@ -1,0 +1,107 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.quiz-form {
+  // Стили переехали в callback.scss
+}
+
+.quiz-sect {
+
+  &_green {}
+
+  &__text {}
+
+  &__title {}
+
+  &__descr {}
+
+  &__quiz {
+    &.final-step {
+      >.quiz__footer {
+        > .quiz__next {
+          // display: none;
+        }
+        > .quiz__progress {
+          margin: 0 auto 0 25px;
+          flex: 50%;
+        }
+      }
+    }
+  }
+
+  &__img {}
+}
+
+.quiz-form-wrap {}
+
+.quiz {
+  &__form-result {}
+}
+
+
+.quiz {
+  &__header {}
+
+  &__step-title {}
+
+  &__body,
+  &__group-inputs {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__group-inputs {
+    margin: 0 0 20px;
+    &:last-child {
+      margin: 0;
+    }
+  }
+
+  &__radio,
+  &__select {
+    width: (536px - 20px) / 2;
+    margin-right: 20px;
+    &:last-child,
+    &:nth-child(even) {
+      margin-right: 0;
+    }
+    &:first-of-type {
+      margin-right: 20px;
+    }
+  }
+  &__text {
+    width: (536px - 20px) / 2;
+  }
+
+  &__radio-inp {}
+
+  &__radio-pseudo-inp {}
+
+  &__radio-title {}
+
+  &__select {
+    // background: $white;
+  }
+
+  &__select-inp {}
+
+  &__footer {
+    flex-flow: row;
+    flex-wrap: wrap;
+  }
+
+  &__next {
+    margin: 0 0 0 auto;
+  }
+
+  &__prev {
+    &.disabled {}
+  }
+}
+
+.required {}
+
+.disabled {}

@@ -29,7 +29,7 @@
       $post_cat = get_the_terms( get_the_ID(), 'house_properties' );
       $post_title = ($post_type === 'projects' ? 'Проект ' : '') . $post->post_title ?><div class="house cases-sect__house">
         <a href="<?php the_permalink() ?>" class="house__link">
-          <strong class="house__title"><?php echo $post_title ?></strong>
+          <strong class="house__title"><?php echo $post_title ?><img src="#" alt="Иконка стрелка" data-src="<?php echo $template_directory ?>/img/icon-arrow.svg" class="house__arrow lazy"></strong>
           <span class="house__descr have-rows"> <?php
 
           $parent_categories_ids = [];

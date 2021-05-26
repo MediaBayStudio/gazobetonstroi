@@ -18,5 +18,5 @@ if ( $section['color'] ) {
   <div class="quiz-sect__quiz" id="quiz"> <?php
     echo do_shortcode( '[contact-form-7 id="319" html_class="quiz-form" html_id="quiz-form"]' ) ?>
   </div>
-  <img src="#" data-src="<?php echo $quiz_sect_img ?>" alt="" class="quiz-sect__img lazy">
+  <img src="#" data-src="<?php echo $quiz_sect_img ?>" alt="#" class="quiz-sect__img lazy">
 </section>

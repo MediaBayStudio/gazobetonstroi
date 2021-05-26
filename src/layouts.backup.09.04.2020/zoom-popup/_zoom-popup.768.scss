@@ -1,0 +1,16 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.zoom-popup {
+  &__cnt {
+  }
+  &__close {
+    width: 22.5px;
+    height: 22.5px;
+  }
+  &__img {
+    max-width: 100vw;
+  }
+}

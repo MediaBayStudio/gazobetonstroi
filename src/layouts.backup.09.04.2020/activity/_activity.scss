@@ -1,0 +1,42 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+
+.activity-block {
+  font: 16px/173% Montserrat;
+  color: $black;
+}
+
+.activity {
+  width: 280px;
+  margin: 0 auto 60px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  &__text {
+  }
+  &__title {
+    margin: 0 0 20px;
+    display: block;
+    font-size: 22px;
+    line-height: 140%;
+  }
+  &__descr {
+  }
+  &__list {
+  }
+  &__list-item {
+  }
+  &__link {
+    margin-top: 30px;
+    width: 190px;
+  }
+  &__img {
+    margin-top: 30px;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+  }
+}

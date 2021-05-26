@@ -1,0 +1,55 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.reviews-sect {
+
+  &::after {
+    left: 0;
+  }
+
+  &__title {
+    margin-bottom: 45px;
+  }
+
+  &__nav {}
+
+  &__prev {}
+
+  &__next {}
+
+  &__counter {}
+
+  &__counter-current {}
+
+  &__counter-total {}
+
+  // Если слайдер
+  &.slick-slider {
+    >.reviews-sect__nav {}
+  }
+}
+
+
+.review {
+  width: (688px - 20px) / 2;
+  padding: 40px;
+  &.slick-slide {}
+
+  &.last {}
+
+  &__hdr {
+    &::before {
+      line-height: 0.5em;
+    }
+  }
+
+  &__title {}
+
+  &__subtitle {}
+
+  &__descr {
+    font-size: 16px;
+  }
+}

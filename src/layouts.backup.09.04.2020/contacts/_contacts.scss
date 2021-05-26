@@ -1,0 +1,108 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.contacts-sect {
+  background: $beige;
+  overflow: hidden;
+  &__title {
+    margin: 0 0 15px;
+  }
+  &__descr {
+    margin: 0 0 20px;
+  }
+}
+
+.contacts-form {
+  padding: 20px;
+  background: $white;
+  border-radius: 5px;
+  position: relative;
+  &__field {
+    width: 100%;
+    // max-width: 320px;
+  }
+  &__field_name {
+    margin: 0 0 35px;
+  }
+  &__field_tel {
+    margin: 0 0 35px;
+  }
+  &__field_email {
+    margin: 0 0 35px;
+  }
+  &__files-upload-block {
+    margin: 30px 0 35px;
+  }
+  &__bottom {
+    margin: auto;
+    max-width: 240px;
+  }
+  &__btn {
+    margin: 20px auto 0;
+  }
+}
+
+// .contacts-form,
+// .quiz-form {
+//   &__field {
+//     width: 100%;
+//     // max-width: 320px;
+//   }
+//   &__field_name {
+//     margin-bottom: 35px;
+//   }
+//   &__field_tel {
+//     margin-bottom: 35px;
+//   }
+//   &__field_email {
+//     margin-bottom: 35px;
+//   }
+//   &__bottom {
+//     margin: auto;
+//     max-width: 240px;
+//   }
+//   &__btn {
+//     margin: 20px auto 0;
+//   }
+// }
+
+
+.contacts-sect {
+  &__contacts {
+    margin-top: 35px;
+    display: flex;
+    flex-flow: column;
+    max-width: 265px;
+    font: 14px/140% Montserrat;
+  }
+  &__title {
+  }
+}
+
+.sect-title {
+}
+
+.contacts-block {
+  margin: 0 0 20px;
+  display: flex;
+  align-items: center;
+  &_geo {
+    align-items: flex-start;
+  }
+  &_email {
+    order: 10;
+  }
+  &_insta {
+    order: 11;
+  }
+  &__img {
+    margin-right: 20px;
+    flex-shrink: 0;
+    width: 15px;
+    height: 15px;
+  }
+  &__text {
+  }
+}

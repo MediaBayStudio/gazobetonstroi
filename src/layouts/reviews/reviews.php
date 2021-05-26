@@ -1,10 +1,9 @@
 <?php
 $sect_title = $section['sect_title'];
 $reviews = $section['reviews'];
-$data_src = '';
-$data_media = ''; ?>
+$data_src = 'url(' . $template_directory . '/img/reviews-house.png)'; ?>
 
-<section class="reviews-sect sect lazy" id="reviews-slider" data-src="<?php echo $data_src ?>" data-media="<?php echo $data_media ?>">
+<section class="reviews-sect sect lazy" id="reviews-slider" data-src="<?php echo $data_src ?>">
   <h1 class="reviews-sect__title sect-title"><?php echo $sect_title ?></h1>
   <div class="slider-nav reviews-sect__nav">
     <div class="slider-nav__counter"><span class="slider-nav__counter-current">1</span>/<span class="slider-nav__counter-total">6</span></div>

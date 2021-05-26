@@ -1,0 +1,35 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.team-sect {
+  &__title {}
+
+  &__team {}
+
+  &__nav {}
+}
+
+.char {
+  width: (940px - 40px) / 3;
+  height: 332px;
+
+  &:last-child {}
+
+  &__text {}
+
+  &__name {}
+
+  &__position {}
+
+  &__photo {}
+}
+
+.slider-nav {
+  &__counter {}
+
+  &__counter-current {}
+
+  &__counter-total {}
+}

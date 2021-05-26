@@ -1,0 +1,30 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.news-sect {
+  &__title {}
+
+  &__descr {}
+
+  &__loadmore {}
+
+  &__loadmore-text {}
+}
+
+.news {}
+
+.post {
+  &:last-child {}
+
+  &__img {}
+
+  &__title {}
+
+  &__descr {}
+
+  &__date {}
+
+  &__more {}
+}

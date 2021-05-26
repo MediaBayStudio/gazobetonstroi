@@ -1,0 +1,20 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.news-slider {
+  &__title {
+    margin: 0 0 35px;
+  }
+  &__nav {
+    margin: 0 0 35px auto;
+  }
+  &__link {
+    margin: 0 0 35px auto;
+  }
+}
+
+#news-slider {
+  overflow: hidden;
+}

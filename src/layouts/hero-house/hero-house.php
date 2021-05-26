@@ -13,53 +13,62 @@
   $flex_text = $house_fields['flexible'];
   $thumbnail = get_the_post_thumbnail_url();
   $gallery = $house_fields['gallery'];
-  $categories = get_categories( [
-    'taxonomy'  => 'house_properties',
-    'hide_empty' => 0
-  ] );
-  // array_unshift( $gallery, $thumbnail );
+  $props = $GLOBALS['house_props'];
+  // Категории дома
+  $house_terms = $GLOBALS['house_terms'];
+  // Остальные категории (второй свет, гараж и т.д.)
+  $other_terms = $GLOBALS['house_other_terms'];
 
-  $props = [
-    'Общая площадь' => $area . 'м<sup>2</sup>'
-  ];
+  $props['Общая площадь'] = $area . ' м<sup style="margin-top:-5px">2</sup>';
 
 
   // if ( $area_other ) {
   //   $props['Площадь террасы/балконов/крылец'] = $area_other . 'м<sup>2</sup>';
   // }
 
-  $props['Длина'] = $length . 'м';
-  $props['Ширина'] = $width . 'м';
+  $props['Длина'] = $length . ' м';
+  $props['Ширина'] = $width . ' м';
 
   if ( $garage ) {
     $props['Гараж'] = $garage;
   }
 
+  $descr_list = $house_fields['includes'];
 
-  $categories = get_the_terms( $post->ID, 'house_properties' );
 
-  $other_categories = [];
-
-  foreach ( $categories as $cat ) {
-    $parent_id = $cat->parent;
-
-    if ( $parent_id === 0 ) {
-      $parent_cat = null;
-    } else {
-      $parent_cat = get_term( $parent_id );
-    }
-
-    if ( $parent_cat->name !== 'Площадь дома' ) {
-      if ( $parent_cat->name === 'Другое' ) {
-        if ( $cat->name !== 'Гараж' ) {
-          $other_categories[] = $cat->name;
-        }
-      } else {
-        $props[ $parent_cat->name ] = $cat->name;
-      }
-    }
-    
+  if ( !$descr_list['standart'] && !$descr_list['prestige'] ) {
+    $page_id = $post->post_type === 'cases' ? 403 : 248;
+    $descr_list = get_field( 'includes', $page_id );
   }
+
+  $first_price_tooltip = $descr_list['standart'] . '<br>';
+  $second_price_tooltip = $descr_list['prestige'];
+  $descr_list = $descr_list['standart'] . '<br><br>' . $descr_list['prestige'];
+
+  // На случай если будет гараж и что-то еще (лучше не удалять)
+  // $categories = get_the_terms( $post->ID, 'house_properties' );
+
+  // $other_terms = [];
+
+  // foreach ( $house_terms as $cat ) {
+  //   $parent_id = $cat->parent;
+
+  //   if ( $parent_id === 0 ) {
+  //     $parent_cat = null;
+  //   } else {
+  //     $parent_cat = get_term( $parent_id );
+  //   }
+
+  //   if ( $parent_cat->name !== 'Площадь дома' ) {
+  //     if ( $parent_cat->name === 'Другое' ) {
+  //       if ( $cat->name !== 'Гараж' ) {
+  //         $other_terms[] = $cat->name;
+  //       }
+  //     } else {
+  //       $props[ $parent_cat->name ] = $cat->name;
+  //     }
+  //   }
+  // }
 
   $title = $post->post_type === 'projects' ? 'Проект ' . $title : $title;
 
@@ -67,26 +76,27 @@
     $excerpt = $house_fields['excerpt'];
   }
 
-  foreach ( $other_categories as $other_cat ) {
-    $props[ $other_cat ] = 'Да';
-  }
-
-  $first_price_tooltip = preg_replace( '/В престиж входит[\s\S]*/', '', $house_fields['descr_list'] );
-  $second_price_tooltip = preg_replace( '/[\s\S]*(?=В престиж входит)/', '', $house_fields['descr_list'] ) ?>
+  if ( is_array( $other_terms ) ) {
+    foreach ( $other_terms as $other_cat ) {
+      $props[ $other_cat ] = 'Да';
+    }
+  } ?>
 
  <section class="house-sect sect">
   <div class="house-sect__sliders">
     <div class="house-sect__gallery house-slider" id="house-slider"> <?php
       foreach ( $gallery as $img ) : ?>
-        <img src="<?php echo $img ?>" alt="" class="house-slider__img"> <?php
+        <a data-fancybox="images" href="<?php echo $img ?>" class="house-slider__img-wrap"><img src="<?php echo $img ?>" alt="<?php echo $title ?>" class="house-slider__img"></a> <?php
       endforeach ?>
+      <button type="button" class="house-slider__prev-clone"></button>
+      <button type="button" class="house-slider__next-clone"></button>
     </div>
     <div class="house-sect__gallery-nav slider-nav">
       <div class="slider-nav__counter"><span class="slider-nav__counter-current">1</span>/<span class="slider-nav__counter-total">6</span></div>
     </div>
     <div class="house-sect__gallery-bottom house-nav" id="house-nav"> <?php
       foreach ( $gallery as $img ) : ?>
-        <img src="<?php echo $img ?>" alt="" class="house-nav__img"> <?php
+        <img src="<?php echo $img ?>" alt="<?php echo $title ?>" class="house-nav__img"> <?php
       endforeach ?>
     </div>
   </div>
@@ -141,9 +151,9 @@
         endif;
       endforeach;
     endif ?>
-    <img src="<?php echo $gallery[1] ?>" alt="" class="house-sect__img">
+    <img src="<?php echo $gallery[1] ?>" alt="<?php echo $title ?>" class="house-sect__img">
     <div class="house-sect__descr"> <?php
-      echo $house_fields['descr_list'] ?>
+      echo $descr_list ?>
     </div>
   </div>
  </section>

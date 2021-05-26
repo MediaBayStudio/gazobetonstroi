@@ -1,0 +1,207 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.quiz-form {
+  // Стили переехали в callback.scss
+}
+
+.quiz-sect {
+  font: 16px/140% Montserrat;
+  position: relative;
+  // overflow: hidden;
+  &_green {
+    background: $lightgrey;
+
+    .quiz__progress-bar {
+      background-color: $white;
+    }
+  }
+
+  &__text {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__title {
+    margin: 0 0 10px;
+  }
+
+  &__descr {
+    margin-bottom: 50px;
+  }
+
+  &__quiz {
+    display: flex;
+    flex-flow: column;
+    position: relative;
+    z-index: 1;
+
+    &.final-step {
+      >.quiz__footer {
+        >.quiz__next {
+          display: none;
+        }
+      }
+    }
+  }
+
+  &__img {
+    max-width: 90%;
+    max-height: 100%;
+    position: absolute;
+    bottom: 50%;
+    right: 50%;
+    transform: translate(50%, 50%);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  &__progress {
+    margin: 20px 0 0;
+    order: 10;
+  }
+}
+
+
+.quiz-form-wrap {}
+
+.quiz {
+  &__form-result {}
+}
+
+
+.quiz {
+  &__header {
+    margin: 0 0 20px;
+  }
+
+  &__step-title {
+    font-weight: 600;
+  }
+
+  &__body {}
+
+  &__group-inputs {
+    margin: 0 0 20px;
+  }
+
+  &__radio,
+  &__select,
+  &__text {
+    margin: 0 0 20px;
+    background: $white;
+    position: relative;
+
+    &:last-child {
+      margin: 0;
+    }
+  }
+
+  &__radio {
+    >.tooltip-icon {
+      position: absolute;
+      // right: 15px;
+      // top: 85%;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    >.tooltip-text {
+      width: 225px;
+      right: 15px;
+      top: 85%;
+      // top: auto;
+      // bottom: -100%;
+      // left: 50%;
+      // right: auto;
+      // transform: translateX(-50%);
+      white-space: normal;
+    }
+  }
+
+  &__radio-inp {}
+
+  &__radio-pseudo-inp {}
+
+  &__radio-title {}
+
+  &__select {
+    // background: $white;
+  }
+
+  &__select-inp {}
+
+  &__footer {
+    margin-top: 25px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+  }
+
+  &__next {
+    margin: 25px auto 0;
+    width: 200px;
+  }
+
+  &__prev,
+  &__next {
+    &.disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  }
+
+  &__prev {
+    &::before {
+      content: '';
+      margin: 0 7px 0 0;
+      display: inline-block;
+      width: 18px;
+      height: 9px;
+      background: url('../img/icon-arrow.svg') center/contain no-repeat;
+      transform: rotate(180deg);
+    }
+  }
+
+  &__progress {
+    margin: 25px 0 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    &-text {}
+
+    &-bar {
+      margin: 0 0 0 15px;
+      width: 100%;
+      height: 6px;
+      border-radius: 5px;
+      background: $lightgrey;
+      font-size: 0;
+      // background: $lightgrey linear-gradient(1deg, $green, $green) 0 0/0 6px no-repeat;
+      // transition: background .5s;
+      transition: font-size .5s;
+      position: relative;
+      overflow: hidden;
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 1em;
+        height: 100%;
+        background: $green;
+      }
+    }
+  }
+}
+
+
+
+.required {}
+
+.disabled {}

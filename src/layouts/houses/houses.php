@@ -49,8 +49,8 @@
       ] );
 
       $posts = $query->posts;
-      
-      // Изменяем сформированный sql-запрос на подсчет кол-ва записей
+
+            // Изменяем сформированный sql-запрос на подсчет кол-ва записей
         // Меняем SELECT ... FROM на SELECT count( * ) FROM
       $count_request = preg_replace( '/(?<=SELECT).*(?=FROM)/', ' count( * ) ', $query->request );
       $count_request = preg_replace( '/(?<=\'publish\'\)\)).*/', '', $count_request );
@@ -77,18 +77,35 @@
 
   // Разбираем GET-параметр для установки его в ссылку
   $query_string = '?';
+
+  $count_pages = ceil( $count_posts / $numberposts ); // Сколько всего у нас страниц
+  $count_posts_on_page = count( $posts ); // Сколько записей уже на странице
+  $current_page_number = ceil( $count_posts_on_page / $numberposts ); // Какой номер страницы показан в данный момент
+
   if ( $_SERVER['QUERY_STRING'] ) {
     // Если страница уже есть, то прибавляем к ней 1, для перехода на следующую
     if ( strpos( $_SERVER['QUERY_STRING'], 'catalogue_page' ) !== false ) {
-      $query_string .= preg_replace_callback( '/(?<=catalogue_page=)\d+/', function( $matches ) {
-        return 1 + (int)$matches[0];
-      }, $_SERVER['QUERY_STRING'] );
-    } else {
-      $query_string .= $_SERVER['QUERY_STRING'] . '&catalogue_page=2';
+      // Проверяем необходимость перехода на следующие страницы
+        // Если остаток страниц равен общему кол-ву страниц, то убираем ссылку на каталог
+      if ( $current_page_number >= $count_pages ) {
+        $query_string = '';
+      } else {
+        $query_string .= preg_replace_callback( '/(?<=catalogue_page=)\d+/', function( $matches ) {
+          return 1 + (int)$matches[0];
+        }, $_SERVER['QUERY_STRING'] );
+      }
+
+          } else {
+      $query_string .= $_SERVER['QUERY_STRING'] . ( $count_pages > 1 ? '&catalogue_page=2' : '' );
     }
   } else {
-    $query_string = '?catalogue_page=2';
-  } ?>
+    $query_string = $count_pages > 1 ? '?catalogue_page=2' : '';
+  }
+
+  if ( $query_string === '?' ) {
+    $query_string = '';
+  }  ?>
+
 <span class="houses-count">Найдено проектов: <span class="houses-count-num"><?php echo $count_posts ?></span></span>
 <div class="houses container">
   <form action="<?php the_permalink() ?>" method="get" class="filter-form popup" id="filter-form" data-numberposts="<?php echo $numberposts ?>" data-post-type="<?php echo $post_type ?>">
@@ -137,7 +154,6 @@
           }
         }
       }
-      // var_dump( $parent_terms );
 
       foreach ( $parent_terms as $term ) :
         $childs = $child_terms[ $term['id'] ];
@@ -178,12 +194,12 @@
         </div>
      </div>
   </form>
-  <button type="button" id="filter-form-call-btn"><img src="#" data-src="<?php echo $template_directory ?>/img/icon-filter.svg" alt="" class="lazy" style="padding-right:10px">Фильтр</button>
+  <button type="button" id="filter-form-call-btn"><img src="#" data-src="<?php echo $template_directory ?>/img/icon-filter.svg" alt="#" class="lazy" style="padding-right:10px">Фильтр</button>
   <div class="houses__cards" id="houses-cards"> <?php
     print_houses( $posts, $post_type, $post_type, $numberposts, $count_posts ) ?>
   </div>
-  <a href="<?php echo $site_url . '/' . $post_type . '/' . $query_string ?>" <?php echo $loadmore_btn_attr ?> class="houses__loadmore loadmore" id="loadmore-btn"<?php echo $loadmore_data_filter ?>>
+  <a onclick="event.preventDefault()" href="<?php echo $site_url . '/' . $post_type . '/' . $query_string ?>" <?php echo $loadmore_btn_attr ?> class="houses__loadmore loadmore" id="loadmore-btn"<?php echo $loadmore_data_filter ?>>
     <span class="loadmore__text">Показать еще</span>
-    <img src="<?php echo $template_directory ?>/img/icon-loadmore.svg" alt="" class="loadmore__icon"></img>
+    <img src="<?php echo $template_directory ?>/img/icon-loadmore.svg" alt="#" class="loadmore__icon"></img>
   </a>
 </div>

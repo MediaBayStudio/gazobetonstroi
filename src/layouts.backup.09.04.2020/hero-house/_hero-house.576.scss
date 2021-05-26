@@ -1,0 +1,101 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.house-sect {
+
+  &__sliders {}
+
+  &__gallery {
+    &-nav {
+      margin: 15px auto 5px;
+      width: 350px;
+      >.slider-nav__counter {}
+    }
+  }
+
+  &__img {
+    // margin: 0 0 0 auto;
+    // width: 262px;
+    // height: 266px;
+  }
+
+  &__title {}
+
+  &__descr {
+    &-block {
+      margin-top: 50px;
+      // display: flex;
+      // flex-wrap: wrap;
+      // align-items: center;
+    }
+  }
+
+  &__p {
+    margin: 0 0 25px;
+  }
+
+  &__list {
+
+    &-item {
+
+      &-text {
+
+        &:first-of-type {}
+
+        &:last-of-type {}
+      }
+
+      &-dots {}
+    }
+  }
+
+  &__prices {
+    display: flex;
+    align-items: center;
+    text-align: left;
+  }
+
+  &__price {
+    &:first-child {
+      padding: 0 40px 0 0;
+      margin: 0 40px 0 0;
+      border-right: 1px solid $green;
+    }
+  }
+
+  &__price-num {}
+
+  &__price-text {}
+}
+
+.house-slider {
+  height: 380px;
+
+  &__prev,
+  &__next {
+    width: 105px;
+  }
+
+  >.slick-list,
+  >.slick-list>.slick-track {}
+
+  &__img {}
+}
+
+
+.house-nav {
+  width: 100%;
+  margin-left: 0;
+  > .slick-list {
+    padding: 0;
+  }
+
+  &__img {
+    // width: 75px;
+    // height: 75px;
+
+    &.active {}
+  }
+}

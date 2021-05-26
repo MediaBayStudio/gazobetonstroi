@@ -7,7 +7,7 @@
   $turnkey_text = '' ?>
 
 <section class="turnkey-sect sect">
-  <img src="#" data-src="<?php echo $template_directory ?>/img/turnkey-decor.png" alt="" class="turnkey-sect__decor lazy">
+  <img src="#" data-src="<?php echo $template_directory ?>/img/turnkey-decor.png" alt="#" class="turnkey-sect__decor lazy">
   <h2 class="turnkey-sect__title sect-title"><?php echo $sect_title ?></h2>
   <div class="turnkey-sect__text"> <?php
   foreach ( $paragraphs as $p ) : ?>
@@ -30,7 +30,7 @@
 
       $turnkey_text .= $text;
     endfor ?>
-    <img src="#" data-src="<?php echo $template_directory ?>/img/turnkey-img.jpg" alt="" class="turnkey-sect__img lazy">
+    <img src="#" data-src="<?php echo $template_directory ?>/img/turnkey-img.jpg" alt="#" class="turnkey-sect__img lazy">
   </div>
   <div class="turnkey-sect__tabs-cnt" id="turnkey-tabs-text-block"> <?php
     echo $turnkey_text ?>

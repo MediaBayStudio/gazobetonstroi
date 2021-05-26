@@ -1,0 +1,79 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.houses {
+
+  &-count {
+    margin-top: -50px;
+
+    &-num {}
+  }
+
+  &__filter {}
+
+  &__cards {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__house {}
+
+  &__notfound {
+    font-size: 16px;
+
+    &::before {}
+
+    &-text {}
+
+    &-btn {
+      font-size: 15px;
+    }
+  }
+}
+
+.projects,
+.cases {
+  &__house {
+    margin: 20px auto 0 0;
+    width: (536px - 20px) / 2;
+
+    &:nth-of-type(2n) {
+      margin-right: 0;
+    }
+  }
+}
+
+#filter-form-call-btn {
+
+  &:focus {}
+}
+
+.filter-form {
+
+  &__title {}
+
+  &__close {}
+
+  &__group {
+
+    &:nth-child(n+2) {}
+  }
+
+  &__group-title {}
+
+  &__check {
+
+    &:focus-within {}
+  }
+
+  &__bottom {}
+
+  &__btn {}
+
+  &__reset {
+
+    &:focus {}
+  }
+}

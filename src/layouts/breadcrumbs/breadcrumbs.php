@@ -6,13 +6,13 @@ if ( $parent !== 0 ) {
   $href = get_the_permalink( $parent );
   $text = get_the_title( $parent );
 } else if ( is_singular( 'projects' ) ) {
-  $href = 'projects';
+  $href = '/projects/';
   $text = 'Проекты';
 } else if ( is_singular( 'cases' ) ) {
-  $href = 'cases';
+  $href = '/cases/';
   $text = 'Наши работы';
 } else if ( is_single() ) {
-  $href = 'news';
+  $href = '/news/';
   $text = 'Новости';
 } ?>
 

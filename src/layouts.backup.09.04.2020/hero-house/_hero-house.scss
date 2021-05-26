@@ -1,0 +1,182 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+
+.house-sect {
+  overflow: hidden;
+  color: $black;
+  // padding-bottom: 0;
+  // margin-bottom: 0;
+  + .callback-sect {
+    margin-top: 0;
+  }
+  &__sliders {}
+
+  &__gallery {
+    &-nav {
+      margin: 15px auto 0;
+      width: 235px;
+      >.slider-nav__counter {
+        font-weight: 600;
+        // margin: 0 -10px;
+      }
+    }
+  }
+
+  &__img {
+    display: none;
+    // margin: 25px 0 0 auto;
+    // max-width: 100%;
+    // object-fit: cover;
+  }
+
+  &__title {
+    font: 600 22px/140% Montserrat;
+  }
+
+  &__heading-block {
+    padding: 0 0 20px;
+    border-bottom: 1px solid $green;
+    font: 16px/140% Montserrat;
+  }
+  &__excerpt {
+    margin-top: 10px;
+  }
+
+  &__descr {
+    &-block {
+      margin-top: 30px;
+      font: 16px/150% Montserrat;
+    }
+  }
+
+  &__p {
+    margin: 0 0 10px;
+  }
+
+  &__list {
+    margin-top: 20px;
+    font: 16px/140% Montserrat;
+    color: $darkgrey;
+
+    &-item {
+      margin: 0 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      &-text {
+        display: flex;
+        align-items: center;
+
+        &:first-of-type {
+          padding-right: 20px;
+        }
+
+        &:last-of-type {
+          text-align: right;
+        }
+      }
+
+      &-dots {}
+    }
+  }
+
+  &__prices {
+    margin: 50px 0;
+    text-align: center;
+    font: 16px/140% Montserrat;
+    color: $darkgrey;
+    white-space: nowrap;
+  }
+
+  &__price {
+    &:first-child {
+      margin: 0 0 25px;
+      .tooltip-text > br:last-child {
+        display: none;
+      }
+    }
+  }
+
+  &__price-num {
+    margin: 0 0 5px;
+    display: block;
+    font: 500 24px/140% Montserrat;
+    color: $black;
+  }
+
+  &__price-text {}
+}
+
+.house-slider {
+  height: responsive('320->575', '200->380');
+
+  &__next,
+  &__prev {
+    position: relative;
+    width: 60px;
+    height: 9px;
+    overflow: hidden;
+    > .arrow__svg {
+      position: absolute;
+      top: 0;
+    }
+  }
+
+  &__next {
+    > .arrow__svg {
+      right: 0;
+    }
+  }
+
+  &__prev {
+    > .arrow__svg {
+      left: 0;
+    }
+  }
+
+  >.slick-list,
+  >.slick-list>.slick-track {
+    height: 100%;
+  }
+
+  &__img {
+    border: 1px solid transparent;
+    // object-fit: cover;
+    object-fit: contain;
+    cursor: zoom-in;
+  }
+}
+
+
+.house-nav {
+  width: 100vw;
+  margin: 5px 0 20px -20px;
+  padding: 1px;
+  overflow: hidden;
+  > .slick-list {
+    padding: 0 20px;
+    > .slick-track {
+      // align-items: center;
+    }
+  }
+
+  &__img {
+    flex-shrink: 0;
+    width: 70px;
+    height: 70px;
+    // min-height: 100%;
+    // width: calc(280px / 4);
+    padding: 5px;
+    object-fit: cover;
+    border: 1px solid transparent;
+    transition: border-color .5s;
+
+    &.active {
+      border-color: $black;
+    }
+  }
+}

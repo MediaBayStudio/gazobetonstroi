@@ -1,0 +1,37 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+
+.activity-block {
+}
+
+.activity {
+  width: (940px - 20px) / 2;
+  &:nth-child(n) {
+    margin: 0 20px 60px 0;
+  }
+  &:nth-child(2n+2) {
+    margin-right: 0;
+  }
+  &:nth-last-child(-n+2) {
+    margin-bottom: 0;
+  }
+  &__text {
+    width: 220px;
+  }
+  &__title {
+  }
+  &__descr {
+  }
+  &__list {
+  }
+  &__list-item {
+  }
+  &__link {
+  }
+  &__img {
+    width: 220px;
+  }
+}

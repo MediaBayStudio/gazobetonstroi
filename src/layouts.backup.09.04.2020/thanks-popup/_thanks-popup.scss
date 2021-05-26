@@ -1,0 +1,17 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.thanks-popup {
+  z-index: 3;
+  &__cnt {
+    max-width: 265px;
+  }
+  &__close {
+  }
+  &__title {
+  }
+  &__descr {
+  }
+}

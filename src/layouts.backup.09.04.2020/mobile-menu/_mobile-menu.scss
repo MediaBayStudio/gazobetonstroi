@@ -1,0 +1,149 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 125%;
+  background: rgba(51, 51, 51, 0.7);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .5s, visibility .5s;
+  z-index: 1;
+  &.active {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.hdr__burger {
+  display: inline-flex;
+  transition: opacity .15s linear;
+  background: 0 0;
+  border: 0;
+  overflow: visible;
+  transition: transform .5s;
+  z-index: 1;
+  font-size: 6px; // Для контроля размеров
+  &-box {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 4.2em;
+    height: 2.835em;
+    position: relative;
+  }
+
+  &-inner {
+    display: block;
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    top: 50%;
+    background: $beige;
+    transition: transform 0.075s 0.15s cubic-bezier(0.55, 0.055, 0.675, 0.19), background-color 0s 0.075s linear;
+    border-radius: 2px;
+
+    &::after,
+    &::before {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      background: $beige;
+      border-radius: inherit;
+    }
+
+    &::after {
+      bottom: -1em; // 6px
+      transition: bottom 0.075s 0.075s ease-in, transform 0.075s 0s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    }
+
+    &::before {
+      top: -1em; // 6px
+      background: $beige;
+      transition: top 0.075s 0.075s ease-in, transform 0.075s 0s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    }
+  }
+
+  &.active {
+    .hdr__burger-inner {
+      transform: rotate(90deg);
+      background-color: transparent !important;
+      transition: transform 0.075s 0s cubic-bezier(0.215, 0.61, 0.355, 1), background-color 0s 0.15s linear;
+
+      &::before {
+        top: 0;
+        transform: rotate(-45deg);
+        transition: top 0.075s 0.1s ease-out, transform 0.075s 0.15s cubic-bezier(0.215, 0.61, 0.355, 1);
+      }
+
+      &::after {
+        bottom: 0;
+        transform: rotate(45deg);
+        transition: bottom 0.075s 0.1s ease-out, transform 0.075s 0.15s cubic-bezier(0.215, 0.61, 0.355, 1);
+      }
+    }
+  }
+}
+
+
+.menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 81.25vw;
+  max-width: 300px;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+  max-height: 100vh;
+  max-height: calc(var(--vh, 1vh) * 100);
+  overflow: hidden;
+  &.active {
+    display: inline-block;
+  }
+
+  &__cnt {
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    height: 100%;
+    max-height: 100%;
+    padding: 0 20px 7.05vh; // pb40px на 320px
+    background: $white;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  &__hdr {
+    border-bottom: 1px solid $green;
+    // Блок переехал в header (стили от hdr)
+  }
+
+  &__nav {
+    margin: auto 0;
+    // max-height: calc(100% - 225px);
+    // height: 100%;
+    // min-height: 60%;
+    font: 400 18px/140% Montserrat;
+    color: $black;
+    &-list {
+      // height: 100%;
+      // display: flex;
+      // flex-flow: column;
+      // justify-content: space-between;
+    }
+    &-list-item {
+      margin-bottom: 55px;
+      &.last {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+}

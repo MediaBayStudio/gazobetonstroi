@@ -1,0 +1,104 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.reviews-sect {
+  padding-bottom: 110px;
+  background: url(../img/reviews-house.png) bottom 35px right/320px auto no-repeat;
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 35px;
+    display: block;
+    width: 120px;
+    height: 190px;
+    background: url(../img/reviews-img.png) center/contain no-repeat;
+    pointer-events: none;
+  }
+
+  &__title {
+    margin: 0 0 20px 0;
+  }
+
+  &__nav {
+    margin: 0 auto 25px;
+    // display: none;
+    // align-items: center;
+    // justify-content: center;
+    // font: 16px/100% Montserrat;
+    // color: $darkgrey;
+  }
+
+  &__prev {
+    order: 0;
+  }
+
+  &__next {
+    order: 2;
+  }
+
+  &__counter {
+    // margin: 0 40px;
+  }
+
+  &__counter-current {}
+
+  &__counter-total {}
+
+  // Если слайдер
+  &.slick-slider {
+    >.reviews-sect__nav {
+      // display: flex;
+    }
+  }
+}
+
+
+.review {
+  margin: 0 20px 0 0;
+  width: 280px;
+  padding: 20px 20px 40px;
+  font: 500 14px/160% Montserrat;
+  border: 1px solid $beige;
+  border-radius: 5px;
+  background: $white;
+  &.slick-slide {
+    margin: 0 responsive('320->575', '20->146') 0 0;
+    &.last {
+      margin-right: 0;
+    }
+  }
+
+  &.last {
+    margin-right: 0;
+  }
+
+  &__hdr {
+    &::before {
+      content: '“';
+      margin: 0 15px 0 0;
+      font: bold 79px/0.6em Montserrat;
+      color: $beige;
+      float: left;
+      padding-top: 0.25em;
+    }
+  }
+
+  &__title {
+    font-size: 18px;
+    line-height: 140%;
+  }
+
+  &__subtitle {
+    // font: 14px/140% Montserrat;
+  }
+
+  &__descr {
+    clear: both;
+  }
+}

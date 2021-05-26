@@ -1,0 +1,58 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.details-sect {
+  &::after {
+
+  }
+  &__title {
+    width: 200px;
+  }
+}
+
+.details {
+  &__btns {
+    width: 200px;
+  }
+  &__btn {
+    &:last-child {
+      margin-bottom: 0;
+    }
+    &::before {
+
+    }
+    &-text {
+
+      &::after {
+
+      }
+    }
+    &.is-active {
+      &::before {
+
+      }
+      > .details__btn-text {
+        &::after {
+
+        }
+      }
+    }
+  }
+  &__text-block {
+    padding: 40px;
+  }
+  &__text {
+
+    &.is-active {
+
+    }
+  }
+  &__text-title {
+    font-size: 30px;
+  }
+  &__text-descr {
+
+  }
+}

@@ -10,7 +10,7 @@
           <span class="char__name"><?php echo $char['name'] ?></span>
           <span class="char__position"><?php echo $char['position'] ?></span>
         </div>
-        <img src="#" data-src="<?php echo $char['photo'] ?>" alt="" class="char__photo lazy">
+        <img src="#" data-src="<?php echo $char['photo'] ?>" alt="<?php echo $char['name'] ?>" class="char__photo lazy">
       </div><?php
     endforeach ?>
   </div>

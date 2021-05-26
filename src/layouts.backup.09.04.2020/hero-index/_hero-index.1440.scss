@@ -1,0 +1,31 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.hero-sect {
+  &__slide {
+    padding: 0 calc(50vw - 620px) 21vh;
+    &-title {
+      font-size: responsive('1440->1920', '42->55');
+    }
+
+    &-descr {
+      max-width: responsive('1440->1920', '440->550');
+      font-size: responsive('1440->1920', '20->24');
+    }
+  }
+
+  // padding-top: 210px;
+  &__text-block {
+    // padding: 60px 70px;
+  }
+
+  &__title {}
+
+  &__descr {}
+
+  &__btn {
+    // margin-top: 80px;
+  }
+}

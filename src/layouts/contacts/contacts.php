@@ -6,43 +6,42 @@ $sect_descr = $section['sect_descr'] ?>
   <?php echo do_shortcode( '[contact-form-7 id="10" html_class="contacts-form" html_id="contacts-form"]' ) ?>
   <div class="contacts-sect__contacts">
     <h2 class="contacts-sect__title sect-title">Контакты</h2>
-    <!-- <div class="contacts-sect__contacts-wrap"> --> <?php
+ <?php
       if ( $address ) : ?>
         <div class="contacts-block contacts-block_geo">
-          <img src="<?php echo $template_directory . '/img/icon-geo.svg' ?>" alt="Иконка" class="contacts-block__img">
+          <img src="#" data-src="<?php echo $template_directory . '/img/icon-geo.svg' ?>" alt="Иконка" class="contacts-block__img lazy">
           <span class="contacts-block__text"><?php echo $address ?></span>
         </div> <?php
       endif;
       if ( $email ) : ?>
         <div class="contacts-block contacts-block_email">
-          <img src="<?php echo $template_directory . '/img/icon-email.svg' ?>" alt="Иконка" class="contacts-block__img">
+          <img src="#" data-src="<?php echo $template_directory . '/img/icon-email.svg' ?>" alt="Иконка" class="contacts-block__img lazy">
           <a href="mailto:<?php echo $email ?>" class="contacts-block__text"><?php echo $email ?></a>
         </div> <?php
       endif;
       if ( $tel_1 ) : ?>
         <div class="contacts-block">
-          <img src="<?php echo $template_directory . '/img/icon-tel.svg' ?>" alt="Иконка" class="contacts-block__img">
+          <img src="#" data-src="<?php echo $template_directory . '/img/icon-tel.svg' ?>" alt="Иконка" class="contacts-block__img lazy">
           <a href="tel:<?php echo $tel_1_dry ?>" class="contacts-block__text"><?php echo $tel_1 ?></a>
         </div> <?php
       endif;
       if ( $tel_2 ) : ?>
         <div class="contacts-block">
-          <img src="<?php echo $template_directory . '/img/icon-tel.svg' ?>" alt="Иконка" class="contacts-block__img">
+          <img src="#" data-src="<?php echo $template_directory . '/img/icon-tel.svg' ?>" alt="Иконка" class="contacts-block__img lazy">
           <a href="tel:<?php echo $tel_2_dry ?>" class="contacts-block__text"><?php echo $tel_2 ?></a>
         </div> <?php
       endif;
       if ( $tel_3 ) : ?>
         <div class="contacts-block">
-          <img src="<?php echo $template_directory . '/img/icon-tel.svg' ?>" alt="Иконка" class="contacts-block__img">
+          <img src="#" data-src="<?php echo $template_directory . '/img/icon-tel.svg' ?>" alt="Иконка" class="contacts-block__img lazy">
           <a href="tel:<?php echo $tel_3_dry ?>" class="contacts-block__text"><?php echo $tel_3 ?></a>
         </div> <?php
       endif;
       if ( $insta ) : ?>
         <div class="contacts-block contacts-block_insta">
-          <img src="<?php echo $template_directory . '/img/icon-insta.svg' ?>" alt="Иконка" class="contacts-block__img">
+          <img src="#" data-src="<?php echo $template_directory . '/img/icon-insta.svg' ?>" alt="Иконка" class="contacts-block__img lazy">
           <a href="tel:<?php echo $insta ?>" class="contacts-block__text">Мы в Instagram</a>
         </div> <?php 
       endif ?>
-    <!-- </div> -->
   </div>
 </section>

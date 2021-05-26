@@ -1,0 +1,14 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.hero-404 {
+  ~.ftr {}
+
+  &__title {}
+
+  &__descr {}
+
+  &__link {}
+}

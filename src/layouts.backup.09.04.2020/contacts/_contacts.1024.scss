@@ -1,0 +1,71 @@
+// assets import
+@import '../../scss/assets/colors';
+@import '../../scss/assets/mixins';
+@import '../../scss/assets/variables';
+
+.contacts-sect {
+  display: flex;
+
+  &__title {}
+
+  &__descr {}
+}
+
+.contacts-form {
+  width: 620px;
+  flex-shrink: 0;
+
+  &__field {
+    width: 250px;
+  }
+
+  &__field_name {}
+
+  &__field_tel {}
+
+  &__field_email {}
+
+  &__files-upload-block {}
+
+  &__bottom {}
+
+  &__btn {}
+}
+
+
+
+.contacts-sect {
+  &__contacts {
+    margin: 40px 0 0 20px;
+    column-count: 1;
+    // overflow: hidden;
+  }
+
+  &__title {}
+}
+
+.sect-title {}
+
+.contacts-block {
+  width: auto;
+
+  &__img {}
+
+  &__text {}
+}
+
+
+.contacts-block {
+  &_email,
+  &_geo {
+    margin: 0 0 30px;
+  }
+
+  &_email {}
+
+  &_insta {}
+
+  &__img {}
+
+  &__text {}
+}
