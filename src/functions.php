@@ -19,6 +19,123 @@ $tel_3_dry = preg_replace( '/\s/', '', $tel_3 );
 $email = get_option( 'contacts_email' );
 $insta = get_option( 'contacts_insta' );
 
+// Тайтлы у домов
+add_filter( 'aioseop_title_single', function( $title ) {
+  global $post;
+
+  if ( is_singular( ['cases', 'projects'] )) {
+    $GLOBALS['house_terms'] = get_the_terms( $post->ID, 'house_properties' );
+    $house_terms = $GLOBALS['house_terms'];
+
+    foreach ( $house_terms as $term ) {
+      $parent_id = $term->parent;
+
+      if ( $parent_id === 0 ) {
+        $parent_cat = null;
+      } else {
+        $parent_cat = get_term( $parent_id );
+      }
+
+      if ( $parent_cat->name !== 'Площадь дома' ) {
+        if ( $parent_cat->name === 'Другое' ) {
+          if ( $term->name !== 'Гараж' ) {
+            $GLOBALS['house_other_terms'][] = $term->name;
+          }
+        } else {
+          $GLOBALS['house_props'][ $parent_cat->name ] = $term->name;
+        }
+      }
+    }
+
+    $material = mb_strtolower( $GLOBALS['house_props']['Материал'] );
+    $house_fields = get_field( 'house_fields' );
+    $post_title = $post->post_title;
+    $area = round( $house_fields['area'] );
+    $type = $GLOBALS['house_props']['Тип строения'];
+
+    if ( strpos( $material, 'кирпич') !== false ) {
+      $material = 'кирпич';
+    }
+
+    if ( strpos( $type, 'Гараж' ) !== false ) {
+      $type = 'Гараж';
+    }
+
+    if ( strpos( $type, 'дом' ) !== false ) {
+      $type = 'Дом';
+    }
+
+    $title = str_replace( ['%type%', '%material%', '%area%'], [$type, $material . 'a', $area], $title );
+  }
+
+  return $title; 
+} , 10, 1 ); 
+
+
+// Дескрипшины у домов
+add_filter( 'aioseop_description', function( $description ) { 
+  global $post;
+
+  if ( is_singular( ['cases', 'projects'] )) {
+    $house_terms = get_the_terms( $post->ID, 'house_properties' );
+
+    foreach ( $house_terms as $term ) {
+      $parent_id = $term->parent;
+
+      if ( $parent_id === 0 ) {
+        $parent_cat = null;
+      } else {
+        $parent_cat = get_term( $parent_id );
+      }
+
+      if ( $parent_cat->name !== 'Площадь дома' ) {
+        if ( $parent_cat->name === 'Другое' ) {
+          if ( $term->name !== 'Гараж' ) {
+            $terms['house_other_terms'][] = $term->name;
+          }
+        } else {
+          $terms['house_props'][ $parent_cat->name ] = $term->name;
+        }
+      }
+    }
+
+    $material = mb_strtolower( $terms['house_props']['Материал'] );
+    $house_fields = get_field( 'house_fields' );
+    $post_title = $post->post_title;
+    $area = round( $house_fields['area'] );
+    $type = $terms['house_props']['Тип строения'];
+
+    if ( strpos( $material, 'кирпич') !== false ) {
+      $material = 'кирпича';
+    } else if ( strpos( $material, 'газобетон') !== false ) {
+      $material = 'газобетона';
+    }
+
+    if ( stripos( $type, 'Гараж' ) !== false ) {
+      $type = 'гаража';
+    } else if ( stripos( $type, 'дом' ) !== false ) {
+      $type = 'дома';
+    } else if ( stripos( $type, 'Баня' ) !== false ) {
+      $type = 'бани';
+    } else if ( stripos( $type, 'Банный комплекс' ) !== false ) {
+      $type = 'банного комплекса';
+    } else if ( stripos( $type, 'Таунхаус' ) !== false ) {
+      $type = 'таунхауса';
+    } else if ( stripos( $type, 'Хозблок' ) !== false ) {
+      $type = 'хозблока';
+    }
+
+    if ( is_singular( 'projects' ) ) {
+      $description = "Заказать строительство %type% из %material% площадью %area% м² в Санкт-Петербурге и ЛО. Проект %type% – %post_title% от компании Газобетонстрой.";
+    } else {
+      $description = "Готовый " . $post_title . " площадью %area% м² в каталоге готовых проектов. Строим дома из газобетона и поризованного кирпича в Санкт-Петербурге и ЛО.";
+    }
+
+    $description = str_replace( ['%type%', '%material%', '%area%'], [$type, $material, $area], $description );
+  }
+  return $description; 
+} , 10, 1 ); 
+
 // Проверка поддержки webp браузером
 if ( strpos( $_SERVER['HTTP_ACCEPT'], 'image/webp' ) !== false || strpos( $_SERVER['HTTP_USER_AGENT'], ' Chrome/' ) !== false ) {
   $webp_support = true; // webp поддерживается
